@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Community — Campus Connect Ghana</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+:root{
+  --navy:#0B1F3A; --navy-2:#0F2A4D;
+  --gold:#F2B705; --gold-dim:#C99400;
+  --green:#146B3C; --green-dim:#0F5230;
+  --red:#C8102E;
+  --parchment:#FBF7EF; --parchment-2:#F4EEDF;
+  --charcoal:#1B1B1B; --charcoal-70:rgba(27,27,27,.7);
+  --line:rgba(27,27,27,.12); --white:#fff;
+  --display:'Fraunces',serif; --body:'Inter',sans-serif; --mono:'IBM Plex Mono',monospace;
+  --max:1180px;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+body{font-family:var(--body); color:var(--charcoal); background:var(--parchment); line-height:1.5; -webkit-font-smoothing:antialiased;}
+a{color:inherit; text-decoration:none;} button{font-family:inherit; cursor:pointer;}
+.wrap{max-width:var(--max); margin:0 auto; padding:0 28px;}
+:focus-visible{outline:3px solid var(--gold); outline-offset:2px;}
+@media (prefers-reduced-motion: reduce){*{animation-duration:.001ms !important; transition-duration:.001ms !important;}}
+
+.kente{height:8px; background:repeating-linear-gradient(100deg, var(--gold) 0 18px, var(--green) 18px 36px, var(--red) 36px 42px, var(--navy) 42px 60px);}
+
+header{background:var(--navy); position:sticky; top:0; z-index:50; border-bottom:1px solid rgba(255,255,255,.08);}
+.nav{display:flex; align-items:center; justify-content:space-between; padding:14px 28px; max-width:var(--max); margin:0 auto;}
+.brand{display:flex; align-items:center; gap:10px; color:var(--white);}
+.brand-mark{width:34px; height:34px; border-radius:50%; background:var(--gold); color:var(--navy); display:flex; align-items:center; justify-content:center; font-family:var(--display); font-weight:700; font-size:15px;}
+.brand-text{font-family:var(--display); font-weight:600; font-size:17px;}
+.brand-text small{display:block; font-family:var(--mono); font-size:8.5px; letter-spacing:1.5px; color:var(--gold); text-transform:uppercase; margin-top:2px;}
+.nav-links{display:flex; gap:26px;}
+.nav-links a{color:rgba(255,255,255,.75); font-size:14px; font-weight:500;}
+.nav-links a.active{color:var(--gold);}
+.nav-links a:hover{color:var(--white);}
+.nav-actions{display:flex; align-items:center; gap:14px;}
+.icon-btn{position:relative; font-size:17px; color:rgba(255,255,255,.75);}
+.icon-btn .dot{position:absolute; top:-3px; right:-4px; width:7px; height:7px; border-radius:50%; background:var(--gold); border:1.5px solid var(--navy);}
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:10px 20px; border-radius:3px; border:none; font-size:13.5px; font-weight:600; transition:transform .15s ease, box-shadow .15s ease, background .15s ease;}
+.btn-gold{background:var(--gold); color:var(--navy);}
+.btn-gold:hover{background:#ffc61a;}
+.btn-outline-navy{background:transparent; color:var(--navy); border:1.5px solid var(--navy);}
+.btn-outline-navy:hover{background:var(--navy); color:var(--white);}
+.btn-sm{padding:7px 14px; font-size:12px;}
+
+.c-hero{background:var(--navy); color:var(--white); padding:40px 0; position:relative; overflow:hidden;}
+.c-hero::before{content:''; position:absolute; inset:0; background:radial-gradient(600px 300px at 90% 0%, rgba(20,107,60,.3), transparent 60%); pointer-events:none;}
+.c-hero .inner{position:relative; z-index:2;}
+.eyebrow{font-family:var(--mono); font-size:12px; letter-spacing:2px; text-transform:uppercase; color:var(--gold); display:flex; align-items:center; gap:10px; margin-bottom:12px;}
+.eyebrow::before{content:''; width:26px; height:1px; background:var(--gold);}
+.c-hero h1{font-family:var(--display); font-weight:700; font-size:clamp(26px,3.4vw,36px);}
+.c-hero p{margin-top:10px; color:rgba(255,255,255,.72); font-size:14.5px; max-width:520px;}
+.stat-strip{display:flex; gap:26px; margin-top:20px; flex-wrap:wrap;}
+.stat-strip .s{font-family:var(--mono); font-size:12px; color:rgba(255,255,255,.55);}
+.stat-strip .s strong{color:var(--gold); font-weight:600;}
+
+.c-body{display:grid; grid-template-columns:250px 1fr 300px; gap:24px; padding:34px 0 60px; align-items:start;}
+
+.card{background:var(--white); border:1px solid var(--line); border-radius:8px; padding:20px; margin-bottom:18px;}
+.card h4{font-family:var(--display); font-weight:600; font-size:15px; color:var(--navy); margin-bottom:14px;}
+
+.group-item{display:flex; align-items:center; gap:10px; padding:9px 0; border-bottom:1px solid var(--line);}
+.group-item:last-child{border-bottom:none;}
+.group-ic{width:34px; height:34px; border-radius:8px; background:var(--parchment-2); color:var(--navy); display:flex; align-items:center; justify-content:center; font-family:var(--display); font-weight:700; font-size:13px; flex-shrink:0;}
+.group-item .n{font-size:12.5px; font-weight:600; color:var(--charcoal);}
+.group-item .m{font-size:11px; color:var(--charcoal-70);}
+.tag-cloud{display:flex; flex-wrap:wrap; gap:7px;}
+.tag-pill{font-family:var(--mono); font-size:11px; padding:5px 10px; border-radius:12px; background:var(--parchment-2); color:var(--charcoal-70);}
+.tag-pill:hover{background:rgba(242,183,5,.15); color:var(--gold-dim);}
+
+.composer{background:var(--white); border:1px solid var(--line); border-radius:8px; padding:18px 20px; margin-bottom:20px; display:flex; gap:12px;}
+.composer .av{width:38px; height:38px; border-radius:50%; background:var(--navy); color:var(--gold); display:flex; align-items:center; justify-content:center; font-family:var(--display); font-weight:700; font-size:13px; flex-shrink:0;}
+.composer-input{flex:1;}
+.composer-input textarea{width:100%; border:1.5px solid var(--line); border-radius:6px; padding:11px 14px; font-family:var(--body); font-size:13.5px; resize:none; min-height:44px;}
+.composer-actions{display:flex; justify-content:space-between; align-items:center; margin-top:10px;}
+.composer-tools{display:flex; gap:14px; font-size:15px; color:var(--charcoal-70);}
+
+.feed-tabs{display:flex; gap:4px; border-bottom:1px solid var(--line); margin-bottom:18px;}
+.feed-tab{padding:10px 4px; margin-right:22px; font-size:13.5px; font-weight:600; color:var(--charcoal-70); border-bottom:2px solid transparent; background:none;}
+.feed-tab.active{color:var(--navy); border-color:var(--gold);}
+
+.post{background:var(--white); border:1px solid var(--line); border-radius:8px; padding:20px 22px; margin-bottom:16px;}
+.post-head{display:flex; align-items:center; gap:12px;}
+.post-avatar{width:40px; height:40px; border-radius:50%; background:var(--parchment-2); color:var(--navy); display:flex; align-items:center; justify-content:center; font-family:var(--display); font-weight:700; font-size:13.5px; flex-shrink:0;}
+.post-head .who{flex:1;}
+.post-head .name{font-size:13.5px; font-weight:700; color:var(--charcoal);}
+.post-head .meta{font-size:11.5px; color:var(--charcoal-70); margin-top:2px;}
+.group-tag{font-family:var(--mono); font-size:9.5px; letter-spacing:.5px; text-transform:uppercase; padding:3px 8px; border-radius:2px; background:rgba(20,107,60,.12); color:var(--green-dim); font-weight:700;}
+.post-body{margin-top:14px; font-size:14px; color:var(--charcoal); line-height:1.65;}
+.post-footer{display:flex; gap:22px; margin-top:16px; padding-top:14px; border-top:1px solid var(--line);}
+.post-action{display:flex; align-items:center; gap:7px; font-size:12.5px; color:var(--charcoal-70);}
+.post-action:hover{color:var(--navy);}
+.post-action.liked{color:var(--red);}
+
+.event-item{padding:12px 0; border-bottom:1px solid var(--line);}
+.event-item:last-child{border-bottom:none;}
+.event-item .date-badge{display:inline-flex; flex-direction:column; align-items:center; background:var(--navy); color:var(--white); border-radius:6px; padding:6px 10px; margin-bottom:8px;}
+.event-item .date-badge .d{font-family:var(--display); font-weight:700; font-size:16px; line-height:1;}
+.event-item .date-badge .m{font-family:var(--mono); font-size:8.5px; letter-spacing:1px; text-transform:uppercase; color:var(--gold);}
+.event-item .n{font-size:13px; font-weight:600; color:var(--charcoal);}
+.event-item .l{font-size:11.5px; color:var(--charcoal-70); margin-top:3px;}
+
+.member-item{display:flex; align-items:center; gap:10px; padding:8px 0;}
+.member-item .av{width:30px; height:30px; border-radius:50%; background:var(--parchment-2); color:var(--navy); display:flex; align-items:center; justify-content:center; font-family:var(--display); font-weight:700; font-size:11px; flex-shrink:0; position:relative;}
+.member-item .av .online{position:absolute; bottom:-1px; right:-1px; width:8px; height:8px; border-radius:50%; background:var(--green); border:1.5px solid var(--white);}
+.member-item .n{font-size:12.5px; font-weight:600; color:var(--charcoal);}
+.member-item .r{font-size:11px; color:var(--charcoal-70);}
+
+.guidelines{font-size:12.5px; color:var(--charcoal-70); line-height:1.6;}
+.guidelines a{color:var(--gold-dim); font-weight:600;}
+
+@media (max-width:1080px){.c-body{grid-template-columns:1fr;} }
+@media (max-width:700px){.nav-links{display:none;}}
+
+footer{background:var(--navy); color:rgba(255,255,255,.65); padding:40px 0 26px; text-align:center; font-size:12.5px;}
+
+/* nav "more" dropdown */
+.nav-more{position:relative;}
+.nav-more-btn{background:none; border:none; color:rgba(255,255,255,.75); font-size:14px; font-weight:500; font-family:inherit; cursor:pointer; padding:6px 0; display:flex; align-items:center; gap:4px;}
+.nav-more-btn:hover{color:var(--white);}
+.nav-more .care{font-size:10px; transition:transform .2s ease;}
+.nav-more.open .care{transform:rotate(180deg);}
+.nav-more-menu{display:none; position:absolute; top:calc(100% + 14px); left:50%; transform:translateX(-50%); background:var(--white); border:1px solid var(--line); border-radius:8px; box-shadow:0 16px 34px rgba(0,0,0,.18); padding:8px; min-width:190px; z-index:60;}
+.nav-more.open .nav-more-menu{display:block;}
+.nav-more-menu a{display:block; padding:9px 12px; font-size:13px; color:var(--charcoal); border-radius:5px; white-space:nowrap;}
+.nav-more-menu a:hover{background:var(--parchment-2); color:var(--navy);}
+
+/* auth gate */
+#authGate{min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; background:var(--navy); position:relative; overflow:hidden;}
+#authGate::before{content:''; position:absolute; inset:0; background:radial-gradient(600px 320px at 85% 15%, rgba(20,107,60,.32), transparent 60%), radial-gradient(460px 280px at 5% 90%, rgba(200,16,46,.16), transparent 60%); pointer-events:none;}
+#authGate .kente-edge{position:absolute; top:0; left:0; right:0; height:8px; background:repeating-linear-gradient(100deg, var(--gold) 0 18px, var(--green) 18px 36px, var(--red) 36px 42px, var(--navy) 42px 60px);}
+.gate-card{position:relative; z-index:2; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.14); border-radius:12px; padding:44px 40px; max-width:400px; width:100%; text-align:center; backdrop-filter:blur(6px);}
+.gate-card .brand-mark{width:44px; height:44px; border-radius:50%; background:var(--gold); color:var(--navy); display:flex; align-items:center; justify-content:center; font-family:var(--display); font-weight:700; font-size:18px; margin:0 auto 18px;}
+.gate-card .lock-ic{width:52px; height:52px; border-radius:50%; background:rgba(242,183,5,.12); color:var(--gold); display:flex; align-items:center; justify-content:center; font-size:22px; margin:0 auto 18px;}
+.gate-card h1{font-family:var(--display); font-weight:600; font-size:23px; color:var(--white);}
+.gate-card p{margin-top:10px; font-size:13.5px; color:rgba(255,255,255,.65); line-height:1.6;}
+.gate-form{margin-top:24px; text-align:left;}
+.gate-form .f{margin-bottom:14px;}
+.gate-form label{display:block; font-size:11.5px; font-weight:600; color:var(--gold); margin-bottom:6px; letter-spacing:.3px;}
+.gate-form input{width:100%; padding:11px 14px; border:1.5px solid rgba(255,255,255,.18); border-radius:5px; font-family:var(--body); font-size:13.5px; background:rgba(255,255,255,.05); color:var(--white);}
+.gate-form input::placeholder{color:rgba(255,255,255,.35);}
+.gate-form input:focus{border-color:var(--gold); outline:none;}
+.gate-btn{width:100%; padding:13px 18px; border-radius:5px; border:none; background:var(--gold); color:var(--navy); font-size:14px; font-weight:700; margin-top:6px; cursor:pointer;}
+.gate-btn:hover{background:#ffc61a;}
+.gate-switch{margin-top:20px; font-size:12.5px; color:rgba(255,255,255,.55);}
+.gate-switch a{color:var(--gold); font-weight:700;}
+</style>
+</head>
+<body>
+
+<div id="authGate">
+  <div class="kente-edge"></div>
+  <div class="gate-card">
+    <div class="lock-ic">🔒</div>
+    <h1>Log in to join the Community</h1>
+    <p>Discussions, groups, and messaging are only visible to registered Campus Connect Ghana students.</p>
+    <form class="gate-form" onsubmit="event.preventDefault(); document.getElementById('authGate').style.display='none'; document.getElementById('communityApp').style.display='block'; window.scrollTo(0,0);">
+      <div class="f"><label>Email address</label><input type="email" placeholder="your.email@example.com" required></div>
+      <div class="f"><label>Password</label><input type="password" placeholder="Enter your password" required></div>
+      <button type="submit" class="gate-btn">Log In &amp; Continue</button>
+    </form>
+    <div class="gate-switch">New here? <a href="campus-connect-ghana-register.html">Create an account</a></div>
+    <div class="gate-switch" style="margin-top:8px;"><a href="campus-connect-ghana-homepage.html">← Back to homepage</a></div>
+  </div>
+</div>
+
+<div id="communityApp" style="display:none;">
+<header>
+  <div class="kente"></div>
+  <nav class="nav">
+    <a href="campus-connect-ghana-homepage.html" class="brand">
+      <span class="brand-mark">CC</span>
+      <span class="brand-text">Campus Connect<br><small>Ghana</small></span>
+    </a>
+        <div class="nav-links">
+      <a href="campus-connect-ghana-scholarship-portal.html">Scholarships</a>
+      <a href="campus-connect-ghana-university-portal.html">Admissions</a>
+      <a href="campus-connect-ghana-internship-portal.html">Internships</a>
+      <a href="campus-connect-ghana-study-resources.html">Study Resources</a>
+      <a href="campus-connect-ghana-community.html">Community</a>
+      <div class="nav-more">
+        <button type="button" class="nav-more-btn" onclick="this.parentElement.classList.toggle('open')">More <span class="care">▾</span></button>
+        <div class="nav-more-menu">
+          <a href="campus-connect-ghana-ai-study-assistant.html">AI Study Assistant</a>
+          <a href="campus-connect-ghana-career-development.html">Career Tools</a>
+          <a href="campus-connect-ghana-blog.html">Blog &amp; News</a>
+          <a href="campus-connect-ghana-events.html">Events</a>
+          <a href="campus-connect-ghana-premium-payments.html">Premium</a>
+          <a href="campus-connect-ghana-contact-support.html">Contact &amp; Support</a>
+        </div>
+      </div>
+    </div>
+        <div class="nav-actions">
+      <a href="campus-connect-ghana-dashboard.html" class="btn btn-ghost-light">My Dashboard</a>
+      <a href="campus-connect-ghana-register.html" class="btn btn-gold">Get Started</a>
+    </div>
+  </nav>
+</header>
+
+<section class="c-hero">
+  <div class="wrap inner">
+    <div class="eyebrow">Student Community</div>
+    <h1>Ask questions. Share notes. Find your people.</h1>
+    <p>Join subject groups, get help from other students, and stay connected across every campus in Ghana.</p>
+    <div class="stat-strip">
+      <span class="s"><strong>8,400+</strong> active members</span>
+      <span class="s"><strong>210</strong> groups</span>
+      <span class="s"><strong>1,240</strong> posts this week</span>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="c-body">
+
+    <aside>
+      <div class="card">
+        <h4>Your Groups</h4>
+        <div class="group-item"><div class="group-ic">EG</div><div><div class="n">Engineering Students Ghana</div><div class="m">2,140 members</div></div></div>
+        <div class="group-item"><div class="group-ic">KN</div><div><div class="n">KNUST Class of 2027</div><div class="m">860 members</div></div></div>
+        <div class="group-item"><div class="group-ic">WS</div><div><div class="n">WASSCE Study Group</div><div class="m">3,400 members</div></div></div>
+        <button class="btn btn-outline-navy btn-sm" style="width:100%; margin-top:12px;">Discover More Groups</button>
+      </div>
+      <div class="card">
+        <h4>Trending Tags</h4>
+        <div class="tag-cloud">
+          <span class="tag-pill">#WASSCE2026</span>
+          <span class="tag-pill">#Scholarships</span>
+          <span class="tag-pill">#Internships</span>
+          <span class="tag-pill">#KNUST</span>
+          <span class="tag-pill">#StudyTips</span>
+          <span class="tag-pill">#Legon</span>
+        </div>
+      </div>
+    </aside>
+
+    <main>
+      <div class="composer">
+        <div class="av">EA</div>
+        <div class="composer-input">
+          <textarea placeholder="Ask a question or share something with the community…"></textarea>
+          <div class="composer-actions">
+            <div class="composer-tools"><span>📷</span><span>📎</span><span>#</span></div>
+            <button class="btn btn-gold btn-sm">Post</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="feed-tabs">
+        <button class="feed-tab active">For You</button>
+        <button class="feed-tab">Your Groups</button>
+        <button class="feed-tab">Latest</button>
+      </div>
+
+      <div class="post">
+        <div class="post-head">
+          <div class="post-avatar">KO</div>
+          <div class="who"><div class="name">Kwame Owusu</div><div class="meta">Computer Science, Legon · 2h ago</div></div>
+          <span class="group-tag">WASSCE Study Group</span>
+        </div>
+        <div class="post-body">Does anyone have a good breakdown of integration by parts? Struggling with question 4 on the 2023 past paper 😅</div>
+        <div class="post-footer">
+          <span class="post-action liked">♥ 24 Likes</span>
+          <span class="post-action">💬 9 Comments</span>
+          <span class="post-action">↗ Share</span>
+        </div>
+      </div>
+
+      <div class="post">
+        <div class="post-head">
+          <div class="post-avatar">AB</div>
+          <div class="who"><div class="name">Abena Boateng</div><div class="meta">SHS 3, Wesley Girls' · 5h ago</div></div>
+          <span class="group-tag">Engineering Students Ghana</span>
+        </div>
+        <div class="post-body">Just got admitted to KNUST for Materials Engineering! Thank you to everyone in this group who helped me with my personal statement 🙏 Happy to answer questions about the application process.</div>
+        <div class="post-footer">
+          <span class="post-action">♥ 142 Likes</span>
+          <span class="post-action">💬 31 Comments</span>
+          <span class="post-action">↗ Share</span>
+        </div>
+      </div>
+
+      <div class="post">
+        <div class="post-head">
+          <div class="post-avatar">YN</div>
+          <div class="who"><div class="name">Yaw Nkrumah</div><div class="meta">Business Admin, UCC · 1d ago</div></div>
+          <span class="group-tag">Career Talk</span>
+        </div>
+        <div class="post-body">Heads up — Ecobank's graduate trainee applications close Sep 5. I applied last week, the process was smooth. Happy to share tips on the interview stage if anyone's applying too.</div>
+        <div class="post-footer">
+          <span class="post-action">♥ 68 Likes</span>
+          <span class="post-action">💬 14 Comments</span>
+          <span class="post-action">↗ Share</span>
+        </div>
+      </div>
+    </main>
+
+    <aside>
+      <div class="card">
+        <h4>Upcoming Events</h4>
+        <div class="event-item">
+          <div class="date-badge"><span class="d">14</span><span class="m">Aug</span></div>
+          <div class="n">Accra Career Fair 2026</div>
+          <div class="l">Accra International Conference Centre</div>
+        </div>
+        <div class="event-item">
+          <div class="date-badge"><span class="d">21</span><span class="m">Aug</span></div>
+          <div class="n">CV Writing Workshop (Online)</div>
+          <div class="l">Free · Zoom</div>
+        </div>
+        <button class="btn btn-outline-navy btn-sm" style="width:100%; margin-top:8px;">View All Events</button>
+      </div>
+      <div class="card">
+        <h4>Active Now</h4>
+        <div class="member-item"><div class="av">KA<span class="online"></span></div><div><div class="n">Kojo Antwi</div><div class="r">Legon · Economics</div></div></div>
+        <div class="member-item"><div class="av">MF<span class="online"></span></div><div><div class="n">Mabel Frimpong</div><div class="r">KNUST · Architecture</div></div></div>
+        <div class="member-item"><div class="av">DO<span class="online"></span></div><div><div class="n">David Osei</div><div class="r">UCC · Law</div></div></div>
+      </div>
+      <div class="card">
+        <h4>Community Guidelines</h4>
+        <div class="guidelines">Be respectful, keep it relevant, and no spam. <a href="campus-connect-ghana-contact-support.html">Read the full guidelines →</a></div>
+      </div>
+    </aside>
+
+  </div>
+</div>
+
+<div class="kente"></div>
+<footer>© 2026 Campus Connect Ghana. Connecting Every Ghanaian Student to Success.</footer>
+
+</div>
+
+<script>
+(function(){
+  var here = location.pathname.split('/').pop();
+  document.querySelectorAll('.nav-links > a[href], .nav-more-menu a[href]').forEach(function(a){
+    if(a.getAttribute('href') === here){ a.classList.add('active'); }
+  });
+  document.addEventListener('click', function(e){
+    document.querySelectorAll('.nav-more.open').forEach(function(m){
+      if(!m.contains(e.target)) m.classList.remove('open');
+    });
+  });
+})();
+</script>
+</body>
+</html>

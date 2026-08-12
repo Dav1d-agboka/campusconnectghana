@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verify Your Email — Campus Connect Ghana</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+:root{
+  --navy:#0B1F3A; --gold:#F2B705; --gold-dim:#C99400; --green:#146B3C;
+  --parchment:#FBF7EF; --charcoal:#1B1B1B; --charcoal-70:rgba(27,27,27,.7);
+  --line:rgba(27,27,27,.14); --white:#fff;
+  --display:'Fraunces',serif; --body:'Inter',sans-serif; --mono:'IBM Plex Mono',monospace;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+body{font-family:var(--body); color:var(--charcoal); background:var(--parchment); min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; -webkit-font-smoothing:antialiased;}
+a{color:inherit; text-decoration:none;} button{font-family:inherit; cursor:pointer;}
+:focus-visible{outline:3px solid var(--gold); outline-offset:2px;}
+@media (prefers-reduced-motion: reduce){*{animation-duration:.001ms !important; transition-duration:.001ms !important;}}
+
+.kente-bar{position:fixed; top:0; left:0; right:0; height:8px; background:repeating-linear-gradient(100deg, var(--gold) 0 18px, var(--green) 18px 36px, #C8102E 36px 42px, var(--navy) 42px 60px);}
+
+.card{background:var(--white); border:1px solid var(--line); border-radius:12px; padding:48px 44px; max-width:440px; width:100%; text-align:center; box-shadow:0 24px 60px rgba(11,31,58,.08);}
+.icon-ring{width:64px; height:64px; border-radius:50%; background:rgba(20,107,60,.1); color:var(--green); display:flex; align-items:center; justify-content:center; font-size:26px; margin:0 auto 22px;}
+h1{font-family:var(--display); font-weight:600; font-size:24px; color:var(--navy);}
+.sub{margin-top:10px; font-size:14px; color:var(--charcoal-70); line-height:1.6;}
+.sub strong{color:var(--navy);}
+
+.otp-row{display:flex; gap:10px; justify-content:center; margin-top:30px;}
+.otp-row input{
+  width:48px; height:56px; text-align:center; font-family:var(--mono); font-size:22px; font-weight:600;
+  border:1.5px solid var(--line); border-radius:6px; color:var(--navy); transition:border-color .15s ease;
+}
+.otp-row input:focus{border-color:var(--gold); outline:none;}
+
+.btn{display:flex; align-items:center; justify-content:center; gap:9px; width:100%; padding:13px 18px; border-radius:5px; border:none; font-size:14.5px; font-weight:600; transition:transform .15s ease, box-shadow .15s ease, background .15s ease;}
+.btn-gold{background:var(--gold); color:var(--navy); margin-top:28px;}
+.btn-gold:hover{background:#ffc61a; transform:translateY(-1px); box-shadow:0 8px 20px rgba(242,183,5,.3);}
+
+.resend{margin-top:20px; font-size:13px; color:var(--charcoal-70);}
+.resend a{color:var(--gold-dim); font-weight:700;}
+.resend .timer{font-family:var(--mono); color:var(--charcoal-70);}
+
+.back-link{display:block; margin-top:26px; font-size:12.5px; color:var(--charcoal-70);}
+</style>
+</head>
+<body>
+<div class="kente-bar"></div>
+
+<div class="card">
+  <div class="icon-ring">✉</div>
+  <h1>Verify your email</h1>
+  <p class="sub">We sent a 6-digit code to <strong id="target-email">your email address</strong>. Enter it below to activate your account.</p>
+
+  <div class="otp-row">
+    <input type="text" maxlength="1" inputmode="numeric" autofocus onInput="if(this.value)this.nextElementSibling?.focus();">
+    <input type="text" maxlength="1" inputmode="numeric" onInput="if(this.value)this.nextElementSibling?.focus();">
+    <input type="text" maxlength="1" inputmode="numeric" onInput="if(this.value)this.nextElementSibling?.focus();">
+    <input type="text" maxlength="1" inputmode="numeric" onInput="if(this.value)this.nextElementSibling?.focus();">
+    <input type="text" maxlength="1" inputmode="numeric" onInput="if(this.value)this.nextElementSibling?.focus();">
+    <input type="text" maxlength="1" inputmode="numeric" onInput="if(this.value)this.nextElementSibling?.focus();">
+  </div>
+
+  <button class="btn btn-gold" onclick="ccgVerifyAccount();">Verify Account</button>
+
+  <div class="resend">Didn't get a code? <span class="timer" id="timer">Resend in 00:30</span></div>
+  <a href="campus-connect-ghana-register.html" class="back-link">← Back to registration</a>
+</div>
+
+<script src="campus-connect-ghana-config.js"></script>
+<script src="campus-connect-ghana-auth.js"></script>
+<script>
+async function ccgVerifyAccount(){
+  var params = new URLSearchParams(window.location.search);
+  var em = params.get('email');
+  if(em){
+    await CCG_AUTH.markVerified(em);
+    // Registering already starts a session for password accounts too,
+    // but set it explicitly here in case this page is reached directly.
+    var users = JSON.parse(localStorage.getItem('ccg_users') || '{}');
+    if(users[em.trim().toLowerCase()]){
+      localStorage.setItem('ccg_session', JSON.stringify({ email: em.trim().toLowerCase(), at: Date.now() }));
+    }
+  }
+  window.location.href = 'campus-connect-ghana-dashboard.html';
+}
+</script>
+<script>
+// Show the email address the account was actually registered with,
+// passed via ?email= from the registration page.
+(function(){
+  var params = new URLSearchParams(window.location.search);
+  var em = params.get('email');
+  if(em){
+    document.getElementById('target-email').textContent = em;
+  }
+})();
+
+let seconds = 30;
+const timerEl = document.getElementById('timer');
+const iv = setInterval(()=>{
+  seconds--;
+  if(seconds <= 0){
+    clearInterval(iv);
+    timerEl.outerHTML = '<a href="javascript:void(0)" id="timer" onclick="location.reload()">Resend code</a>';
+  } else {
+    timerEl.textContent = 'Resend in 00:' + String(seconds).padStart(2,'0');
+  }
+}, 1000);
+</script>
+</body>
+</html>

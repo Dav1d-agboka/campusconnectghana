@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Premium & Payments — Campus Connect Ghana</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+:root{
+  --navy:#0B1F3A; --navy-2:#0F2A4D;
+  --gold:#F2B705; --gold-dim:#C99400;
+  --green:#146B3C; --green-dim:#0F5230;
+  --red:#C8102E;
+  --parchment:#FBF7EF; --parchment-2:#F4EEDF;
+  --charcoal:#1B1B1B; --charcoal-70:rgba(27,27,27,.7);
+  --line:rgba(27,27,27,.12); --white:#fff;
+  --display:'Fraunces',serif; --body:'Inter',sans-serif; --mono:'IBM Plex Mono',monospace;
+  --max:1180px;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+body{font-family:var(--body); color:var(--charcoal); background:var(--parchment); line-height:1.5; -webkit-font-smoothing:antialiased;}
+a{color:inherit; text-decoration:none;} button{font-family:inherit; cursor:pointer;}
+.wrap{max-width:var(--max); margin:0 auto; padding:0 28px;}
+:focus-visible{outline:3px solid var(--gold); outline-offset:2px;}
+@media (prefers-reduced-motion: reduce){*{animation-duration:.001ms !important; transition-duration:.001ms !important;}}
+
+.kente{height:8px; background:repeating-linear-gradient(100deg, var(--gold) 0 18px, var(--green) 18px 36px, var(--red) 36px 42px, var(--navy) 42px 60px);}
+
+header{background:var(--navy); position:sticky; top:0; z-index:50; border-bottom:1px solid rgba(255,255,255,.08);}
+.nav{display:flex; align-items:center; justify-content:space-between; padding:14px 28px; max-width:var(--max); margin:0 auto;}
+.brand{display:flex; align-items:center; gap:10px; color:var(--white);}
+.brand-mark{width:34px; height:34px; border-radius:50%; background:var(--gold); color:var(--navy); display:flex; align-items:center; justify-content:center; font-family:var(--display); font-weight:700; font-size:15px;}
+.brand-text{font-family:var(--display); font-weight:600; font-size:17px;}
+.brand-text small{display:block; font-family:var(--mono); font-size:8.5px; letter-spacing:1.5px; color:var(--gold); text-transform:uppercase; margin-top:2px;}
+.nav-links{display:flex; gap:26px;}
+.nav-links a{color:rgba(255,255,255,.75); font-size:14px; font-weight:500;}
+.nav-links a.active{color:var(--gold);}
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:10px 20px; border-radius:3px; border:none; font-size:13.5px; font-weight:600; transition:transform .15s ease, box-shadow .15s ease, background .15s ease;}
+.btn-gold{background:var(--gold); color:var(--navy);}
+.btn-gold:hover{background:#ffc61a;}
+.btn-ghost-light{background:transparent; color:var(--white); border:1.5px solid rgba(255,255,255,.3);}
+.btn-outline-navy{background:transparent; color:var(--navy); border:1.5px solid var(--navy);}
+
+/* hero */
+.p-hero{background:var(--navy); color:var(--white); padding:50px 0 60px; text-align:center; position:relative; overflow:hidden;}
+.p-hero::before{content:''; position:absolute; inset:0; background:radial-gradient(600px 320px at 80% 0%, rgba(20,107,60,.3), transparent 60%), radial-gradient(500px 280px at 20% 100%, rgba(200,16,46,.15), transparent 60%); pointer-events:none;}
+.eyebrow{font-family:var(--mono); font-size:12px; letter-spacing:2px; text-transform:uppercase; color:var(--gold); display:inline-flex; align-items:center; gap:10px; margin-bottom:14px; position:relative; z-index:2;}
+.eyebrow::before,.eyebrow::after{content:''; width:26px; height:1px; background:var(--gold);}
+.p-hero h1{font-family:var(--display); font-weight:700; font-size:clamp(28px,4vw,42px); position:relative; z-index:2;}
+.p-hero p{margin-top:12px; color:rgba(255,255,255,.72); font-size:15px; max-width:520px; margin-left:auto; margin-right:auto; position:relative; z-index:2;}
+
+.toggle-row{display:flex; justify-content:center; align-items:center; gap:14px; margin-top:28px; position:relative; z-index:2;}
+.plan-toggle{display:flex; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15); border-radius:24px; padding:4px;}
+.plan-toggle button{padding:9px 20px; border-radius:20px; font-size:13px; font-weight:600; color:rgba(255,255,255,.6); background:none;}
+.plan-toggle button.active{background:var(--gold); color:var(--navy);}
+.save-badge{font-family:var(--mono); font-size:11px; background:rgba(20,107,60,.25); color:#4CCB8B; padding:5px 10px; border-radius:10px;}
+
+/* pricing */
+.pricing-grid{display:grid; grid-template-columns:1fr 1fr; gap:22px; margin:-30px 0 50px; position:relative; z-index:3;}
+.plan-card{background:var(--white); border:1px solid var(--line); border-radius:12px; padding:32px 30px; box-shadow:0 20px 44px rgba(11,31,58,.1);}
+.plan-card.premium{border:2px solid var(--gold); position:relative;}
+.plan-card .badge{position:absolute; top:-13px; left:30px; background:var(--gold); color:var(--navy); font-family:var(--mono); font-size:10.5px; letter-spacing:1px; text-transform:uppercase; padding:5px 12px; border-radius:12px; font-weight:700;}
+.plan-card h3{font-family:var(--display); font-weight:600; font-size:20px; color:var(--navy);}
+.plan-card .price{font-family:var(--display); font-weight:700; font-size:36px; color:var(--navy); margin-top:12px;}
+.plan-card .price span{font-size:14px; font-weight:500; color:var(--charcoal-70); font-family:var(--body);}
+.plan-features{margin-top:22px; list-style:none;}
+.plan-features li{display:flex; gap:10px; padding:8px 0; font-size:13.5px; color:var(--charcoal);}
+.plan-features li.dim{color:var(--charcoal-70);}
+.plan-features .ck{color:var(--green-dim); flex-shrink:0;}
+.plan-features .x{color:var(--line); flex-shrink:0;}
+.plan-card .btn{width:100%; margin-top:24px;}
+
+@media (max-width:820px){.pricing-grid{grid-template-columns:1fr;}}
+
+/* checkout */
+.checkout-section{padding:10px 0 50px;}
+.section-head{text-align:center; margin-bottom:30px;}
+.section-head h2{font-family:var(--display); font-weight:600; font-size:24px; color:var(--navy);}
+.section-head p{font-size:13.5px; color:var(--charcoal-70); margin-top:6px;}
+
+.checkout-layout{display:grid; grid-template-columns:1fr 340px; gap:24px; max-width:900px; margin:0 auto; align-items:start;}
+.card{background:var(--white); border:1px solid var(--line); border-radius:8px; padding:26px;}
+.method-tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:22px;}
+.method-tab{display:flex; align-items:center; gap:8px; padding:10px 16px; border:1.5px solid var(--line); border-radius:6px; font-size:13px; font-weight:600; color:var(--charcoal-70); background:var(--white);}
+.method-tab.active{border-color:var(--gold); background:rgba(242,183,5,.08); color:var(--navy);}
+.method-tab .sw{width:16px; height:16px; border-radius:3px; flex-shrink:0;}
+.sw-mtn{background:#FFCB05;} .sw-telecel{background:#E4022A;} .sw-airtel{background:#ED1C24;} .sw-card{background:var(--navy);} .sw-paypal{background:#003087;}
+
+.pay-form{display:none;}
+.pay-form.active{display:block;}
+.f{margin-bottom:16px;}
+.f label{display:block; font-size:12px; font-weight:600; color:var(--navy); margin-bottom:7px;}
+.f input, .f select{width:100%; padding:11px 14px; border:1.5px solid var(--line); border-radius:5px; font-family:var(--body); font-size:13.5px;}
+.f-row{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+.momo-note{background:var(--parchment-2); border-radius:6px; padding:12px 14px; font-size:12px; color:var(--charcoal-70); margin-bottom:16px;}
+
+.order-summary .row{display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--line); font-size:13.5px;}
+.order-summary .row:last-child{border-bottom:none;}
+.order-summary .row.total{font-weight:700; color:var(--navy); font-family:var(--display); font-size:16px;}
+.order-summary .btn{width:100%; margin-top:16px;}
+.secure-note{display:flex; align-items:center; gap:7px; justify-content:center; margin-top:14px; font-family:var(--mono); font-size:10.5px; color:var(--charcoal-70);}
+.form-error{display:none; margin-top:14px; padding:11px 14px; border-radius:6px; background:rgba(200,16,46,.08); border:1px solid rgba(200,16,46,.25); color:#C8102E; font-size:12.5px; line-height:1.5;}
+.form-error.show{display:block;}
+
+@media (max-width:820px){.checkout-layout{grid-template-columns:1fr;}}
+@media (max-width:700px){.nav-links{display:none;} .f-row{grid-template-columns:1fr;}}
+
+/* history */
+.history-section{padding:10px 0 60px;}
+table{width:100%; border-collapse:collapse; background:var(--white); border:1px solid var(--line); border-radius:8px; overflow:hidden;}
+th{text-align:left; font-family:var(--mono); font-size:10.5px; letter-spacing:1px; text-transform:uppercase; color:var(--charcoal-70); padding:14px 16px; background:var(--parchment-2); border-bottom:1px solid var(--line);}
+td{padding:14px 16px; border-bottom:1px solid var(--line); font-size:13px;}
+tr:last-child td{border-bottom:none;}
+.status-pill{font-family:var(--mono); font-size:10px; letter-spacing:.5px; text-transform:uppercase; padding:3px 9px; border-radius:10px; font-weight:700;}
+.status-paid{background:rgba(20,107,60,.12); color:var(--green-dim);}
+.receipt-link{color:var(--gold-dim); font-weight:600; font-size:12.5px;}
+
+@media (max-width:760px){table{display:block; overflow-x:auto;}}
+
+footer{background:var(--navy); color:rgba(255,255,255,.65); padding:40px 0 26px; text-align:center; font-size:12.5px;}
+
+/* nav "more" dropdown */
+.nav-more{position:relative;}
+.nav-more-btn{background:none; border:none; color:rgba(255,255,255,.75); font-size:14px; font-weight:500; font-family:inherit; cursor:pointer; padding:6px 0; display:flex; align-items:center; gap:4px;}
+.nav-more-btn:hover{color:var(--white);}
+.nav-more .care{font-size:10px; transition:transform .2s ease;}
+.nav-more.open .care{transform:rotate(180deg);}
+.nav-more-menu{display:none; position:absolute; top:calc(100% + 14px); left:50%; transform:translateX(-50%); background:var(--white); border:1px solid var(--line); border-radius:8px; box-shadow:0 16px 34px rgba(0,0,0,.18); padding:8px; min-width:190px; z-index:60;}
+.nav-more.open .nav-more-menu{display:block;}
+.nav-more-menu a{display:block; padding:9px 12px; font-size:13px; color:var(--charcoal); border-radius:5px; white-space:nowrap;}
+.nav-more-menu a:hover{background:var(--parchment-2); color:var(--navy);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="kente"></div>
+  <nav class="nav">
+    <a href="campus-connect-ghana-homepage.html" class="brand">
+      <span class="brand-mark">CC</span>
+      <span class="brand-text">Campus Connect<br><small>Ghana</small></span>
+    </a>
+        <div class="nav-links">
+      <a href="campus-connect-ghana-scholarship-portal.html">Scholarships</a>
+      <a href="campus-connect-ghana-university-portal.html">Admissions</a>
+      <a href="campus-connect-ghana-internship-portal.html">Internships</a>
+      <a href="campus-connect-ghana-study-resources.html">Study Resources</a>
+      <a href="campus-connect-ghana-community.html">Community</a>
+      <div class="nav-more">
+        <button type="button" class="nav-more-btn" onclick="this.parentElement.classList.toggle('open')">More <span class="care">▾</span></button>
+        <div class="nav-more-menu">
+          <a href="campus-connect-ghana-ai-study-assistant.html">AI Study Assistant</a>
+          <a href="campus-connect-ghana-career-development.html">Career Tools</a>
+          <a href="campus-connect-ghana-blog.html">Blog &amp; News</a>
+          <a href="campus-connect-ghana-events.html">Events</a>
+          <a href="campus-connect-ghana-premium-payments.html">Premium</a>
+          <a href="campus-connect-ghana-contact-support.html">Contact &amp; Support</a>
+        </div>
+      </div>
+    </div>
+        <div class="nav-actions">
+      <a href="campus-connect-ghana-dashboard.html" class="btn btn-ghost-light">My Dashboard</a>
+      <a href="campus-connect-ghana-register.html" class="btn btn-gold">Get Started</a>
+    </div>
+  </nav>
+</header>
+
+<section class="p-hero">
+  <div class="wrap">
+    <div class="eyebrow">Premium Membership</div>
+    <h1>Unlock every opportunity,<br>ad-free.</h1>
+    <p>Exclusive scholarships, premium study materials, unlimited AI tools, and early access — for less than a bag of rice a month.</p>
+    <div class="toggle-row">
+      <div class="plan-toggle">
+        <button class="active" onclick="setBilling('monthly', this)">Monthly</button>
+        <button onclick="setBilling('annual', this)">Annual</button>
+      </div>
+      <span class="save-badge">Save 20% annually</span>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="pricing-grid">
+    <div class="plan-card">
+      <h3>Free</h3>
+      <div class="price">GH₵0<span>/forever</span></div>
+      <ul class="plan-features">
+        <li><span class="ck">✓</span> Browse all scholarships &amp; internships</li>
+        <li><span class="ck">✓</span> Save up to 10 opportunities</li>
+        <li><span class="ck">✓</span> Basic study resources</li>
+        <li><span class="ck">✓</span> 5 AI queries per day</li>
+        <li class="dim"><span class="x">✕</span> Exclusive premium scholarships</li>
+        <li class="dim"><span class="x">✕</span> CV review by mentors</li>
+        <li class="dim"><span class="x">✕</span> Ad-free experience</li>
+      </ul>
+      <button class="btn btn-outline-navy">Current Plan</button>
+    </div>
+
+    <div class="plan-card premium">
+      <span class="badge">Most Popular</span>
+      <h3>Premium</h3>
+      <div class="price" id="premium-price">GH₵25<span>/month</span></div>
+      <ul class="plan-features">
+        <li><span class="ck">✓</span> Everything in Free, plus:</li>
+        <li><span class="ck">✓</span> Unlimited saved opportunities</li>
+        <li><span class="ck">✓</span> Exclusive premium-only scholarships</li>
+        <li><span class="ck">✓</span> Full study material library</li>
+        <li><span class="ck">✓</span> Unlimited AI Study Assistant queries</li>
+        <li><span class="ck">✓</span> Free CV review by a mentor</li>
+        <li><span class="ck">✓</span> Early access to new opportunities</li>
+        <li><span class="ck">✓</span> Completely ad-free</li>
+      </ul>
+      <button class="btn btn-gold">Upgrade to Premium</button>
+    </div>
+  </div>
+</div>
+
+<section class="checkout-section">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Complete Your Upgrade</h2>
+      <p>Choose how you'd like to pay.</p>
+    </div>
+
+    <div class="checkout-layout">
+      <div class="card">
+        <div class="f" style="margin-bottom:18px;">
+          <label>Email (for your receipt)</label>
+          <input type="email" id="pay-email" placeholder="your.email@example.com">
+        </div>
+
+        <div class="method-tabs">
+          <button class="method-tab active" onclick="setMethod('mtn', this)"><span class="sw sw-mtn"></span>MTN MoMo</button>
+          <button class="method-tab" onclick="setMethod('telecel', this)"><span class="sw sw-telecel"></span>Telecel Cash</button>
+          <button class="method-tab" onclick="setMethod('airtel', this)"><span class="sw sw-airtel"></span>AirtelTigo</button>
+          <button class="method-tab" onclick="setMethod('card', this)"><span class="sw sw-card"></span>Visa / Mastercard</button>
+          <button class="method-tab" onclick="setMethod('paypal', this)"><span class="sw sw-paypal"></span>PayPal</button>
+        </div>
+
+        <div class="pay-form active" id="form-mtn">
+          <div class="momo-note">You'll receive a prompt on your phone to approve this payment via MTN Mobile Money, powered by Paystack.</div>
+          <div class="f"><label>MTN Mobile Money Number</label><input type="tel" id="momo-number-mtn" placeholder="024 000 0000"></div>
+          <div class="f"><label>Full Name (as registered)</label><input type="text" placeholder="Efua Asante"></div>
+        </div>
+
+        <div class="pay-form" id="form-telecel">
+          <div class="momo-note">You'll receive a prompt on your phone to approve this payment via Telecel Cash, powered by Paystack.</div>
+          <div class="f"><label>Telecel Cash Number</label><input type="tel" id="momo-number-telecel" placeholder="020 000 0000"></div>
+          <div class="f"><label>Full Name (as registered)</label><input type="text" placeholder="Efua Asante"></div>
+        </div>
+
+        <div class="pay-form" id="form-airtel">
+          <div class="momo-note">You'll receive a prompt on your phone to approve this payment via AirtelTigo Money, powered by Paystack.</div>
+          <div class="f"><label>AirtelTigo Money Number</label><input type="tel" id="momo-number-airtel" placeholder="027 000 0000"></div>
+          <div class="f"><label>Full Name (as registered)</label><input type="text" placeholder="Efua Asante"></div>
+        </div>
+
+        <div class="pay-form" id="form-card">
+          <div class="momo-note">Card payments are handled by Paystack's secure checkout — we never see or store your card number. Click "Confirm &amp; Pay" and enter your card details on the Paystack screen that opens.</div>
+          <div class="f"><label>Name on Card</label><input type="text" id="card-name" placeholder="Efua Asante"></div>
+        </div>
+
+        <div class="pay-form" id="form-paypal">
+          <div class="momo-note">PayPal checkout isn't connected yet — please pay with Mobile Money or Card for now.</div>
+          <div class="f"><label>PayPal Email</label><input type="email" placeholder="your.email@example.com" disabled></div>
+        </div>
+      </div>
+
+      <div class="card order-summary">
+        <h3 style="font-family:var(--display); font-weight:600; font-size:16px; color:var(--navy); margin-bottom:14px;">Order Summary</h3>
+        <div class="row"><span>Campus Connect Premium</span><span id="summary-plan">Monthly</span></div>
+        <div class="row"><span>Subtotal</span><span id="summary-sub">GH₵25.00</span></div>
+        <div class="row"><span>VAT (0%)</span><span>GH₵0.00</span></div>
+        <div class="row total"><span>Total Due</span><span id="summary-total">GH₵25.00</span></div>
+        <div id="pay-error" class="form-error"></div>
+        <button class="btn btn-gold" id="pay-confirm-btn" onclick="ccgHandlePayment()">Confirm &amp; Pay</button>
+        <div class="secure-note">🔒 Encrypted &amp; PCI-compliant checkout</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="history-section">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Payment History</h2>
+      <p>Your past transactions and receipts.</p>
+    </div>
+    <table>
+      <tr><th>Date</th><th>Description</th><th>Method</th><th>Amount</th><th>Status</th><th>Receipt</th></tr>
+      <tr>
+        <td class="mono">Jul 7, 2026</td>
+        <td>Premium Membership — Monthly</td>
+        <td>MTN MoMo</td>
+        <td class="mono">GH₵25.00</td>
+        <td><span class="status-pill status-paid">Paid</span></td>
+        <td><a href="#" class="receipt-link">Download →</a></td>
+      </tr>
+      <tr>
+        <td class="mono">Jun 7, 2026</td>
+        <td>Premium Membership — Monthly</td>
+        <td>Visa •••• 4242</td>
+        <td class="mono">GH₵25.00</td>
+        <td><span class="status-pill status-paid">Paid</span></td>
+        <td><a href="#" class="receipt-link">Download →</a></td>
+      </tr>
+      <tr>
+        <td class="mono">May 15, 2026</td>
+        <td>CV Review Add-on</td>
+        <td>Telecel Cash</td>
+        <td class="mono">GH₵15.00</td>
+        <td><span class="status-pill status-paid">Paid</span></td>
+        <td><a href="#" class="receipt-link">Download →</a></td>
+      </tr>
+    </table>
+  </div>
+</section>
+
+<div class="kente"></div>
+<footer>© 2026 Campus Connect Ghana. Connecting Every Ghanaian Student to Success.</footer>
+
+<script>
+var ccgMethod = 'mtn';
+var ccgBillingAmountGHS = 25;
+var ccgBillingLabel = 'Monthly';
+
+function setMethod(id, btn){
+  ccgMethod = id;
+  document.querySelectorAll('.pay-form').forEach(f=>f.classList.remove('active'));
+  document.querySelectorAll('.method-tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('form-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+function setBilling(type, btn){
+  document.querySelectorAll('.plan-toggle button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const priceEl = document.getElementById('premium-price');
+  const summaryPlan = document.getElementById('summary-plan');
+  const summarySub = document.getElementById('summary-sub');
+  const summaryTotal = document.getElementById('summary-total');
+  if(type === 'annual'){
+    ccgBillingAmountGHS = 240;
+    ccgBillingLabel = 'Annual';
+    priceEl.innerHTML = 'GH₵240<span>/year</span>';
+    summaryPlan.textContent = 'Annual';
+    summarySub.textContent = 'GH₵240.00';
+    summaryTotal.textContent = 'GH₵240.00';
+  } else {
+    ccgBillingAmountGHS = 25;
+    ccgBillingLabel = 'Monthly';
+    priceEl.innerHTML = 'GH₵25<span>/month</span>';
+    summaryPlan.textContent = 'Monthly';
+    summarySub.textContent = 'GH₵25.00';
+    summaryTotal.textContent = 'GH₵25.00';
+  }
+}
+</script>
+<script src="https://js.paystack.co/v1/inline.js"></script>
+<script src="campus-connect-ghana-config.js"></script>
+<script src="campus-connect-ghana-auth.js"></script>
+<script>
+// Prefill the receipt email from the signed-in account, if any.
+(function(){
+  var user = CCG_AUTH.currentUser();
+  if(user && user.email){
+    document.getElementById('pay-email').value = user.email;
+  }
+})();
+
+function ccgPaystackConfigured(){
+  return typeof CCG_CONFIG !== 'undefined' &&
+    CCG_CONFIG.PAYSTACK_PUBLIC_KEY.indexOf('YOUR_PAYSTACK_PUBLIC_KEY') === -1;
+}
+
+function ccgShowPayError(msg){
+  var box = document.getElementById('pay-error');
+  box.textContent = msg;
+  box.classList.add('show');
+}
+
+function ccgHandlePayment(){
+  var box = document.getElementById('pay-error');
+  box.classList.remove('show');
+
+  if(ccgMethod === 'paypal'){
+    ccgShowPayError('PayPal isn\'t connected yet — please choose Mobile Money or Card.');
+    return;
+  }
+
+  var email = document.getElementById('pay-email').value.trim();
+  if(!email){
+    ccgShowPayError('Enter an email address for your receipt.');
+    return;
+  }
+
+  if(!ccgPaystackConfigured()){
+    ccgShowPayError('Payments aren\'t connected yet. Add your Paystack public key to campus-connect-ghana-config.js to enable checkout — see the comments in that file.');
+    return;
+  }
+
+  var channels;
+  if(ccgMethod === 'card'){
+    channels = ['card'];
+  } else {
+    // mtn / telecel / airtel all go through Paystack's mobile_money channel;
+    // Paystack detects the network from the number entered in its popup.
+    channels = ['mobile_money'];
+    var numberField = document.getElementById('momo-number-' + ccgMethod);
+    if(numberField && !numberField.value.trim()){
+      ccgShowPayError('Enter your ' + numberField.previousElementSibling.textContent + '.');
+      return;
+    }
+  }
+
+  var btn = document.getElementById('pay-confirm-btn');
+  btn.disabled = true;
+  btn.textContent = 'Opening secure checkout…';
+
+  var handler = PaystackPop.setup({
+    key: CCG_CONFIG.PAYSTACK_PUBLIC_KEY,
+    email: email,
+    amount: Math.round(ccgBillingAmountGHS * 100), // pesewas
+    currency: 'GHS',
+    channels: channels,
+    ref: 'ccg_' + ccgBillingLabel.toLowerCase() + '_' + Date.now(),
+    metadata: {
+      plan: 'Premium (' + ccgBillingLabel + ')',
+      custom_fields: [
+        { display_name: 'Plan', variable_name: 'plan', value: 'Premium (' + ccgBillingLabel + ')' }
+      ]
+    },
+    callback: function(response){
+      // response.reference confirms the charge on Paystack's side. For a
+      // real deployment, send this reference to your backend and verify
+      // it server-side (GET /transaction/verify/:reference with your
+      // SECRET key) before marking the account Premium — never trust the
+      // client-side callback alone to unlock paid features.
+      btn.disabled = false;
+      btn.textContent = 'Confirm & Pay';
+      alert('Payment received! Reference: ' + response.reference + '\n\nIn production, this reference should be verified on your server before Premium is activated.');
+      window.location.href = 'campus-connect-ghana-dashboard.html';
+    },
+    onClose: function(){
+      btn.disabled = false;
+      btn.textContent = 'Confirm & Pay';
+    }
+  });
+  handler.openIframe();
+}
+</script>
+
+
+<script>
+(function(){
+  var here = location.pathname.split('/').pop();
+  document.querySelectorAll('.nav-links > a[href], .nav-more-menu a[href]').forEach(function(a){
+    if(a.getAttribute('href') === here){ a.classList.add('active'); }
+  });
+  document.addEventListener('click', function(e){
+    document.querySelectorAll('.nav-more.open').forEach(function(m){
+      if(!m.contains(e.target)) m.classList.remove('open');
+    });
+  });
+})();
+</script>
+</body>
+</html>

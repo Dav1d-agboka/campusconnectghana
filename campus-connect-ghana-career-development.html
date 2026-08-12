@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Career Development — Campus Connect Ghana</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+:root{
+  --navy:#0B1F3A; --navy-2:#0F2A4D;
+  --gold:#F2B705; --gold-dim:#C99400;
+  --green:#146B3C; --green-dim:#0F5230;
+  --red:#C8102E;
+  --parchment:#FBF7EF; --parchment-2:#F4EEDF;
+  --charcoal:#1B1B1B; --charcoal-70:rgba(27,27,27,.7);
+  --line:rgba(27,27,27,.12); --white:#fff;
+  --display:'Fraunces',serif; --body:'Inter',sans-serif; --mono:'IBM Plex Mono',monospace;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+body{font-family:var(--body); color:var(--charcoal); background:var(--parchment); line-height:1.5; -webkit-font-smoothing:antialiased;}
+a{color:inherit; text-decoration:none;} button{font-family:inherit; cursor:pointer; border:none; background:none;}
+:focus-visible{outline:3px solid var(--gold); outline-offset:2px;}
+@media (prefers-reduced-motion: reduce){*{animation-duration:.001ms !important; transition-duration:.001ms !important;}}
+
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:10px 18px; border-radius:5px; font-size:13px; font-weight:600; transition:transform .15s ease, box-shadow .15s ease, background .15s ease;}
+.btn-gold{background:var(--gold); color:var(--navy);}
+.btn-gold:hover{background:#ffc61a;}
+.btn-outline{background:transparent; color:var(--navy); border:1.5px solid var(--line);}
+.btn-outline:hover{border-color:var(--navy);}
+
+.app{display:grid; grid-template-columns:250px 1fr; min-height:100vh;}
+
+.sidebar{background:var(--navy); color:var(--white); display:flex; flex-direction:column; position:sticky; top:0; height:100vh; padding:20px 0;}
+.side-brand{display:flex; align-items:center; gap:10px; padding:0 20px 20px; border-bottom:1px solid rgba(255,255,255,.08); margin-bottom:16px;}
+.brand-mark{width:32px; height:32px; border-radius:50%; background:var(--gold); color:var(--navy); display:flex; align-items:center; justify-content:center; font-family:var(--display); font-weight:700; font-size:14px; flex-shrink:0;}
+.side-brand .txt{font-family:var(--display); font-weight:600; font-size:15px; line-height:1.2;}
+.side-brand .txt small{display:block; font-family:var(--mono); font-size:8px; letter-spacing:1.5px; color:var(--gold); text-transform:uppercase; margin-top:2px;}
+
+.tool-nav{padding:0 12px;}
+.tool-nav .grp-label{font-family:var(--mono); font-size:9.5px; letter-spacing:1.5px; text-transform:uppercase; color:rgba(255,255,255,.32); padding:12px 10px 8px;}
+.tool-btn{display:flex; align-items:center; gap:11px; width:100%; padding:10px 12px; border-radius:7px; margin-bottom:3px; font-size:13.5px; color:rgba(255,255,255,.75); font-weight:500; text-align:left; position:relative;}
+.tool-btn .ic{width:18px; text-align:center; font-size:15px;}
+.tool-btn:hover{background:rgba(255,255,255,.06); color:var(--white);}
+.tool-btn.active{background:rgba(242,183,5,.12); color:var(--gold);}
+.tool-btn.active::before{content:''; position:absolute; left:-12px; top:6px; bottom:6px; width:3px; background:var(--gold); border-radius:2px;}
+
+.main{display:flex; flex-direction:column; min-width:0;}
+.topbar{background:var(--white); border-bottom:1px solid var(--line); padding:16px 30px;}
+.topbar h1{font-family:var(--display); font-weight:600; font-size:19px; color:var(--navy);}
+.topbar .sub{font-size:12.5px; color:var(--charcoal-70); margin-top:3px;}
+
+.panel{display:none; padding:28px 30px; overflow-y:auto;}
+.panel.active{display:block;}
+
+/* CV BUILDER */
+.cv-layout{display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start;}
+.form-card{background:var(--white); border:1px solid var(--line); border-radius:8px; padding:24px;}
+.form-card h3{font-family:var(--display); font-weight:600; font-size:16px; color:var(--navy); margin-bottom:16px;}
+.f-row{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+.f{margin-bottom:14px;}
+.f label{display:block; font-size:11.5px; font-weight:600; color:var(--navy); margin-bottom:6px;}
+.f input, .f textarea{width:100%; padding:9px 12px; border:1.5px solid var(--line); border-radius:5px; font-family:var(--body); font-size:13px;}
+.f textarea{resize:none; min-height:60px;}
+.section-divider{font-family:var(--mono); font-size:10.5px; letter-spacing:1px; text-transform:uppercase; color:var(--charcoal-70); margin:18px 0 10px; padding-top:14px; border-top:1px solid var(--line);}
+
+.cv-preview{background:var(--white); border:1px solid var(--line); border-radius:8px; padding:36px 34px; position:sticky; top:24px; box-shadow:0 16px 34px rgba(11,31,58,.06);}
+.cv-header{border-bottom:2px solid var(--navy); padding-bottom:14px; margin-bottom:16px;}
+.cv-header h2{font-family:var(--display); font-weight:700; font-size:24px; color:var(--navy);}
+.cv-header .contact{font-size:11.5px; color:var(--charcoal-70); margin-top:6px; font-family:var(--mono);}
+.cv-section{margin-bottom:16px;}
+.cv-section h4{font-family:var(--mono); font-size:10.5px; letter-spacing:1.5px; text-transform:uppercase; color:var(--gold-dim); margin-bottom:8px;}
+.cv-entry{margin-bottom:10px;}
+.cv-entry .t1{font-size:13.5px; font-weight:700; color:var(--charcoal);}
+.cv-entry .t2{font-size:12px; color:var(--charcoal-70); font-family:var(--mono); margin-top:1px;}
+.cv-entry p{font-size:12.5px; color:var(--charcoal-70); margin-top:4px; line-height:1.5;}
+.skill-pills{display:flex; flex-wrap:wrap; gap:6px;}
+.skill-pill{font-size:11px; padding:4px 10px; border-radius:10px; background:var(--parchment-2); color:var(--navy);}
+
+/* COVER LETTER */
+.cl-layout{display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start;}
+.cl-preview{background:var(--white); border:1px solid var(--line); border-radius:8px; padding:32px; font-size:13px; line-height:1.8; color:var(--charcoal); position:sticky; top:24px;}
+.cl-preview p{margin-bottom:12px;}
+
+/* INTERVIEW PREP */
+.mock-banner{background:var(--navy); color:var(--white); border-radius:8px; padding:26px 30px; display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap; margin-bottom:22px;}
+.mock-banner h3{font-family:var(--display); font-weight:600; font-size:19px;}
+.mock-banner p{font-size:13px; color:rgba(255,255,255,.7); margin-top:5px;}
+.q-accordion{background:var(--white); border:1px solid var(--line); border-radius:8px; overflow:hidden; margin-bottom:14px;}
+.q-item{border-bottom:1px solid var(--line);}
+.q-item:last-child{border-bottom:none;}
+.q-head{display:flex; justify-content:space-between; align-items:center; padding:16px 20px; font-size:14px; font-weight:600; color:var(--charcoal); width:100%; text-align:left;}
+.q-head .cat{font-family:var(--mono); font-size:9.5px; text-transform:uppercase; letter-spacing:.5px; color:var(--gold-dim); background:rgba(242,183,5,.14); padding:3px 8px; border-radius:2px; margin-right:10px;}
+.q-body{max-height:0; overflow:hidden; transition:max-height .25s ease;}
+.q-body-in{padding:0 20px 18px; font-size:13px; color:var(--charcoal-70); line-height:1.65;}
+.q-item.open .q-body{max-height:200px;}
+.q-item.open .chev{transform:rotate(180deg);}
+.chev{transition:transform .2s ease; color:var(--charcoal-70);}
+
+/* MENTORSHIP */
+.mentor-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+.mentor-card{background:var(--white); border:1px solid var(--line); border-radius:8px; padding:22px 20px; text-align:center;}
+.mentor-avatar{width:56px; height:56px; border-radius:50%; background:var(--navy); color:var(--gold); display:flex; align-items:center; justify-content:center; font-family:var(--display); font-weight:700; font-size:19px; margin:0 auto 12px;}
+.mentor-card h5{font-family:var(--display); font-weight:600; font-size:15.5px; color:var(--navy);}
+.mentor-card .role{font-size:12px; color:var(--charcoal-70); margin-top:3px;}
+.mentor-tags{display:flex; gap:6px; justify-content:center; flex-wrap:wrap; margin-top:12px;}
+.mentor-tags span{font-family:var(--mono); font-size:10px; padding:3px 8px; border-radius:2px; background:var(--parchment-2); color:var(--charcoal-70);}
+.mentor-card .btn{width:100%; margin-top:16px;}
+
+@media (max-width:960px){.cv-layout, .cl-layout{grid-template-columns:1fr;} .mentor-grid{grid-template-columns:1fr 1fr;}}
+@media (max-width:760px){
+  .app{grid-template-columns:1fr;}
+  .sidebar{display:none;}
+  .f-row{grid-template-columns:1fr;}
+  .mentor-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <aside class="sidebar">
+    <a href="campus-connect-ghana-homepage.html" class="side-brand" style="text-decoration:none;">
+      <span class="brand-mark">CC</span>
+      <span class="txt">Career<small>Development</small></span>
+    </a>
+    <nav class="tool-nav">
+      <div class="grp-label">Build</div>
+      <button class="tool-btn active" onclick="showPanel('cv', this)"><span class="ic">📄</span> CV Builder</button>
+      <button class="tool-btn" onclick="showPanel('cl', this)"><span class="ic">✉</span> Cover Letter Builder</button>
+      <div class="grp-label">Prepare</div>
+      <button class="tool-btn" onclick="showPanel('interview', this)"><span class="ic">🎤</span> Interview Prep</button>
+      <button class="tool-btn"><span class="ic">📊</span> Career Assessment</button>
+      <div class="grp-label">Connect</div>
+      <button class="tool-btn" onclick="showPanel('mentor', this)"><span class="ic">🤝</span> Mentorship</button>
+      <div class="grp-label">Navigate</div>
+      <a class="tool-btn" href="campus-connect-ghana-dashboard.html"><span class="ic">◆</span> My Dashboard</a>
+      <a class="tool-btn" href="campus-connect-ghana-ai-study-assistant.html"><span class="ic">✓</span> AI Study Assistant</a>
+      <a class="tool-btn" href="campus-connect-ghana-internship-portal.html"><span class="ic">▣</span> Find Internships</a>
+    </nav>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <h1>Career Development</h1>
+      <div class="sub">Build your CV, prep for interviews, and connect with mentors — all in one place.</div>
+    </div>
+
+    <!-- CV BUILDER -->
+    <div class="panel active" id="panel-cv">
+      <div class="cv-layout">
+        <div class="form-card">
+          <h3>Build Your CV</h3>
+          <div class="f-row">
+            <div class="f"><label>Full Name</label><input type="text" value="Efua Asante"></div>
+            <div class="f"><label>Phone</label><input type="text" value="024 000 0000"></div>
+          </div>
+          <div class="f"><label>Professional Summary</label><textarea>Computer Science student at University of Ghana with a passion for data analysis and building tools that solve real problems.</textarea></div>
+
+          <div class="section-divider">Education</div>
+          <div class="f-row">
+            <div class="f"><label>School</label><input type="text" value="University of Ghana, Legon"></div>
+            <div class="f"><label>Years</label><input type="text" value="2023 – 2027"></div>
+          </div>
+          <div class="f"><label>Programme</label><input type="text" value="BSc Computer Science"></div>
+
+          <div class="section-divider">Experience</div>
+          <div class="f-row">
+            <div class="f"><label>Role</label><input type="text" value="Data Analyst Intern"></div>
+            <div class="f"><label>Company</label><input type="text" value="MTN Ghana"></div>
+          </div>
+          <div class="f"><label>Description</label><textarea>Analysed customer usage data to support marketing campaigns; built dashboards used by 3 teams.</textarea></div>
+
+          <div class="section-divider">Skills</div>
+          <div class="f"><input type="text" value="Python, SQL, Excel, Data Visualization, Public Speaking"></div>
+
+          <button class="btn btn-gold" style="width:100%; margin-top:10px;">Download as PDF</button>
+        </div>
+
+        <div class="cv-preview">
+          <div class="cv-header">
+            <h2>Efua Asante</h2>
+            <div class="contact">efua.a@gmail.com · 024 000 0000 · Accra, Ghana</div>
+          </div>
+          <div class="cv-section">
+            <h4>Summary</h4>
+            <p style="font-size:12.5px; color:var(--charcoal-70); line-height:1.6;">Computer Science student at University of Ghana with a passion for data analysis and building tools that solve real problems.</p>
+          </div>
+          <div class="cv-section">
+            <h4>Education</h4>
+            <div class="cv-entry">
+              <div class="t1">BSc Computer Science — University of Ghana, Legon</div>
+              <div class="t2">2023 – 2027</div>
+            </div>
+          </div>
+          <div class="cv-section">
+            <h4>Experience</h4>
+            <div class="cv-entry">
+              <div class="t1">Data Analyst Intern — MTN Ghana</div>
+              <div class="t2">Jun 2026 – Aug 2026</div>
+              <p>Analysed customer usage data to support marketing campaigns; built dashboards used by 3 teams.</p>
+            </div>
+          </div>
+          <div class="cv-section" style="margin-bottom:0;">
+            <h4>Skills</h4>
+            <div class="skill-pills">
+              <span class="skill-pill">Python</span><span class="skill-pill">SQL</span><span class="skill-pill">Excel</span><span class="skill-pill">Data Visualization</span><span class="skill-pill">Public Speaking</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COVER LETTER -->
+    <div class="panel" id="panel-cl">
+      <div class="cl-layout">
+        <div class="form-card">
+          <h3>Cover Letter Builder</h3>
+          <div class="f"><label>Job Title</label><input type="text" value="Data Analyst Intern"></div>
+          <div class="f"><label>Company</label><input type="text" value="MTN Ghana"></div>
+          <div class="f"><label>Why this role?</label><textarea>I'm passionate about using data to solve real customer problems, and MTN's scale means my work could reach millions of Ghanaians.</textarea></div>
+          <div class="f"><label>Tone</label><input type="text" value="Confident and professional"></div>
+          <button class="btn btn-gold" style="width:100%; margin-top:6px;">Generate Cover Letter</button>
+        </div>
+        <div class="cl-preview">
+          <p>Dear Hiring Manager,</p>
+          <p>I am writing to apply for the Data Analyst Intern position at MTN Ghana. As a Computer Science student at the University of Ghana with hands-on experience in Python and SQL, I'm excited about the opportunity to contribute to a company whose work touches millions of Ghanaians every day.</p>
+          <p>In my recent coursework and personal projects, I've built dashboards and analysed real datasets to uncover insights that inform decisions — skills I'm eager to bring to your team. I'm particularly drawn to MTN's scale and impact, and I believe this internship would let me grow while making a genuine contribution.</p>
+          <p>I would welcome the opportunity to discuss how my background in data analysis can support your team. Thank you for considering my application.</p>
+          <p>Sincerely,<br>Efua Asante</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- INTERVIEW PREP -->
+    <div class="panel" id="panel-interview">
+      <div class="mock-banner">
+        <div><h3>Try a Mock Interview</h3><p>Practice with AI-generated questions based on your target role.</p></div>
+        <button class="btn btn-gold">Start Mock Interview</button>
+      </div>
+
+      <div class="q-accordion">
+        <div class="q-item open">
+          <button class="q-head" onclick="toggleQ(this)"><span><span class="cat">Behavioral</span>Tell me about a time you worked in a team.</span><span class="chev">▾</span></button>
+          <div class="q-body"><div class="q-body-in">Use the STAR method: describe the <strong>Situation</strong>, the <strong>Task</strong>, the <strong>Action</strong> you took, and the <strong>Result</strong>. Keep it specific and focus on your individual contribution.</div></div>
+        </div>
+        <div class="q-item">
+          <button class="q-head" onclick="toggleQ(this)"><span><span class="cat">General</span>Why do you want to work here?</span><span class="chev">▾</span></button>
+          <div class="q-body"><div class="q-body-in">Research the company beforehand. Connect their mission or recent work to your own goals and skills — avoid generic answers like "great culture."</div></div>
+        </div>
+        <div class="q-item">
+          <button class="q-head" onclick="toggleQ(this)"><span><span class="cat">Technical</span>Walk me through how you'd approach a new dataset.</span><span class="chev">▾</span></button>
+          <div class="q-body"><div class="q-body-in">Talk through your process: understanding the business question, exploring and cleaning the data, checking for anomalies, then choosing an analysis method suited to the question.</div></div>
+        </div>
+        <div class="q-item">
+          <button class="q-head" onclick="toggleQ(this)"><span><span class="cat">Closing</span>Do you have any questions for us?</span><span class="chev">▾</span></button>
+          <div class="q-body"><div class="q-body-in">Always have 2–3 ready. Ask about team structure, what success looks like in the first 3 months, or a current challenge the team is working through.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MENTORSHIP -->
+    <div class="panel" id="panel-mentor">
+      <div class="mentor-grid">
+        <div class="mentor-card">
+          <div class="mentor-avatar">AK</div>
+          <h5>Ama Kufuor</h5>
+          <div class="role">Senior Data Analyst, MTN Ghana</div>
+          <div class="mentor-tags"><span>Data</span><span>Careers in Tech</span></div>
+          <button class="btn btn-outline">Request Mentorship</button>
+        </div>
+        <div class="mentor-card">
+          <div class="mentor-avatar">JB</div>
+          <h5>John Boateng</h5>
+          <div class="role">Product Manager, Jumia</div>
+          <div class="mentor-tags"><span>Product</span><span>Interview Prep</span></div>
+          <button class="btn btn-outline">Request Mentorship</button>
+        </div>
+        <div class="mentor-card">
+          <div class="mentor-avatar">SN</div>
+          <h5>Sandra Nyarko</h5>
+          <div class="role">Legal Associate, Ecobank</div>
+          <div class="mentor-tags"><span>Law</span><span>Grad School</span></div>
+          <button class="btn btn-outline">Request Mentorship</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function showPanel(id, btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tool-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+function toggleQ(head){
+  const item = head.parentElement;
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.q-item').forEach(i=>i.classList.remove('open'));
+  if(!wasOpen) item.classList.add('open');
+}
+</script>
+
+</body>
+</html>

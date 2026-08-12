@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — Campus Connect Ghana</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root{
+  --navy:#0B1F3A; --navy-2:#0F2A4D;
+  --gold:#F2B705; --gold-dim:#C99400;
+  --green:#146B3C; --green-dim:#0F5230;
+  --red:#C8102E;
+  --parchment:#FBF7EF; --parchment-2:#F4EEDF;
+  --charcoal:#1B1B1B; --charcoal-70:rgba(27,27,27,.7);
+  --line:rgba(27,27,27,.12); --white:#fff;
+  --display:'Fraunces',serif; --body:'Inter',sans-serif; --mono:'IBM Plex Mono',monospace;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+body{font-family:var(--body); color:var(--charcoal); background:var(--parchment); line-height:1.5; -webkit-font-smoothing:antialiased;}
+a{color:inherit; text-decoration:none;} button{font-family:inherit; cursor:pointer; border:none; background:none;}
+img{max-width:100%; display:block;}
+:focus-visible{outline:3px solid var(--gold); outline-offset:2px;}
+@media (prefers-reduced-motion: reduce){*{animation-duration:.001ms !important; transition-duration:.001ms !important;}}
+
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:10px 18px; border-radius:3px; font-size:13.5px; font-weight:600; transition:transform .15s ease, box-shadow .15s ease, background .15s ease;}
+.btn-gold{background:var(--gold); color:var(--navy);}
+.btn-gold:hover{background:#ffc61a; transform:translateY(-1px); box-shadow:0 6px 16px rgba(242,183,5,.3);}
+.btn-outline{background:transparent; color:var(--navy); border:1.5px solid var(--line);}
+.btn-outline:hover{border-color:var(--navy);}
+.btn-sm{padding:7px 13px; font-size:12.5px;}
+
+/* ---------- app shell ---------- */
+.app{display:grid; grid-template-columns:250px 1fr; min-height:100vh;}
+
+/* sidebar */
+.sidebar{background:var(--navy); color:var(--white); display:flex; flex-direction:column; position:sticky; top:0; height:100vh; padding:22px 0;}
+.side-brand{display:flex; align-items:center; gap:10px; padding:0 22px 26px; border-bottom:1px solid rgba(255,255,255,.08); margin-bottom:18px;}
+.brand-mark{width:34px; height:34px; border-radius:50%; background:var(--gold); color:var(--navy); display:flex; align-items:center; justify-content:center; font-family:var(--display); font-weight:700; font-size:15px; flex-shrink:0;}
+.side-brand .txt{font-family:var(--display); font-weight:600; font-size:16px; line-height:1.2;}
+.side-brand .txt small{display:block; font-family:var(--mono); font-size:8.5px; letter-spacing:1.5px; color:var(--gold); text-transform:uppercase; margin-top:2px;}
+
+.side-nav{flex:1; padding:0 12px;}
+.side-nav .grp-label{font-family:var(--mono); font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:rgba(255,255,255,.35); padding:14px 12px 8px;}
+.side-nav a{
+  display:flex; align-items:center; gap:12px; padding:11px 12px; border-radius:6px; margin-bottom:2px;
+  font-size:14px; color:rgba(255,255,255,.75); font-weight:500; position:relative;
+}
+.side-nav a .ic{width:18px; text-align:center; font-size:15px; opacity:.85;}
+.side-nav a:hover{background:rgba(255,255,255,.06); color:var(--white);}
+.side-nav a.active{background:rgba(242,183,5,.12); color:var(--gold);}
+.side-nav a.active::before{content:''; position:absolute; left:-12px; top:8px; bottom:8px; width:3px; background:var(--gold); border-radius:2px;}
+.side-nav a .badge{margin-left:auto; background:var(--red); color:var(--white); font-family:var(--mono); font-size:10px; padding:1px 6px; border-radius:10px;}
+
+.side-foot{padding:16px 22px 4px; border-top:1px solid rgba(255,255,255,.08);}
+.mini-profile{display:flex; align-items:center; gap:10px;}
+.mini-avatar{width:36px; height:36px; border-radius:50%; background:var(--gold); color:var(--navy); display:flex; align-items:center; justify-content:center; font-family:var(--display); font-weight:700; font-size:13px;}
+.mini-profile .name{font-size:13.5px; font-weight:600; color:var(--white);}
+.mini-profile .role{font-size:11.5px; color:rgba(255,255,255,.45);}
+.mini-profile .logout{margin-left:auto; font-size:16px; color:rgba(255,255,255,.4);}
+
+/* main */
+.main{display:flex; flex-direction:column; min-width:0;}
+.topbar{
+  background:var(--white); border-bottom:1px solid var(--line);
+  padding:16px 30px; display:flex; align-items:center; gap:20px; position:sticky; top:0; z-index:10;
+}
+.search-box{
+  flex:1; max-width:420px; display:flex; align-items:center; gap:10px;
+  background:var(--parchment-2); border:1px solid var(--line); border-radius:6px; padding:10px 14px;
+}
+.search-box input{border:none; background:none; font-family:var(--body); font-size:13.5px; width:100%; outline:none; color:var(--charcoal);}
+.topbar-actions{margin-left:auto; display:flex; align-items:center; gap:18px;}
+.icon-btn{position:relative; font-size:18px; color:var(--charcoal-70);}
+.icon-btn .dot{position:absolute; top:-3px; right:-4px; width:8px; height:8px; border-radius:50%; background:var(--red); border:1.5px solid var(--white);}
+.topbar-avatar{width:36px; height:36px; border-radius:50%; background:var(--navy); color:var(--gold); display:flex; align-items:center; justify-content:center; font-family:var(--display); font-weight:700; font-size:13px;}
+
+.content{padding:32px 30px 60px; max-width:1180px; width:100%; margin:0 auto;}
+
+/* welcome */
+.welcome-row{display:flex; justify-content:space-between; align-items:flex-end; gap:24px; flex-wrap:wrap; margin-bottom:28px;}
+.welcome-row h1{font-family:var(--display); font-weight:600; font-size:clamp(24px,3vw,30px); color:var(--navy);}
+.welcome-row p{font-size:14.5px; color:var(--charcoal-70); margin-top:6px;}
+.profile-ring{display:flex; align-items:center; gap:14px; background:var(--white); border:1px solid var(--line); border-radius:8px; padding:12px 18px;}
+.ring{width:52px; height:52px; border-radius:50%; background:conic-gradient(var(--gold) 0 72%, var(--line) 72% 100%); display:flex; align-items:center; justify-content:center; position:relative; flex-shrink:0;}
+.ring::before{content:''; position:absolute; inset:5px; background:var(--white); border-radius:50%;}
+.ring span{position:relative; font-family:var(--mono); font-size:12px; font-weight:700; color:var(--navy);}
+.profile-ring .txt .t1{font-size:13px; font-weight:700; color:var(--navy);}
+.profile-ring .txt .t2{font-size:12px; color:var(--charcoal-70); margin-top:2px;}
+
+/* stats */
+.stats-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-bottom:34px;}
+.stat-card{background:var(--white); border:1px solid var(--line); border-radius:8px; padding:20px 22px;}
+.stat-card .top{display:flex; justify-content:space-between; align-items:flex-start;}
+.stat-card .ic{width:34px; height:34px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:16px;}
+.ic-gold{background:rgba(242,183,5,.14); color:var(--gold-dim);}
+.ic-green{background:rgba(20,107,60,.12); color:var(--green-dim);}
+.ic-red{background:rgba(200,16,46,.1); color:var(--red);}
+.ic-navy{background:rgba(11,31,58,.08); color:var(--navy);}
+.stat-card .num{font-family:var(--display); font-weight:700; font-size:28px; color:var(--navy); margin-top:14px;}
+.stat-card .label{font-size:12.5px; color:var(--charcoal-70); margin-top:4px;}
+
+/* two col */
+.two-col{display:grid; grid-template-columns:1fr 320px; gap:26px; align-items:start;}
+.card{background:var(--white); border:1px solid var(--line); border-radius:8px; padding:24px; margin-bottom:24px;}
+.card-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:18px;}
+.card-head h3{font-family:var(--display); font-weight:600; font-size:18px; color:var(--navy);}
+.card-head .link{font-size:12.5px; color:var(--gold-dim); font-weight:600;}
+
+/* recommended row */
+.rec-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+.rec-card{border:1px solid var(--line); border-radius:7px; padding:16px; position:relative; transition:transform .15s ease, box-shadow .15s ease;}
+.rec-card:hover{transform:translateY(-3px); box-shadow:0 10px 22px rgba(11,31,58,.08);}
+.rec-tag{font-family:var(--mono); font-size:9.5px; letter-spacing:1px; text-transform:uppercase; padding:3px 7px; border-radius:2px; font-weight:700; width:fit-content;}
+.tag-schol{background:rgba(242,183,5,.15); color:var(--gold-dim);}
+.tag-intern{background:rgba(20,107,60,.14); color:var(--green-dim);}
+.tag-uni{background:rgba(11,31,58,.08); color:var(--navy);}
+.rec-card h4{font-size:14px; font-weight:700; margin-top:10px; color:var(--charcoal); line-height:1.35;}
+.rec-card .org{font-size:12px; color:var(--charcoal-70); margin-top:3px;}
+.rec-card .meta{display:flex; justify-content:space-between; align-items:center; margin-top:14px; font-family:var(--mono); font-size:11px; color:var(--red);}
+.rec-card .save-ic{font-size:15px; color:var(--charcoal-70);}
+
+/* tabs */
+.tabs{display:flex; gap:4px; border-bottom:1px solid var(--line); margin-bottom:18px;}
+.tab-btn{padding:10px 4px; margin-right:22px; font-size:13.5px; font-weight:600; color:var(--charcoal-70); border-bottom:2px solid transparent; background:none;}
+.tab-btn.active{color:var(--navy); border-color:var(--gold);}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+.saved-row{display:flex; align-items:center; gap:14px; padding:13px 0; border-bottom:1px solid var(--line);}
+.saved-row:last-child{border-bottom:none;}
+.saved-ic{width:38px; height:38px; border-radius:7px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:16px;}
+.saved-row .info{flex:1; min-width:0;}
+.saved-row .info .n{font-size:13.5px; font-weight:700; color:var(--charcoal);}
+.saved-row .info .o{font-size:12px; color:var(--charcoal-70); margin-top:2px;}
+.saved-row .dl{font-family:var(--mono); font-size:11px; color:var(--red); white-space:nowrap;}
+
+/* activity timeline */
+.timeline{position:relative; padding-left:22px;}
+.timeline::before{content:''; position:absolute; left:6px; top:4px; bottom:4px; width:1.5px; background:var(--line);}
+.tl-item{position:relative; padding-bottom:22px;}
+.tl-item:last-child{padding-bottom:0;}
+.tl-item::before{content:''; position:absolute; left:-22px; top:2px; width:9px; height:9px; border-radius:50%; background:var(--gold); border:2px solid var(--white); box-shadow:0 0 0 1.5px var(--line);}
+.tl-item .t{font-size:13px; color:var(--charcoal);}
+.tl-item .time{font-family:var(--mono); font-size:11px; color:var(--charcoal-70); margin-top:3px;}
+
+/* sidebar column */
+.notif-item{display:flex; gap:12px; padding:12px 0; border-bottom:1px solid var(--line);}
+.notif-item:last-child{border-bottom:none;}
+.notif-ic{width:32px; height:32px; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:14px;}
+.notif-item .n-t{font-size:12.5px; color:var(--charcoal); line-height:1.4;}
+.notif-item .n-time{font-family:var(--mono); font-size:10.5px; color:var(--charcoal-70); margin-top:4px;}
+
+.checklist-item{display:flex; align-items:center; gap:10px; padding:9px 0; font-size:13px; border-bottom:1px solid var(--line);}
+.checklist-item:last-child{border-bottom:none;}
+.checklist-item .chk{width:18px; height:18px; border-radius:5px; border:1.5px solid var(--line); display:flex; align-items:center; justify-content:center; font-size:11px; flex-shrink:0;}
+.checklist-item.done .chk{background:var(--green); border-color:var(--green); color:var(--white);}
+.checklist-item.done span.txt{color:var(--charcoal-70); text-decoration:line-through;}
+
+@media (max-width:1080px){
+  .two-col{grid-template-columns:1fr;}
+  .stats-grid{grid-template-columns:repeat(2,1fr);}
+  .rec-grid{grid-template-columns:1fr 1fr;}
+}
+@media (max-width:760px){
+  .app{grid-template-columns:1fr;}
+  .sidebar{display:none;}
+  .stats-grid{grid-template-columns:1fr 1fr;}
+  .rec-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<script src="campus-connect-ghana-config.js"></script>
+<script src="campus-connect-ghana-auth.js"></script>
+<script>
+// Members-only guard: bounce anyone without a valid session straight to
+// login, before the page content below is of any use.
+var ccgUser = CCG_AUTH.requireLogin('campus-connect-ghana-login.html');
+</script>
+
+<div class="app">
+
+  <aside class="sidebar">
+    <a href="campus-connect-ghana-homepage.html" class="side-brand" style="text-decoration:none;">
+      <span class="brand-mark">CC</span>
+      <span class="txt">Campus Connect<small>Ghana</small></span>
+    </a>
+    <nav class="side-nav">
+      <div class="grp-label">Overview</div>
+      <a href="campus-connect-ghana-dashboard.html" class="active"><span class="ic">◆</span> Dashboard</a>
+      <a href="campus-connect-ghana-dashboard.html"><span class="ic">☺</span> Profile</a>
+      <div class="grp-label">Opportunities</div>
+      <a href="campus-connect-ghana-scholarship-portal.html"><span class="ic">✦</span> Scholarships</a>
+      <a href="campus-connect-ghana-internship-portal.html"><span class="ic">▣</span> Internships &amp; Jobs</a>
+      <a href="campus-connect-ghana-university-portal.html"><span class="ic">🎓</span> Universities</a>
+      <a href="campus-connect-ghana-career-development.html"><span class="ic">🤝</span> Mentorship</a>
+      <div class="grp-label">Tools</div>
+      <a href="campus-connect-ghana-study-resources.html"><span class="ic">▤</span> Study Resources</a>
+      <a href="campus-connect-ghana-career-development.html"><span class="ic">✎</span> CV Builder</a>
+      <a href="campus-connect-ghana-ai-study-assistant.html"><span class="ic">✓</span> AI Study Assistant</a>
+      <div class="grp-label">Account</div>
+      <a href="campus-connect-ghana-contact-support.html"><span class="ic">🔔</span> Notifications <span class="badge">5</span></a>
+      <a href="campus-connect-ghana-contact-support.html"><span class="ic">⚙</span> Settings</a>
+    </nav>
+    <div class="side-foot">
+      <div class="mini-profile">
+        <div class="mini-avatar" id="mini-avatar">EA</div>
+        <div>
+          <div class="name" id="sidebar-name">Efua Asante</div>
+          <div class="role">Level 200 · Legon</div>
+        </div>
+        <span class="logout" onclick="CCG_AUTH.logout(); window.location.href='campus-connect-ghana-login.html';" style="cursor:pointer;" title="Log out">⏻</span>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="search-box">
+        <span>🔍</span>
+        <input type="text" placeholder="Search scholarships, internships, universities…">
+      </div>
+      <div class="topbar-actions">
+        <span class="icon-btn">🔔<span class="dot"></span></span>
+        <span class="icon-btn">✉</span>
+        <div class="topbar-avatar" id="topbar-avatar">EA</div>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <div class="welcome-row">
+        <div>
+          <h1 id="welcome-heading">Welcome back, Efua</h1>
+          <p>You have 2 deadlines this week and 4 new matches waiting.</p>
+        </div>
+        <div class="profile-ring">
+          <div class="ring"><span>72%</span></div>
+          <div class="txt">
+            <div class="t1">Profile 72% complete</div>
+            <div class="t2">Add your transcript to reach 100%</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="top"><span></span><span class="ic ic-gold">✦</span></div>
+          <div class="num">14</div>
+          <div class="label">Saved Opportunities</div>
+        </div>
+        <div class="stat-card">
+          <div class="top"><span></span><span class="ic ic-green">✓</span></div>
+          <div class="num">3</div>
+          <div class="label">Applications in Progress</div>
+        </div>
+        <div class="stat-card">
+          <div class="top"><span></span><span class="ic ic-red">⏰</span></div>
+          <div class="num">2</div>
+          <div class="label">Deadlines This Week</div>
+        </div>
+        <div class="stat-card">
+          <div class="top"><span></span><span class="ic ic-navy">◆</span></div>
+          <div class="num">4</div>
+          <div class="label">New Recommended Matches</div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="col-main">
+
+          <div class="card">
+            <div class="card-head">
+              <h3>Recommended for You</h3>
+              <a href="campus-connect-ghana-scholarship-portal.html" class="link">View all →</a>
+            </div>
+            <div class="rec-grid">
+              <div class="rec-card">
+                <span class="rec-tag tag-schol">Scholarship</span>
+                <h4>MasterCard Foundation Scholars</h4>
+                <div class="org">Ashesi University</div>
+                <div class="meta"><span>4D : 12H left</span><span class="save-ic">♡</span></div>
+              </div>
+              <div class="rec-card">
+                <span class="rec-tag tag-intern">Internship</span>
+                <h4>Data Analyst Intern</h4>
+                <div class="org">MTN Ghana</div>
+                <div class="meta"><span>11D : 02H left</span><span class="save-ic">♡</span></div>
+              </div>
+              <div class="rec-card">
+                <span class="rec-tag tag-uni">Admission</span>
+                <h4>Undergraduate Applications</h4>
+                <div class="org">University of Ghana</div>
+                <div class="meta"><span>26D left</span><span class="save-ic">♡</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="tabs">
+              <button class="tab-btn active" onclick="showTab('schol', this)">Saved Scholarships (6)</button>
+              <button class="tab-btn" onclick="showTab('intern', this)">Saved Internships (5)</button>
+              <button class="tab-btn" onclick="showTab('uni', this)">Saved Universities (3)</button>
+            </div>
+
+            <div class="tab-panel active" id="tab-schol">
+              <div class="saved-row">
+                <div class="saved-ic tag-schol" style="background:rgba(242,183,5,.15); color:var(--gold-dim);">✦</div>
+                <div class="info"><div class="n">Girls in STEM Grant</div><div class="o">GhanaTech Foundation</div></div>
+                <div class="dl">Closes Aug 8</div>
+              </div>
+              <div class="saved-row">
+                <div class="saved-ic" style="background:rgba(242,183,5,.15); color:var(--gold-dim);">✦</div>
+                <div class="info"><div class="n">Mastercard-KNUST Engineering Award</div><div class="o">KNUST, Kumasi</div></div>
+                <div class="dl">Closes Aug 22</div>
+              </div>
+              <div class="saved-row">
+                <div class="saved-ic" style="background:rgba(242,183,5,.15); color:var(--gold-dim);">✦</div>
+                <div class="info"><div class="n">Ghana National Petroleum Scholarship</div><div class="o">GNPC Foundation</div></div>
+                <div class="dl">Closes Sep 3</div>
+              </div>
+            </div>
+
+            <div class="tab-panel" id="tab-intern">
+              <div class="saved-row">
+                <div class="saved-ic" style="background:rgba(20,107,60,.14); color:var(--green-dim);">▣</div>
+                <div class="info"><div class="n">Data Analyst Intern</div><div class="o">MTN Ghana</div></div>
+                <div class="dl">Closes Aug 17</div>
+              </div>
+              <div class="saved-row">
+                <div class="saved-ic" style="background:rgba(20,107,60,.14); color:var(--green-dim);">▣</div>
+                <div class="info"><div class="n">Marketing Intern</div><div class="o">Jumia Ghana</div></div>
+                <div class="dl">Closes Aug 19</div>
+              </div>
+            </div>
+
+            <div class="tab-panel" id="tab-uni">
+              <div class="saved-row">
+                <div class="saved-ic" style="background:rgba(11,31,58,.08); color:var(--navy);">🎓</div>
+                <div class="info"><div class="n">University of Ghana, Legon</div><div class="o">Undergraduate Admissions</div></div>
+                <div class="dl">Closes Sep 1</div>
+              </div>
+              <div class="saved-row">
+                <div class="saved-ic" style="background:rgba(11,31,58,.08); color:var(--navy);">🎓</div>
+                <div class="info"><div class="n">KNUST</div><div class="o">Engineering Programs</div></div>
+                <div class="dl">Closes Sep 15</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head"><h3>Activity History</h3></div>
+            <div class="timeline">
+              <div class="tl-item"><div class="t">You applied to <strong>Girls in STEM Grant</strong></div><div class="time">Today · 9:14 AM</div></div>
+              <div class="tl-item"><div class="t">You saved <strong>Mastercard-KNUST Engineering Award</strong></div><div class="time">Yesterday · 6:40 PM</div></div>
+              <div class="tl-item"><div class="t">You updated your profile transcript</div><div class="time">2 days ago</div></div>
+              <div class="tl-item"><div class="t">You joined the <strong>Engineering Students Ghana</strong> group</div><div class="time">4 days ago</div></div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-side">
+          <div class="card">
+            <div class="card-head"><h3>Notifications</h3><span class="link">Mark all read</span></div>
+            <div class="notif-item">
+              <div class="notif-ic" style="background:rgba(200,16,46,.1); color:var(--red);">⏰</div>
+              <div><div class="n-t">Girls in STEM Grant closes in 2 days — finish your application.</div><div class="n-time">1h ago</div></div>
+            </div>
+            <div class="notif-item">
+              <div class="notif-ic" style="background:rgba(20,107,60,.12); color:var(--green-dim);">✓</div>
+              <div><div class="n-t">Your MTN internship application was received.</div><div class="n-time">5h ago</div></div>
+            </div>
+            <div class="notif-item">
+              <div class="notif-ic" style="background:rgba(242,183,5,.14); color:var(--gold-dim);">✦</div>
+              <div><div class="n-t">4 new scholarships match your profile.</div><div class="n-time">Yesterday</div></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head"><h3>Finish Your Profile</h3></div>
+            <div class="checklist-item done"><span class="chk">✓</span><span class="txt">Basic information</span></div>
+            <div class="checklist-item done"><span class="chk">✓</span><span class="txt">Academic history</span></div>
+            <div class="checklist-item done"><span class="chk">✓</span><span class="txt">Areas of interest</span></div>
+            <div class="checklist-item"><span class="chk"></span><span class="txt">Upload transcript</span></div>
+            <div class="checklist-item"><span class="chk"></span><span class="txt">Add a mentor request</span></div>
+            <a href="campus-connect-ghana-dashboard.html" class="btn btn-outline btn-sm" style="margin-top:14px; width:100%;">Complete Profile</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+function showTab(id, btn){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+
+(function(){
+  if(!ccgUser) return; // guard above is already redirecting
+  var name = ccgUser.name || ccgUser.email;
+  var firstName = name.split(' ')[0];
+  var initials = name.split(' ').filter(Boolean).slice(0,2).map(function(p){return p[0].toUpperCase();}).join('') || 'CC';
+  document.getElementById('sidebar-name').textContent = name;
+  document.getElementById('mini-avatar').textContent = initials;
+  document.getElementById('topbar-avatar').textContent = initials;
+  document.getElementById('welcome-heading').textContent = 'Welcome back, ' + firstName;
+})();
+</script>
+
+</body>
+</html>

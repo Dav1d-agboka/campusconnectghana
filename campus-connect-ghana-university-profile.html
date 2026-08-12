@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>University of Ghana — Campus Connect Ghana</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+:root{
+  --navy:#0B1F3A; --navy-2:#0F2A4D;
+  --gold:#F2B705; --gold-dim:#C99400;
+  --green:#146B3C; --green-dim:#0F5230;
+  --red:#C8102E;
+  --parchment:#FBF7EF; --parchment-2:#F4EEDF;
+  --charcoal:#1B1B1B; --charcoal-70:rgba(27,27,27,.7);
+  --line:rgba(27,27,27,.12); --white:#fff;
+  --display:'Fraunces',serif; --body:'Inter',sans-serif; --mono:'IBM Plex Mono',monospace;
+  --max:1180px;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+body{font-family:var(--body); color:var(--charcoal); background:var(--parchment); line-height:1.5; -webkit-font-smoothing:antialiased;}
+a{color:inherit; text-decoration:none;} button{font-family:inherit; cursor:pointer;}
+.wrap{max-width:var(--max); margin:0 auto; padding:0 28px;}
+:focus-visible{outline:3px solid var(--gold); outline-offset:2px;}
+@media (prefers-reduced-motion: reduce){*{animation-duration:.001ms !important; transition-duration:.001ms !important;}}
+
+.kente{height:8px; background:repeating-linear-gradient(100deg, var(--gold) 0 18px, var(--green) 18px 36px, var(--red) 36px 42px, var(--navy) 42px 60px);}
+
+header{background:var(--navy); position:sticky; top:0; z-index:50; border-bottom:1px solid rgba(255,255,255,.08);}
+.nav{display:flex; align-items:center; justify-content:space-between; padding:14px 28px; max-width:var(--max); margin:0 auto;}
+.brand{display:flex; align-items:center; gap:10px; color:var(--white);}
+.brand-mark{width:34px; height:34px; border-radius:50%; background:var(--gold); color:var(--navy); display:flex; align-items:center; justify-content:center; font-family:var(--display); font-weight:700; font-size:15px;}
+.brand-text{font-family:var(--display); font-weight:600; font-size:17px;}
+.brand-text small{display:block; font-family:var(--mono); font-size:8.5px; letter-spacing:1.5px; color:var(--gold); text-transform:uppercase; margin-top:2px;}
+.nav-links{display:flex; gap:28px;}
+.nav-links a{color:rgba(255,255,255,.75); font-size:14px; font-weight:500;}
+.nav-links a:hover{color:var(--white);}
+.nav-actions{display:flex; align-items:center; gap:12px;}
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:10px 20px; border-radius:3px; border:none; font-size:13.5px; font-weight:600; transition:transform .15s ease, box-shadow .15s ease, background .15s ease;}
+.btn-gold{background:var(--gold); color:var(--navy);}
+.btn-gold:hover{background:#ffc61a; transform:translateY(-1px); box-shadow:0 6px 16px rgba(242,183,5,.3);}
+.btn-ghost-light{background:transparent; color:var(--white); border:1.5px solid rgba(255,255,255,.3);}
+.btn-outline-navy{background:transparent; color:var(--navy); border:1.5px solid var(--navy);}
+.btn-outline-navy:hover{background:var(--navy); color:var(--white);}
+
+.breadcrumb{font-family:var(--mono); font-size:12px; color:var(--charcoal-70); padding:18px 0; }
+.breadcrumb a{color:var(--gold-dim); font-weight:600;}
+
+/* profile hero */
+.profile-hero{background:var(--navy); color:var(--white); padding:34px 0 40px; position:relative; overflow:hidden;}
+.profile-hero::before{content:''; position:absolute; inset:0; background:radial-gradient(600px 300px at 90% 0%, rgba(20,107,60,.28), transparent 60%); pointer-events:none;}
+.ph-row{display:flex; gap:22px; align-items:flex-start; position:relative; z-index:2; flex-wrap:wrap;}
+.ph-logo{width:78px; height:78px; border-radius:14px; background:var(--gold); color:var(--navy); display:flex; align-items:center; justify-content:center; font-family:var(--display); font-weight:700; font-size:28px; flex-shrink:0;}
+.ph-info{flex:1; min-width:240px;}
+.ph-info .badge-type{font-family:var(--mono); font-size:9.5px; letter-spacing:1px; text-transform:uppercase; padding:3px 8px; border-radius:2px; font-weight:700; background:rgba(20,107,60,.22); color:#4CCB8B;}
+.ph-info h1{font-family:var(--display); font-weight:700; font-size:clamp(26px,3.2vw,34px); margin-top:10px;}
+.ph-info .loc{margin-top:6px; font-size:14px; color:rgba(255,255,255,.7);}
+.ph-stats{display:flex; gap:26px; margin-top:18px; flex-wrap:wrap;}
+.ph-stats .s{font-family:var(--mono); font-size:12px; color:rgba(255,255,255,.55);}
+.ph-stats .s strong{display:block; font-size:16px; color:var(--gold); font-family:var(--display); font-weight:600; margin-top:2px;}
+.ph-actions{display:flex; flex-direction:column; gap:10px; align-items:stretch; min-width:200px;}
+.ph-actions .btn{width:100%;}
+
+/* body layout */
+.profile-body{display:grid; grid-template-columns:1fr 320px; gap:32px; padding:40px 0 60px; align-items:start;}
+
+.tabs{display:flex; gap:4px; border-bottom:1px solid var(--line); margin-bottom:26px; overflow-x:auto;}
+.tab-btn{padding:11px 4px; margin-right:26px; font-size:14px; font-weight:600; color:var(--charcoal-70); border-bottom:2px solid transparent; background:none; white-space:nowrap;}
+.tab-btn.active{color:var(--navy); border-color:var(--gold);}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+
+.card{background:var(--white); border:1px solid var(--line); border-radius:8px; padding:26px; margin-bottom:22px;}
+.card h3{font-family:var(--display); font-weight:600; font-size:19px; color:var(--navy); margin-bottom:14px;}
+.card p{font-size:14.5px; color:var(--charcoal-70); line-height:1.7;}
+
+/* overview */
+.about p{margin-bottom:14px;}
+
+/* requirements */
+.req-list{list-style:none;}
+.req-item{display:flex; gap:12px; padding:12px 0; border-top:1px solid var(--line);}
+.req-item:first-child{border-top:none;}
+.req-item .ck{width:22px; height:22px; border-radius:50%; background:rgba(20,107,60,.12); color:var(--green-dim); display:flex; align-items:center; justify-content:center; font-size:12px; flex-shrink:0; margin-top:1px;}
+.req-item .t{font-size:14px; color:var(--charcoal);}
+.req-item .t strong{display:block; color:var(--navy); font-size:14.5px; margin-bottom:2px;}
+
+/* courses */
+.course-table{width:100%; border-collapse:collapse;}
+.course-table th{text-align:left; font-family:var(--mono); font-size:10.5px; letter-spacing:1px; text-transform:uppercase; color:var(--charcoal-70); padding:0 0 10px; border-bottom:1px solid var(--line);}
+.course-table td{padding:13px 0; border-bottom:1px solid var(--line); font-size:13.5px;}
+.course-table td.name{font-weight:600; color:var(--navy);}
+.course-table td.sub{color:var(--charcoal-70); font-size:12px;}
+.course-table tr:last-child td{border-bottom:none;}
+.dur-tag{font-family:var(--mono); font-size:11px; color:var(--charcoal-70);}
+
+/* fees */
+.fee-table{width:100%; border-collapse:collapse;}
+.fee-table th{text-align:left; font-family:var(--mono); font-size:10.5px; letter-spacing:1px; text-transform:uppercase; color:var(--charcoal-70); padding:0 0 10px; border-bottom:1px solid var(--line);}
+.fee-table td{padding:12px 0; border-bottom:1px solid var(--line); font-size:14px;}
+.fee-table td.amt{font-family:var(--mono); font-weight:600; color:var(--navy);}
+.fee-table tr:last-child td{border-bottom:none;}
+.fee-note{margin-top:16px; padding:14px 16px; background:var(--parchment-2); border-radius:6px; font-size:12.5px; color:var(--charcoal-70);}
+
+/* guide */
+.guide-step{display:flex; gap:16px; padding:18px 0; border-top:1px solid var(--line);}
+.guide-step:first-child{border-top:none;}
+.guide-step .n{font-family:var(--mono); font-size:13px; color:var(--gold-dim); font-weight:700; flex-shrink:0; width:26px;}
+.guide-step h4{font-family:var(--display); font-size:16px; font-weight:600; color:var(--navy);}
+.guide-step p{margin-top:5px; font-size:13.5px;}
+
+/* sidebar */
+.side-card{background:var(--white); border:1px solid var(--line); border-radius:8px; padding:22px; margin-bottom:20px;}
+.side-card h4{font-family:var(--display); font-weight:600; font-size:15.5px; color:var(--navy); margin-bottom:14px;}
+.dl-tracker{display:flex; align-items:center; gap:14px;}
+.dl-tracker .num{font-family:var(--display); font-weight:700; font-size:32px; color:var(--red);}
+.dl-tracker .lbl{font-size:12px; color:var(--charcoal-70); line-height:1.5;}
+.side-row{display:flex; justify-content:space-between; padding:9px 0; border-top:1px solid var(--line); font-size:13px;}
+.side-row:first-of-type{border-top:none;}
+.side-row .k{color:var(--charcoal-70);}
+.side-row .v{font-weight:600; color:var(--navy);}
+
+@media (max-width:1000px){.profile-body{grid-template-columns:1fr;}}
+@media (max-width:700px){.nav-links{display:none;} .course-table{display:block; overflow-x:auto;}}
+
+footer{background:var(--navy); color:rgba(255,255,255,.65); padding:40px 0 26px; text-align:center; font-size:12.5px;}
+
+/* nav "more" dropdown */
+.nav-more{position:relative;}
+.nav-more-btn{background:none; border:none; color:rgba(255,255,255,.75); font-size:14px; font-weight:500; font-family:inherit; cursor:pointer; padding:6px 0; display:flex; align-items:center; gap:4px;}
+.nav-more-btn:hover{color:var(--white);}
+.nav-more .care{font-size:10px; transition:transform .2s ease;}
+.nav-more.open .care{transform:rotate(180deg);}
+.nav-more-menu{display:none; position:absolute; top:calc(100% + 14px); left:50%; transform:translateX(-50%); background:var(--white); border:1px solid var(--line); border-radius:8px; box-shadow:0 16px 34px rgba(0,0,0,.18); padding:8px; min-width:190px; z-index:60;}
+.nav-more.open .nav-more-menu{display:block;}
+.nav-more-menu a{display:block; padding:9px 12px; font-size:13px; color:var(--charcoal); border-radius:5px; white-space:nowrap;}
+.nav-more-menu a:hover{background:var(--parchment-2); color:var(--navy);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="kente"></div>
+  <nav class="nav">
+    <a href="campus-connect-ghana-homepage.html" class="brand">
+      <span class="brand-mark">CC</span>
+      <span class="brand-text">Campus Connect<br><small>Ghana</small></span>
+    </a>
+        <div class="nav-links">
+      <a href="campus-connect-ghana-scholarship-portal.html">Scholarships</a>
+      <a href="campus-connect-ghana-university-portal.html">Admissions</a>
+      <a href="campus-connect-ghana-internship-portal.html">Internships</a>
+      <a href="campus-connect-ghana-study-resources.html">Study Resources</a>
+      <a href="campus-connect-ghana-community.html">Community</a>
+      <div class="nav-more">
+        <button type="button" class="nav-more-btn" onclick="this.parentElement.classList.toggle('open')">More <span class="care">▾</span></button>
+        <div class="nav-more-menu">
+          <a href="campus-connect-ghana-ai-study-assistant.html">AI Study Assistant</a>
+          <a href="campus-connect-ghana-career-development.html">Career Tools</a>
+          <a href="campus-connect-ghana-blog.html">Blog &amp; News</a>
+          <a href="campus-connect-ghana-events.html">Events</a>
+          <a href="campus-connect-ghana-premium-payments.html">Premium</a>
+          <a href="campus-connect-ghana-contact-support.html">Contact &amp; Support</a>
+        </div>
+      </div>
+    </div>
+        <div class="nav-actions">
+      <a href="campus-connect-ghana-dashboard.html" class="btn btn-ghost-light">My Dashboard</a>
+      <a href="campus-connect-ghana-register.html" class="btn btn-gold">Get Started</a>
+    </div>
+  </nav>
+</header>
+
+<div class="wrap">
+  <div class="breadcrumb"><a href="campus-connect-ghana-university-portal.html">← Back to University Admissions Portal</a></div>
+</div>
+
+<section class="profile-hero">
+  <div class="wrap ph-row">
+    <div class="ph-logo">UG</div>
+    <div class="ph-info">
+      <span class="badge-type">Public University</span>
+      <h1>University of Ghana</h1>
+      <div class="loc">Legon, Greater Accra — Est. 1948</div>
+      <div class="ph-stats">
+        <div class="s">Programmes<strong>142</strong></div>
+        <div class="s">Students<strong>38,000+</strong></div>
+        <div class="s">Tuition from<strong>GH₵4,200/yr</strong></div>
+        <div class="s">Acceptance rate<strong>~42%</strong></div>
+      </div>
+    </div>
+    <div class="ph-actions">
+      <a href="campus-connect-ghana-register.html" class="btn btn-gold">Start Application</a>
+      <a href="campus-connect-ghana-login.html" class="btn btn-ghost-light">♡ Save University</a>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="profile-body">
+    <main>
+      <div class="tabs">
+        <button class="tab-btn active" onclick="showTab('overview', this)">Overview</button>
+        <button class="tab-btn" onclick="showTab('requirements', this)">Admission Requirements</button>
+        <button class="tab-btn" onclick="showTab('courses', this)">Courses Offered</button>
+        <button class="tab-btn" onclick="showTab('fees', this)">School Fees</button>
+        <button class="tab-btn" onclick="showTab('guide', this)">Application Guide</button>
+      </div>
+
+      <div class="tab-panel active" id="tab-overview">
+        <div class="card about">
+          <h3>About University of Ghana</h3>
+          <p>The University of Ghana, Legon is the oldest and largest of Ghana's public universities, offering undergraduate and postgraduate programmes across colleges including Humanities, Basic and Applied Sciences, Health Sciences, Education, and Business.</p>
+          <p>The main campus sits in Legon, Greater Accra, with satellite campuses supporting distance and evening programmes. Admission is competitive and based on WASSCE / SSSCE results and programme-specific cut-off points published each year.</p>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-requirements">
+        <div class="card">
+          <h3>Admission Requirements — Undergraduate</h3>
+          <ul class="req-list">
+            <li class="req-item"><span class="ck">✓</span><span class="t"><strong>WASSCE / SSSCE Results</strong>Credit passes (A1–C6) in six subjects including English, Mathematics, and Integrated Science, at one sitting.</span></li>
+            <li class="req-item"><span class="ck">✓</span><span class="t"><strong>Programme-Specific Cut-Offs</strong>Some programmes (e.g. Medicine, Law) require higher aggregate scores — check the published cut-off list each admissions cycle.</span></li>
+            <li class="req-item"><span class="ck">✓</span><span class="t"><strong>Valid Ghana Card / Passport</strong>Required for identity verification during application.</span></li>
+            <li class="req-item"><span class="ck">✓</span><span class="t"><strong>Application Fee</strong>GH₵200 non-refundable, paid online during submission.</span></li>
+            <li class="req-item"><span class="ck">✓</span><span class="t"><strong>International Applicants</strong>Equivalent qualification assessment through the Admissions Office, plus an English proficiency test where applicable.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-courses">
+        <div class="card">
+          <h3>Popular Programmes</h3>
+          <table class="course-table">
+            <tr><th>Programme</th><th>College</th><th>Duration</th><th>Cut-off</th></tr>
+            <tr><td class="name">BSc Computer Science</td><td class="sub">Basic &amp; Applied Sciences</td><td class="dur-tag">4 years</td><td class="sub">Aggregate 6–12</td></tr>
+            <tr><td class="name">BA Economics</td><td class="sub">Humanities</td><td class="dur-tag">4 years</td><td class="sub">Aggregate 8–14</td></tr>
+            <tr><td class="name">Bachelor of Laws (LLB)</td><td class="sub">School of Law</td><td class="dur-tag">4 years</td><td class="sub">Aggregate 6–10</td></tr>
+            <tr><td class="name">MBChB Medicine &amp; Surgery</td><td class="sub">Health Sciences</td><td class="dur-tag">6 years</td><td class="sub">Aggregate 6–8</td></tr>
+            <tr><td class="name">BSc Business Administration</td><td class="sub">Business School</td><td class="dur-tag">4 years</td><td class="sub">Aggregate 9–15</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-fees">
+        <div class="card">
+          <h3>School Fees — 2026/27 Academic Year</h3>
+          <table class="fee-table">
+            <tr><th>Item</th><th>Ghanaian Student</th><th>International</th></tr>
+            <tr><td>Tuition (per year)</td><td class="amt">GH₵4,200 – 12,800</td><td class="amt">USD 4,500 – 8,200</td></tr>
+            <tr><td>Residential Fees</td><td class="amt">GH₵2,600</td><td class="amt">USD 1,800</td></tr>
+            <tr><td>Academic Facility User Fee</td><td class="amt">GH₵850</td><td class="amt">USD 300</td></tr>
+            <tr><td>Student ID &amp; Registration</td><td class="amt">GH₵180</td><td class="amt">USD 60</td></tr>
+          </table>
+          <div class="fee-note">Fees vary by college and programme. Medicine, Law, and Engineering carry additional lab/clinical charges. Figures shown are indicative — confirm exact fees on your admission letter.</div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-guide">
+        <div class="card">
+          <h3>How to Apply</h3>
+          <div class="guide-step"><span class="n">01</span><div><h4>Create your Campus Connect profile</h4><p>Add your WASSCE results and programme interests so we can confirm you meet the cut-off before you apply.</p></div></div>
+          <div class="guide-step"><span class="n">02</span><div><h4>Complete the online application</h4><p>Fill in your bio-data, select up to two programme choices, and upload your results slip and Ghana Card.</p></div></div>
+          <div class="guide-step"><span class="n">03</span><div><h4>Pay the application fee</h4><p>GH₵200 via Mobile Money or card, paid securely through the application portal.</p></div></div>
+          <div class="guide-step"><span class="n">04</span><div><h4>Track your status</h4><p>Follow your application from "Submitted" to "Under Review" to "Admitted" right from your dashboard.</p></div></div>
+        </div>
+      </div>
+    </main>
+
+    <aside>
+      <div class="side-card">
+        <h4>Deadline Tracker</h4>
+        <div class="dl-tracker">
+          <div class="num">26</div>
+          <div class="lbl">days left to apply<br>for the 2026/27 intake</div>
+        </div>
+      </div>
+      <div class="side-card">
+        <h4>Key Dates</h4>
+        <div class="side-row"><span class="k">Applications open</span><span class="v">May 1, 2026</span></div>
+        <div class="side-row"><span class="k">Applications close</span><span class="v">Sep 1, 2026</span></div>
+        <div class="side-row"><span class="k">Admissions released</span><span class="v">Oct 15, 2026</span></div>
+        <div class="side-row"><span class="k">Orientation week</span><span class="v">Jan 5, 2027</span></div>
+      </div>
+      <div class="side-card">
+        <h4>Contact Admissions</h4>
+        <div class="side-row"><span class="k">Phone</span><span class="v">030 221 3820</span></div>
+        <div class="side-row"><span class="k">Email</span><span class="v">admissions@ug.edu.gh</span></div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<div class="kente"></div>
+<footer>© 2026 Campus Connect Ghana. Connecting Every Ghanaian Student to Success.</footer>
+
+<script>
+function showTab(id, btn){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+
+
+<script>
+(function(){
+  var here = location.pathname.split('/').pop();
+  document.querySelectorAll('.nav-links > a[href], .nav-more-menu a[href]').forEach(function(a){
+    if(a.getAttribute('href') === here){ a.classList.add('active'); }
+  });
+  document.addEventListener('click', function(e){
+    document.querySelectorAll('.nav-more.open').forEach(function(m){
+      if(!m.contains(e.target)) m.classList.remove('open');
+    });
+  });
+})();
+</script>
+</body>
+</html>

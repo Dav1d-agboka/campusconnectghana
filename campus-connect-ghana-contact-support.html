@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact & Support — Campus Connect Ghana</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+:root{
+  --navy:#0B1F3A; --navy-2:#0F2A4D;
+  --gold:#F2B705; --gold-dim:#C99400;
+  --green:#146B3C; --green-dim:#0F5230;
+  --red:#C8102E;
+  --parchment:#FBF7EF; --parchment-2:#F4EEDF;
+  --charcoal:#1B1B1B; --charcoal-70:rgba(27,27,27,.7);
+  --line:rgba(27,27,27,.12); --white:#fff;
+  --display:'Fraunces',serif; --body:'Inter',sans-serif; --mono:'IBM Plex Mono',monospace;
+  --max:1180px;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+body{font-family:var(--body); color:var(--charcoal); background:var(--parchment); line-height:1.5; -webkit-font-smoothing:antialiased;}
+a{color:inherit; text-decoration:none;} button{font-family:inherit; cursor:pointer;}
+.wrap{max-width:var(--max); margin:0 auto; padding:0 28px;}
+:focus-visible{outline:3px solid var(--gold); outline-offset:2px;}
+@media (prefers-reduced-motion: reduce){*{animation-duration:.001ms !important; transition-duration:.001ms !important;}}
+
+.kente{height:8px; background:repeating-linear-gradient(100deg, var(--gold) 0 18px, var(--green) 18px 36px, var(--red) 36px 42px, var(--navy) 42px 60px);}
+
+header{background:var(--navy); position:sticky; top:0; z-index:50; border-bottom:1px solid rgba(255,255,255,.08);}
+.nav{display:flex; align-items:center; justify-content:space-between; padding:14px 28px; max-width:var(--max); margin:0 auto;}
+.brand{display:flex; align-items:center; gap:10px; color:var(--white);}
+.brand-mark{width:34px; height:34px; border-radius:50%; background:var(--gold); color:var(--navy); display:flex; align-items:center; justify-content:center; font-family:var(--display); font-weight:700; font-size:15px;}
+.brand-text{font-family:var(--display); font-weight:600; font-size:17px;}
+.brand-text small{display:block; font-family:var(--mono); font-size:8.5px; letter-spacing:1.5px; color:var(--gold); text-transform:uppercase; margin-top:2px;}
+.nav-links{display:flex; gap:26px;}
+.nav-links a{color:rgba(255,255,255,.75); font-size:14px; font-weight:500;}
+.nav-links a.active{color:var(--gold);}
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:10px 20px; border-radius:3px; border:none; font-size:13.5px; font-weight:600; transition:transform .15s ease, box-shadow .15s ease, background .15s ease;}
+.btn-gold{background:var(--gold); color:var(--navy);}
+.btn-gold:hover{background:#ffc61a;}
+.btn-ghost-light{background:transparent; color:var(--white); border:1.5px solid rgba(255,255,255,.3);}
+.btn-outline-navy{background:transparent; color:var(--navy); border:1.5px solid var(--navy);}
+.btn-outline-navy:hover{background:var(--navy); color:var(--white);}
+
+/* hero */
+.s-hero{background:var(--navy); color:var(--white); padding:50px 0; text-align:center; position:relative; overflow:hidden;}
+.s-hero::before{content:''; position:absolute; inset:0; background:radial-gradient(600px 300px at 85% 0%, rgba(20,107,60,.3), transparent 60%); pointer-events:none;}
+.eyebrow{font-family:var(--mono); font-size:12px; letter-spacing:2px; text-transform:uppercase; color:var(--gold); display:inline-flex; align-items:center; gap:10px; margin-bottom:14px; position:relative; z-index:2;}
+.eyebrow::before,.eyebrow::after{content:''; width:26px; height:1px; background:var(--gold);}
+.s-hero h1{font-family:var(--display); font-weight:700; font-size:clamp(28px,4vw,40px); position:relative; z-index:2;}
+.s-hero p{margin-top:10px; color:rgba(255,255,255,.72); font-size:14.5px; max-width:480px; margin-left:auto; margin-right:auto; position:relative; z-index:2;}
+.search-bar{margin:24px auto 0; background:var(--white); border-radius:8px; padding:8px; display:flex; gap:8px; max-width:520px; box-shadow:0 14px 34px rgba(0,0,0,.25); position:relative; z-index:2;}
+.search-bar input{flex:1; border:none; outline:none; font-family:var(--body); font-size:14px; padding:10px 14px;}
+
+/* contact options */
+.options-row{padding:40px 0 10px;}
+.options-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px;}
+.opt-card{background:var(--white); border:1px solid var(--line); border-radius:8px; padding:24px 20px; text-align:center; transition:transform .15s ease, box-shadow .15s ease;}
+.opt-card:hover{transform:translateY(-3px); box-shadow:0 14px 28px rgba(11,31,58,.08);}
+.opt-ic{width:44px; height:44px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:19px; margin:0 auto 14px;}
+.oi-chat{background:rgba(20,107,60,.12); color:var(--green-dim);}
+.oi-phone{background:rgba(242,183,5,.15); color:var(--gold-dim);}
+.oi-email{background:rgba(11,31,58,.08); color:var(--navy);}
+.oi-ticket{background:rgba(200,16,46,.1); color:var(--red);}
+.opt-card h4{font-family:var(--display); font-weight:600; font-size:15px; color:var(--navy);}
+.opt-card p{font-size:12px; color:var(--charcoal-70); margin-top:6px;}
+.opt-card .action{font-size:12.5px; font-weight:700; color:var(--gold-dim); margin-top:12px; display:inline-block;}
+@media (max-width:860px){.options-grid{grid-template-columns:1fr 1fr;}}
+
+/* help categories */
+.help-section{padding:50px 0 10px;}
+.section-head{text-align:center; margin-bottom:28px;}
+.section-head h2{font-family:var(--display); font-weight:600; font-size:24px; color:var(--navy);}
+.section-head p{font-size:13.5px; color:var(--charcoal-70); margin-top:6px;}
+.help-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+.help-cat{background:var(--white); border:1px solid var(--line); border-radius:8px; padding:20px; display:flex; align-items:center; gap:14px; transition:transform .15s ease, box-shadow .15s ease;}
+.help-cat:hover{transform:translateY(-2px); box-shadow:0 12px 24px rgba(11,31,58,.07);}
+.help-cat .ic{width:38px; height:38px; border-radius:9px; background:var(--parchment-2); color:var(--navy); display:flex; align-items:center; justify-content:center; font-size:17px; flex-shrink:0;}
+.help-cat h5{font-size:13.5px; font-weight:700; color:var(--charcoal);}
+.help-cat p{font-size:11.5px; color:var(--charcoal-70); margin-top:3px;}
+@media (max-width:900px){.help-grid{grid-template-columns:1fr 1fr;}}
+
+/* FAQ */
+.faq-section{padding:50px 0;}
+.faq-accordion{max-width:760px; margin:0 auto; background:var(--white); border:1px solid var(--line); border-radius:8px; overflow:hidden;}
+.faq-item{border-bottom:1px solid var(--line);}
+.faq-item:last-child{border-bottom:none;}
+.faq-head{display:flex; justify-content:space-between; align-items:center; padding:18px 22px; font-size:14.5px; font-weight:600; color:var(--charcoal); width:100%; text-align:left;}
+.faq-body{max-height:0; overflow:hidden; transition:max-height .25s ease;}
+.faq-body-in{padding:0 22px 18px; font-size:13.5px; color:var(--charcoal-70); line-height:1.65;}
+.faq-item.open .faq-body{max-height:200px;}
+.faq-item.open .chev{transform:rotate(180deg);}
+.chev{transition:transform .2s ease; color:var(--charcoal-70); flex-shrink:0;}
+
+/* ticket form + contact info */
+.contact-section{padding:10px 0 60px;}
+.contact-layout{display:grid; grid-template-columns:1fr 340px; gap:24px; align-items:start;}
+.card{background:var(--white); border:1px solid var(--line); border-radius:8px; padding:26px;}
+.card h3{font-family:var(--display); font-weight:600; font-size:18px; color:var(--navy); margin-bottom:18px;}
+.f{margin-bottom:16px;}
+.f label{display:block; font-size:12px; font-weight:600; color:var(--navy); margin-bottom:7px;}
+.f input, .f select, .f textarea{width:100%; padding:11px 14px; border:1.5px solid var(--line); border-radius:5px; font-family:var(--body); font-size:13.5px;}
+.f textarea{resize:none; min-height:110px;}
+.f-row{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+
+.info-row{display:flex; gap:12px; padding:14px 0; border-bottom:1px solid var(--line);}
+.info-row:last-child{border-bottom:none;}
+.info-row .ic{width:34px; height:34px; border-radius:8px; background:var(--parchment-2); color:var(--navy); display:flex; align-items:center; justify-content:center; font-size:15px; flex-shrink:0;}
+.info-row .t strong{display:block; font-size:13px; color:var(--navy);}
+.info-row .t span{font-size:12.5px; color:var(--charcoal-70);}
+
+@media (max-width:900px){.contact-layout{grid-template-columns:1fr;} .f-row{grid-template-columns:1fr;}}
+@media (max-width:700px){.nav-links{display:none;}}
+
+footer{background:var(--navy); color:rgba(255,255,255,.65); padding:40px 0 26px; text-align:center; font-size:12.5px;}
+
+/* live chat widget */
+.chat-widget{position:fixed; bottom:24px; right:24px; z-index:100; display:flex; flex-direction:column; align-items:flex-end;}
+.chat-bubble{width:56px; height:56px; border-radius:50%; background:var(--gold); color:var(--navy); display:flex; align-items:center; justify-content:center; font-size:22px; box-shadow:0 10px 26px rgba(0,0,0,.25); border:none;}
+.chat-panel{display:none; width:300px; background:var(--white); border:1px solid var(--line); border-radius:10px; overflow:hidden; box-shadow:0 20px 44px rgba(0,0,0,.2); margin-bottom:14px;}
+.chat-panel.open{display:block;}
+.chat-panel-head{background:var(--navy); color:var(--white); padding:14px 16px; display:flex; align-items:center; gap:10px;}
+.chat-panel-head .dot{width:8px; height:8px; border-radius:50%; background:var(--green);}
+.chat-panel-head strong{font-size:13px; font-family:var(--display);}
+.chat-panel-head span{font-size:11px; color:rgba(255,255,255,.6); display:block;}
+.chat-panel-body{padding:16px; font-size:12.5px; color:var(--charcoal-70); background:var(--parchment-2);}
+.chat-panel-body .bubble{background:var(--white); border-radius:10px; padding:10px 12px; border:1px solid var(--line); margin-bottom:8px;}
+.chat-panel-input{display:flex; border-top:1px solid var(--line);}
+.chat-panel-input input{flex:1; border:none; padding:12px 14px; font-size:12.5px; outline:none;}
+.chat-panel-input button{padding:0 16px; background:var(--gold); color:var(--navy); font-weight:700;}
+
+/* nav "more" dropdown */
+.nav-more{position:relative;}
+.nav-more-btn{background:none; border:none; color:rgba(255,255,255,.75); font-size:14px; font-weight:500; font-family:inherit; cursor:pointer; padding:6px 0; display:flex; align-items:center; gap:4px;}
+.nav-more-btn:hover{color:var(--white);}
+.nav-more .care{font-size:10px; transition:transform .2s ease;}
+.nav-more.open .care{transform:rotate(180deg);}
+.nav-more-menu{display:none; position:absolute; top:calc(100% + 14px); left:50%; transform:translateX(-50%); background:var(--white); border:1px solid var(--line); border-radius:8px; box-shadow:0 16px 34px rgba(0,0,0,.18); padding:8px; min-width:190px; z-index:60;}
+.nav-more.open .nav-more-menu{display:block;}
+.nav-more-menu a{display:block; padding:9px 12px; font-size:13px; color:var(--charcoal); border-radius:5px; white-space:nowrap;}
+.nav-more-menu a:hover{background:var(--parchment-2); color:var(--navy);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="kente"></div>
+  <nav class="nav">
+    <a href="campus-connect-ghana-homepage.html" class="brand">
+      <span class="brand-mark">CC</span>
+      <span class="brand-text">Campus Connect<br><small>Ghana</small></span>
+    </a>
+        <div class="nav-links">
+      <a href="campus-connect-ghana-scholarship-portal.html">Scholarships</a>
+      <a href="campus-connect-ghana-university-portal.html">Admissions</a>
+      <a href="campus-connect-ghana-internship-portal.html">Internships</a>
+      <a href="campus-connect-ghana-study-resources.html">Study Resources</a>
+      <a href="campus-connect-ghana-community.html">Community</a>
+      <div class="nav-more">
+        <button type="button" class="nav-more-btn" onclick="this.parentElement.classList.toggle('open')">More <span class="care">▾</span></button>
+        <div class="nav-more-menu">
+          <a href="campus-connect-ghana-ai-study-assistant.html">AI Study Assistant</a>
+          <a href="campus-connect-ghana-career-development.html">Career Tools</a>
+          <a href="campus-connect-ghana-blog.html">Blog &amp; News</a>
+          <a href="campus-connect-ghana-events.html">Events</a>
+          <a href="campus-connect-ghana-premium-payments.html">Premium</a>
+          <a href="campus-connect-ghana-contact-support.html">Contact &amp; Support</a>
+        </div>
+      </div>
+    </div>
+        <div class="nav-actions">
+      <a href="campus-connect-ghana-dashboard.html" class="btn btn-ghost-light">My Dashboard</a>
+      <a href="campus-connect-ghana-register.html" class="btn btn-gold">Get Started</a>
+    </div>
+  </nav>
+</header>
+
+<section class="s-hero">
+  <div class="wrap">
+    <div class="eyebrow">Contact &amp; Support</div>
+    <h1>How can we help?</h1>
+    <p>Search the Help Centre, chat with us live, or send a support ticket — we usually reply within a few hours.</p>
+    <div class="search-bar">
+      <input type="text" placeholder="Search help articles… e.g. 'reset password'">
+      <button class="btn btn-gold">Search</button>
+    </div>
+  </div>
+</section>
+
+<section class="options-row">
+  <div class="wrap">
+    <div class="options-grid">
+      <div class="opt-card">
+        <div class="opt-ic oi-chat">💬</div>
+        <h4>Live Chat</h4>
+        <p>Chat with our support team now</p>
+        <a href="#" class="action" onclick="document.getElementById('chatPanel').classList.add('open'); return false;">Start Chat →</a>
+      </div>
+      <div class="opt-card">
+        <div class="opt-ic oi-phone">📞</div>
+        <h4>Call Us</h4>
+        <p>Mon–Fri, 8am–6pm GMT</p>
+        <a href="tel:0597303411" class="action">059 730 3411 →</a>
+      </div>
+      <div class="opt-card">
+        <div class="opt-ic oi-email">✉</div>
+        <h4>Email Support</h4>
+        <p>We reply within 24 hours</p>
+        <a href="mailto:campusconnectghana19@gmail.com" class="action">Send Email →</a>
+      </div>
+      <div class="opt-card">
+        <div class="opt-ic oi-ticket">🎫</div>
+        <h4>Submit a Ticket</h4>
+        <p>Track your request end-to-end</p>
+        <a href="#ticket" class="action">Open Ticket →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="help-section">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Browse the Help Centre</h2>
+      <p>Find answers by category.</p>
+    </div>
+    <div class="help-grid">
+      <div class="help-cat"><div class="ic">👤</div><div><h5>Account &amp; Login</h5><p>Registration, verification, password resets</p></div></div>
+      <div class="help-cat"><div class="ic">✦</div><div><h5>Scholarships &amp; Applications</h5><p>Applying, saving, tracking deadlines</p></div></div>
+      <div class="help-cat"><div class="ic">💳</div><div><h5>Billing &amp; Premium</h5><p>Payments, subscriptions, receipts</p></div></div>
+      <div class="help-cat"><div class="ic">📁</div><div><h5>Study Resources</h5><p>Downloads, uploads, file formats</p></div></div>
+      <div class="help-cat"><div class="ic">🛡</div><div><h5>Safety &amp; Reporting</h5><p>Community guidelines, blocking, reporting</p></div></div>
+      <div class="help-cat"><div class="ic">⚙</div><div><h5>Technical Issues</h5><p>App bugs, loading errors, browser support</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="faq-section">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Frequently Asked Questions</h2>
+    </div>
+    <div class="faq-accordion">
+      <div class="faq-item open">
+        <button class="faq-head" onclick="toggleFaq(this)"><span>Is Campus Connect Ghana free to use?</span><span class="chev">▾</span></button>
+        <div class="faq-body"><div class="faq-body-in">Yes — the core platform is free, including browsing scholarships, internships, and university admissions. A Premium membership unlocks extra features like unlimited AI tools and exclusive scholarships.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-head" onclick="toggleFaq(this)"><span>How do I reset my password?</span><span class="chev">▾</span></button>
+        <div class="faq-body"><div class="faq-body-in">Go to the login page and select "Forgot password?" You'll receive a reset link by email — follow the steps to set a new password.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-head" onclick="toggleFaq(this)"><span>What payment methods do you accept?</span><span class="chev">▾</span></button>
+        <div class="faq-body"><div class="faq-body-in">We accept MTN Mobile Money, Telecel Cash, AirtelTigo Money, Visa/Mastercard, and PayPal for Premium subscriptions and other paid features.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-head" onclick="toggleFaq(this)"><span>How do I report a scam scholarship listing?</span><span class="chev">▾</span></button>
+        <div class="faq-body"><div class="faq-body-in">Click "Report" on the listing, or submit a support ticket with the listing name and details. Our moderation team reviews reports within 24 hours.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact-section" id="ticket">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Still need help?</h2>
+      <p>Send us a message and we'll get back to you.</p>
+    </div>
+    <div class="contact-layout">
+      <div class="card">
+        <h3>Submit a Support Ticket</h3>
+        <form onsubmit="event.preventDefault(); this.querySelector('button').textContent='Ticket Submitted ✓';">
+          <div class="f-row">
+            <div class="f"><label>Full Name</label><input type="text" placeholder="Your name" required></div>
+            <div class="f"><label>Email Address</label><input type="email" placeholder="your.email@example.com" required></div>
+          </div>
+          <div class="f"><label>Category</label>
+            <select>
+              <option>Account &amp; Login</option>
+              <option>Scholarships &amp; Applications</option>
+              <option>Billing &amp; Premium</option>
+              <option>Technical Issue</option>
+              <option>Report Content</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="f"><label>Message</label><textarea placeholder="Describe your issue in detail…" required></textarea></div>
+          <button type="submit" class="btn btn-gold" style="width:100%;">Submit Ticket</button>
+        </form>
+      </div>
+      <div class="card">
+        <h3>Contact Information</h3>
+        <div class="info-row"><div class="ic">📍</div><div class="t"><strong>Office</strong><span>Accra, Greater Accra, Ghana</span></div></div>
+        <div class="info-row"><div class="ic">📞</div><div class="t"><strong>Phone</strong><span>059 730 3411 · 020 276 1952</span></div></div>
+        <div class="info-row"><div class="ic">✉</div><div class="t"><strong>Email</strong><span>campusconnectghana19@gmail.com</span></div></div>
+        <div class="info-row"><div class="ic">🕐</div><div class="t"><strong>Support Hours</strong><span>Mon–Fri, 8:00 AM – 6:00 PM GMT</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="kente"></div>
+<footer>© 2026 Campus Connect Ghana. Connecting Every Ghanaian Student to Success.</footer>
+
+<div class="chat-widget">
+  <div class="chat-panel" id="chatPanel">
+    <div class="chat-panel-head">
+      <span class="dot"></span>
+      <div><strong>Campus Connect Support</strong><span>Typically replies in a few minutes</span></div>
+    </div>
+    <div class="chat-panel-body">
+      <div class="bubble">👋 Hi! How can we help you today?</div>
+    </div>
+    <div class="chat-panel-input">
+      <input type="text" placeholder="Type your message…">
+      <button>➤</button>
+    </div>
+  </div>
+  <button class="chat-bubble" onclick="document.getElementById('chatPanel').classList.toggle('open');">💬</button>
+</div>
+
+<script>
+function toggleFaq(head){
+  const item = head.parentElement;
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+  if(!wasOpen) item.classList.add('open');
+}
+</script>
+
+
+<script>
+(function(){
+  var here = location.pathname.split('/').pop();
+  document.querySelectorAll('.nav-links > a[href], .nav-more-menu a[href]').forEach(function(a){
+    if(a.getAttribute('href') === here){ a.classList.add('active'); }
+  });
+  document.addEventListener('click', function(e){
+    document.querySelectorAll('.nav-more.open').forEach(function(m){
+      if(!m.contains(e.target)) m.classList.remove('open');
+    });
+  });
+})();
+</script>
+</body>
+</html>

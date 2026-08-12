@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard — Campus Connect Ghana</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+:root{
+  --navy:#0B1F3A; --navy-2:#0F2A4D;
+  --gold:#F2B705; --gold-dim:#C99400;
+  --green:#146B3C; --green-dim:#0F5230;
+  --red:#C8102E;
+  --parchment:#FBF7EF; --parchment-2:#F4EEDF;
+  --charcoal:#1B1B1B; --charcoal-70:rgba(27,27,27,.7);
+  --line:rgba(27,27,27,.12); --white:#fff;
+  --display:'Fraunces',serif; --body:'Inter',sans-serif; --mono:'IBM Plex Mono',monospace;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+body{font-family:var(--body); color:var(--charcoal); background:var(--parchment); line-height:1.5; -webkit-font-smoothing:antialiased;}
+a{color:inherit; text-decoration:none;} button{font-family:inherit; cursor:pointer; border:none; background:none;}
+:focus-visible{outline:3px solid var(--gold); outline-offset:2px;}
+@media (prefers-reduced-motion: reduce){*{animation-duration:.001ms !important; transition-duration:.001ms !important;}}
+
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:7px; padding:9px 16px; border-radius:3px; font-size:12.5px; font-weight:600; transition:transform .15s ease, box-shadow .15s ease, background .15s ease;}
+.btn-gold{background:var(--gold); color:var(--navy);}
+.btn-gold:hover{background:#ffc61a;}
+.btn-outline{background:transparent; color:var(--navy); border:1.5px solid var(--line);}
+.btn-outline:hover{border-color:var(--navy);}
+.btn-green{background:rgba(20,107,60,.12); color:var(--green-dim);}
+.btn-green:hover{background:rgba(20,107,60,.2);}
+.btn-red{background:rgba(200,16,46,.1); color:var(--red);}
+.btn-red:hover{background:rgba(200,16,46,.18);}
+.btn-xs{padding:6px 11px; font-size:11.5px;}
+
+/* app shell */
+.app{display:grid; grid-template-columns:246px 1fr; min-height:100vh;}
+
+.sidebar{background:var(--navy); color:var(--white); display:flex; flex-direction:column; position:sticky; top:0; height:100vh; padding:20px 0;}
+.side-brand{display:flex; align-items:center; gap:10px; padding:0 20px 22px; border-bottom:1px solid rgba(255,255,255,.08); margin-bottom:14px;}
+.brand-mark{width:32px; height:32px; border-radius:8px; background:var(--gold); color:var(--navy); display:flex; align-items:center; justify-content:center; font-family:var(--display); font-weight:700; font-size:14px; flex-shrink:0;}
+.side-brand .txt{font-family:var(--display); font-weight:600; font-size:15px; line-height:1.2;}
+.side-brand .txt small{display:block; font-family:var(--mono); font-size:8px; letter-spacing:1.5px; color:var(--red); text-transform:uppercase; margin-top:2px;}
+
+.side-nav{flex:1; padding:0 12px; overflow-y:auto;}
+.side-nav .grp-label{font-family:var(--mono); font-size:9.5px; letter-spacing:1.5px; text-transform:uppercase; color:rgba(255,255,255,.32); padding:14px 10px 7px;}
+.side-nav a{display:flex; align-items:center; gap:11px; padding:9px 10px; border-radius:6px; margin-bottom:1px; font-size:13.3px; color:rgba(255,255,255,.72); font-weight:500; position:relative;}
+.side-nav a .ic{width:17px; text-align:center; font-size:14px; opacity:.85;}
+.side-nav a:hover{background:rgba(255,255,255,.06); color:var(--white);}
+.side-nav a.active{background:rgba(242,183,5,.12); color:var(--gold);}
+.side-nav a.active::before{content:''; position:absolute; left:-12px; top:6px; bottom:6px; width:3px; background:var(--gold); border-radius:2px;}
+.side-nav a .badge{margin-left:auto; background:var(--red); color:var(--white); font-family:var(--mono); font-size:9.5px; padding:1px 6px; border-radius:10px;}
+
+.side-foot{padding:14px 20px 2px; border-top:1px solid rgba(255,255,255,.08);}
+.mini-profile{display:flex; align-items:center; gap:10px;}
+.mini-avatar{width:34px; height:34px; border-radius:50%; background:var(--red); color:var(--white); display:flex; align-items:center; justify-content:center; font-family:var(--display); font-weight:700; font-size:12px;}
+.mini-profile .name{font-size:13px; font-weight:600; color:var(--white);}
+.mini-profile .role{font-size:11px; color:rgba(255,255,255,.45);}
+
+.main{display:flex; flex-direction:column; min-width:0;}
+.topbar{background:var(--white); border-bottom:1px solid var(--line); padding:15px 30px; display:flex; align-items:center; gap:20px; position:sticky; top:0; z-index:10;}
+.search-box{flex:1; max-width:400px; display:flex; align-items:center; gap:10px; background:var(--parchment-2); border:1px solid var(--line); border-radius:6px; padding:9px 14px;}
+.search-box input{border:none; background:none; font-family:var(--body); font-size:13.5px; width:100%; outline:none;}
+.topbar-actions{margin-left:auto; display:flex; align-items:center; gap:16px;}
+.icon-btn{position:relative; font-size:17px; color:var(--charcoal-70);}
+.icon-btn .dot{position:absolute; top:-3px; right:-4px; width:8px; height:8px; border-radius:50%; background:var(--red); border:1.5px solid var(--white);}
+.topbar-avatar{width:34px; height:34px; border-radius:50%; background:var(--navy); color:var(--gold); display:flex; align-items:center; justify-content:center; font-family:var(--display); font-weight:700; font-size:12px;}
+
+.content{padding:28px 30px 60px; max-width:1320px; width:100%; margin:0 auto;}
+
+.page-head{display:flex; justify-content:space-between; align-items:flex-end; gap:16px; flex-wrap:wrap; margin-bottom:24px;}
+.page-head h1{font-family:var(--display); font-weight:600; font-size:26px; color:var(--navy);}
+.page-head p{font-size:13.5px; color:var(--charcoal-70); margin-top:5px;}
+.range-select{display:flex; gap:6px;}
+.range-btn{padding:8px 14px; font-size:12.5px; border-radius:5px; border:1px solid var(--line); background:var(--white); color:var(--charcoal-70); font-weight:600;}
+.range-btn.active{background:var(--navy); color:var(--white); border-color:var(--navy);}
+
+/* stats */
+.stats-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:24px;}
+.stat-card{background:var(--white); border:1px solid var(--line); border-radius:8px; padding:19px 21px;}
+.stat-card .top{display:flex; justify-content:space-between; align-items:flex-start;}
+.stat-card .ic{width:32px; height:32px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:15px;}
+.ic-gold{background:rgba(242,183,5,.14); color:var(--gold-dim);}
+.ic-green{background:rgba(20,107,60,.12); color:var(--green-dim);}
+.ic-red{background:rgba(200,16,46,.1); color:var(--red);}
+.ic-navy{background:rgba(11,31,58,.08); color:var(--navy);}
+.stat-card .delta{font-family:var(--mono); font-size:11px; font-weight:600;}
+.delta-up{color:var(--green-dim);}
+.delta-down{color:var(--red);}
+.stat-card .num{font-family:var(--display); font-weight:700; font-size:26px; color:var(--navy); margin-top:13px;}
+.stat-card .label{font-size:12px; color:var(--charcoal-70); margin-top:3px;}
+
+/* charts row */
+.charts-row{display:grid; grid-template-columns:1.6fr 1fr; gap:18px; margin-bottom:24px; align-items:start;}
+.card{background:var(--white); border:1px solid var(--line); border-radius:8px; padding:22px; margin-bottom:18px;}
+.card-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;}
+.card-head h3{font-family:var(--display); font-weight:600; font-size:16.5px; color:var(--navy);}
+.card-head .link{font-size:12px; color:var(--gold-dim); font-weight:600;}
+
+.chart-legend{display:flex; gap:16px; font-family:var(--mono); font-size:11px; color:var(--charcoal-70);}
+.chart-legend span{display:flex; align-items:center; gap:6px;}
+.chart-legend .sw{width:9px; height:9px; border-radius:2px;}
+
+/* revenue breakdown */
+.rev-row{margin-bottom:14px;}
+.rev-row .top-line{display:flex; justify-content:space-between; font-size:12.5px; margin-bottom:6px;}
+.rev-row .top-line .lbl{color:var(--charcoal);}
+.rev-row .top-line .val{font-family:var(--mono); color:var(--navy); font-weight:600;}
+.rev-bar-bg{height:7px; background:var(--parchment-2); border-radius:4px; overflow:hidden;}
+.rev-bar-fill{height:100%; border-radius:4px;}
+
+/* two col main */
+.two-col{display:grid; grid-template-columns:1fr 320px; gap:18px; align-items:start;}
+
+/* table */
+table{width:100%; border-collapse:collapse;}
+th{text-align:left; font-family:var(--mono); font-size:10px; letter-spacing:1px; text-transform:uppercase; color:var(--charcoal-70); padding:0 10px 10px 0; border-bottom:1px solid var(--line);}
+td{padding:12px 10px 12px 0; border-bottom:1px solid var(--line); font-size:13px; vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+.cell-user{display:flex; align-items:center; gap:10px;}
+.cell-avatar{width:30px; height:30px; border-radius:50%; background:var(--parchment-2); color:var(--navy); display:flex; align-items:center; justify-content:center; font-family:var(--display); font-weight:700; font-size:11px; flex-shrink:0;}
+.cell-user .n{font-weight:600; color:var(--charcoal);}
+.cell-user .e{font-size:11.5px; color:var(--charcoal-70);}
+.status-pill{font-family:var(--mono); font-size:10px; letter-spacing:.5px; text-transform:uppercase; padding:3px 9px; border-radius:10px; font-weight:700;}
+.status-active{background:rgba(20,107,60,.12); color:var(--green-dim);}
+.status-premium{background:rgba(242,183,5,.15); color:var(--gold-dim);}
+.status-pending{background:rgba(200,16,46,.1); color:var(--red);}
+.type-pill{font-family:var(--mono); font-size:9.5px; letter-spacing:.5px; text-transform:uppercase; padding:3px 8px; border-radius:2px; font-weight:700;}
+.type-schol{background:rgba(242,183,5,.15); color:var(--gold-dim);}
+.type-blog{background:rgba(11,31,58,.08); color:var(--navy);}
+.type-sponsor{background:rgba(200,16,46,.1); color:var(--red);}
+.type-event{background:rgba(20,107,60,.12); color:var(--green-dim);}
+.actions-cell{display:flex; gap:6px;}
+
+/* sidebar column */
+.side-list-item{display:flex; align-items:center; gap:12px; padding:11px 0; border-bottom:1px solid var(--line);}
+.side-list-item:last-child{border-bottom:none;}
+.side-ic{width:32px; height:32px; border-radius:8px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:14px;}
+.side-list-item .t{flex:1; min-width:0;}
+.side-list-item .t .n{font-size:12.5px; font-weight:600; color:var(--charcoal);}
+.side-list-item .t .s{font-size:11px; color:var(--charcoal-70); margin-top:2px;}
+.side-list-item .v{font-family:var(--mono); font-size:11.5px; color:var(--navy); font-weight:600; white-space:nowrap;}
+
+.health-row{display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--line); font-size:12.5px;}
+.health-row:last-child{border-bottom:none;}
+.health-dot{display:flex; align-items:center; gap:7px;}
+.health-dot .d{width:7px; height:7px; border-radius:50%; background:var(--green-dim);}
+
+@media (max-width:1180px){.charts-row{grid-template-columns:1fr;} .two-col{grid-template-columns:1fr;}}
+@media (max-width:900px){.stats-grid{grid-template-columns:1fr 1fr;}}
+@media (max-width:760px){
+  .app{grid-template-columns:1fr;}
+  .sidebar{display:none;}
+  .stats-grid{grid-template-columns:1fr 1fr;}
+  table{display:block; overflow-x:auto;}
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <aside class="sidebar">
+    <a href="campus-connect-ghana-homepage.html" class="side-brand" style="text-decoration:none;">
+      <span class="brand-mark">CC</span>
+      <span class="txt">Campus Connect<small>Admin Console</small></span>
+    </a>
+    <nav class="side-nav">
+      <div class="grp-label">Overview</div>
+      <a href="campus-connect-ghana-admin-dashboard.html" class="active"><span class="ic">◆</span> Dashboard</a>
+      <a href="campus-connect-ghana-admin-dashboard.html"><span class="ic">📊</span> Analytics</a>
+      <a href="campus-connect-ghana-premium-payments.html"><span class="ic">💰</span> Revenue</a>
+      <div class="grp-label">Content</div>
+      <a href="campus-connect-ghana-admin-dashboard.html"><span class="ic">👥</span> Users</a>
+      <a href="campus-connect-ghana-scholarship-portal.html"><span class="ic">✦</span> Scholarships</a>
+      <a href="campus-connect-ghana-university-portal.html"><span class="ic">🎓</span> Universities</a>
+      <a href="campus-connect-ghana-internship-portal.html"><span class="ic">▣</span> Internships</a>
+      <a href="campus-connect-ghana-blog.html"><span class="ic">📰</span> Blog &amp; News</a>
+      <a href="campus-connect-ghana-study-resources.html"><span class="ic">📁</span> Resources</a>
+      <a href="campus-connect-ghana-events.html"><span class="ic">📅</span> Events</a>
+      <div class="grp-label">Trust &amp; Safety</div>
+      <a href="campus-connect-ghana-admin-dashboard.html"><span class="ic">🛡</span> Moderation <span class="badge">23</span></a>
+      <a href="campus-connect-ghana-admin-dashboard.html"><span class="ic">🚩</span> Reports</a>
+      <div class="grp-label">System</div>
+      <a href="campus-connect-ghana-contact-support.html"><span class="ic">⚙</span> Settings</a>
+    </nav>
+    <div class="side-foot">
+      <div class="mini-profile">
+        <div class="mini-avatar">SA</div>
+        <div><div class="name">Selina Addo</div><div class="role">Super Admin</div></div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="search-box"><span>🔍</span><input type="text" placeholder="Search users, scholarships, content…"></div>
+      <div class="topbar-actions">
+        <span class="icon-btn">🛡<span class="dot"></span></span>
+        <span class="icon-btn">🔔<span class="dot"></span></span>
+        <div class="topbar-avatar">SA</div>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <div class="page-head">
+        <div>
+          <h1>Admin Dashboard</h1>
+          <p>Platform overview for Friday, August 7, 2026.</p>
+        </div>
+        <div class="range-select">
+          <button class="range-btn">7D</button>
+          <button class="range-btn active">30D</button>
+          <button class="range-btn">90D</button>
+          <button class="range-btn">1Y</button>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="top"><span class="ic ic-navy">👥</span><span class="delta delta-up">▲ 8.2%</span></div>
+          <div class="num">12,406</div>
+          <div class="label">Total Registered Students</div>
+        </div>
+        <div class="stat-card">
+          <div class="top"><span class="ic ic-gold">✦</span><span class="delta delta-up">▲ 3.1%</span></div>
+          <div class="num">852</div>
+          <div class="label">Active Scholarship Listings</div>
+        </div>
+        <div class="stat-card">
+          <div class="top"><span class="ic ic-red">🛡</span><span class="delta delta-down">▲ 12 today</span></div>
+          <div class="num">23</div>
+          <div class="label">Pending Moderation</div>
+        </div>
+        <div class="stat-card">
+          <div class="top"><span class="ic ic-green">💰</span><span class="delta delta-up">▲ 14.6%</span></div>
+          <div class="num">GH₵48,210</div>
+          <div class="label">Revenue This Month</div>
+        </div>
+      </div>
+
+      <div class="charts-row">
+        <div class="card">
+          <div class="card-head">
+            <h3>Platform Growth</h3>
+            <div class="chart-legend">
+              <span><span class="sw" style="background:var(--gold);"></span>New Students</span>
+              <span><span class="sw" style="background:var(--green);"></span>Applications Submitted</span>
+            </div>
+          </div>
+          <svg viewBox="0 0 560 200" width="100%" height="200" preserveAspectRatio="none">
+            <line x1="0" y1="40" x2="560" y2="40" stroke="#00000010"/>
+            <line x1="0" y1="90" x2="560" y2="90" stroke="#00000010"/>
+            <line x1="0" y1="140" x2="560" y2="140" stroke="#00000010"/>
+            <line x1="0" y1="190" x2="560" y2="190" stroke="#00000010"/>
+            <polyline fill="none" stroke="#F2B705" stroke-width="3" points="0,150 80,130 160,110 240,120 320,80 400,70 480,45 560,30"/>
+            <polyline fill="none" stroke="#146B3C" stroke-width="3" points="0,180 80,170 160,160 240,150 320,145 400,120 480,110 560,95"/>
+            <circle cx="560" cy="30" r="4.5" fill="#F2B705"/>
+            <circle cx="560" cy="95" r="4.5" fill="#146B3C"/>
+          </svg>
+          <div style="display:flex; justify-content:space-between; font-family:var(--mono); font-size:10.5px; color:var(--charcoal-70); margin-top:4px;">
+            <span>Mar</span><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>Revenue by Source</h3></div>
+          <div class="rev-row">
+            <div class="top-line"><span class="lbl">Premium Subscriptions</span><span class="val">GH₵18,400</span></div>
+            <div class="rev-bar-bg"><div class="rev-bar-fill" style="width:70%; background:var(--gold);"></div></div>
+          </div>
+          <div class="rev-row">
+            <div class="top-line"><span class="lbl">Sponsored Listings</span><span class="val">GH₵12,900</span></div>
+            <div class="rev-bar-bg"><div class="rev-bar-fill" style="width:52%; background:var(--green);"></div></div>
+          </div>
+          <div class="rev-row">
+            <div class="top-line"><span class="lbl">Advertising</span><span class="val">GH₵9,300</span></div>
+            <div class="rev-bar-bg"><div class="rev-bar-fill" style="width:38%; background:var(--navy);"></div></div>
+          </div>
+          <div class="rev-row">
+            <div class="top-line"><span class="lbl">Digital Marketplace</span><span class="val">GH₵4,610</span></div>
+            <div class="rev-bar-bg"><div class="rev-bar-fill" style="width:22%; background:var(--red);"></div></div>
+          </div>
+          <div class="rev-row" style="margin-bottom:0;">
+            <div class="top-line"><span class="lbl">Event Tickets &amp; Courses</span><span class="val">GH₵3,000</span></div>
+            <div class="rev-bar-bg"><div class="rev-bar-fill" style="width:15%; background:var(--gold-dim);"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="col-main">
+
+          <div class="card">
+            <div class="card-head">
+              <h3>Content Moderation Queue</h3>
+              <span class="link">View all 23 →</span>
+            </div>
+            <table>
+              <tr><th>Type</th><th>Title</th><th>Submitted By</th><th>Date</th><th>Actions</th></tr>
+              <tr>
+                <td><span class="type-pill type-schol">Scholarship</span></td>
+                <td>Kosmos Energy STEM Award</td>
+                <td>partner_kosmos</td>
+                <td class="mono">Aug 6</td>
+                <td class="actions-cell"><button class="btn btn-green btn-xs">Approve</button><button class="btn btn-red btn-xs">Reject</button></td>
+              </tr>
+              <tr>
+                <td><span class="type-pill type-blog">Blog Post</span></td>
+                <td>"5 Tips for WASSCE Resit Success"</td>
+                <td>efua.writes</td>
+                <td class="mono">Aug 6</td>
+                <td class="actions-cell"><button class="btn btn-green btn-xs">Approve</button><button class="btn btn-red btn-xs">Reject</button></td>
+              </tr>
+              <tr>
+                <td><span class="type-pill type-sponsor">Sponsored</span></td>
+                <td>SnapFin Africa — Banner Ad</td>
+                <td>snapfin_ads</td>
+                <td class="mono">Aug 5</td>
+                <td class="actions-cell"><button class="btn btn-green btn-xs">Approve</button><button class="btn btn-red btn-xs">Reject</button></td>
+              </tr>
+              <tr>
+                <td><span class="type-pill type-event">Event</span></td>
+                <td>Accra Career Fair 2026</td>
+                <td>events_ghtech</td>
+                <td class="mono">Aug 5</td>
+                <td class="actions-cell"><button class="btn btn-green btn-xs">Approve</button><button class="btn btn-red btn-xs">Reject</button></td>
+              </tr>
+              <tr>
+                <td><span class="type-pill type-schol">Scholarship</span></td>
+                <td>GNPC Postgraduate Grant</td>
+                <td>partner_gnpc</td>
+                <td class="mono">Aug 4</td>
+                <td class="actions-cell"><button class="btn btn-green btn-xs">Approve</button><button class="btn btn-red btn-xs">Reject</button></td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <h3>Recent Users</h3>
+              <span class="link">Manage all users →</span>
+            </div>
+            <table>
+              <tr><th>Student</th><th>Level</th><th>Joined</th><th>Status</th><th></th></tr>
+              <tr>
+                <td><div class="cell-user"><div class="cell-avatar">EA</div><div><div class="n">Efua Asante</div><div class="e">efua.a@gmail.com</div></div></div></td>
+                <td>Undergraduate</td>
+                <td class="mono">Aug 6</td>
+                <td><span class="status-pill status-active">Active</span></td>
+                <td><button class="btn btn-outline btn-xs">View</button></td>
+              </tr>
+              <tr>
+                <td><div class="cell-user"><div class="cell-avatar">KO</div><div><div class="n">Kwame Owusu</div><div class="e">kwame.o@gmail.com</div></div></div></td>
+                <td>Postgraduate</td>
+                <td class="mono">Aug 5</td>
+                <td><span class="status-pill status-premium">Premium</span></td>
+                <td><button class="btn btn-outline btn-xs">View</button></td>
+              </tr>
+              <tr>
+                <td><div class="cell-user"><div class="cell-avatar">AB</div><div><div class="n">Abena Boateng</div><div class="e">abena.b@gmail.com</div></div></div></td>
+                <td>SHS Student</td>
+                <td class="mono">Aug 5</td>
+                <td><span class="status-pill status-active">Active</span></td>
+                <td><button class="btn btn-outline btn-xs">View</button></td>
+              </tr>
+              <tr>
+                <td><div class="cell-user"><div class="cell-avatar">YN</div><div><div class="n">Yaw Nkrumah</div><div class="e">yaw.n@gmail.com</div></div></div></td>
+                <td>Undergraduate</td>
+                <td class="mono">Aug 4</td>
+                <td><span class="status-pill status-pending">Unverified</span></td>
+                <td><button class="btn btn-outline btn-xs">View</button></td>
+              </tr>
+            </table>
+          </div>
+
+        </div>
+
+        <div class="col-side">
+          <div class="card">
+            <div class="card-head"><h3>System Health</h3></div>
+            <div class="health-row"><span class="health-dot"><span class="d"></span>API Uptime</span><span class="mono">99.98%</span></div>
+            <div class="health-row"><span class="health-dot"><span class="d"></span>Database</span><span class="mono">Operational</span></div>
+            <div class="health-row"><span class="health-dot"><span class="d"></span>Payment Gateway</span><span class="mono">Operational</span></div>
+            <div class="health-row"><span class="health-dot" style="color:var(--gold-dim);"><span class="d" style="background:var(--gold-dim);"></span>Email Delivery</span><span class="mono">Degraded</span></div>
+            <div class="health-row"><span class="health-dot"><span class="d"></span>Backups</span><span class="mono">Last: 2h ago</span></div>
+          </div>
+
+          <div class="card">
+            <div class="card-head"><h3>Top Content This Week</h3></div>
+            <div class="side-list-item"><div class="side-ic" style="background:rgba(242,183,5,.15); color:var(--gold-dim);">✦</div><div class="t"><div class="n">MasterCard Foundation Scholars</div><div class="s">2,140 views</div></div><div class="v">#1</div></div>
+            <div class="side-list-item"><div class="side-ic" style="background:rgba(11,31,58,.08); color:var(--navy);">🎓</div><div class="t"><div class="n">University of Ghana Admissions</div><div class="s">1,860 views</div></div><div class="v">#2</div></div>
+            <div class="side-list-item"><div class="side-ic" style="background:rgba(20,107,60,.12); color:var(--green-dim);">▣</div><div class="t"><div class="n">MTN Data Analyst Internship</div><div class="s">1,502 views</div></div><div class="v">#3</div></div>
+            <div class="side-list-item"><div class="side-ic" style="background:rgba(200,16,46,.1); color:var(--red);">📰</div><div class="t"><div class="n">WASSCE Resit Tips (Blog)</div><div class="s">1,190 views</div></div><div class="v">#4</div></div>
+          </div>
+
+          <div class="card">
+            <div class="card-head"><h3>Quick Actions</h3></div>
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              <button class="btn btn-outline" style="width:100%; justify-content:flex-start;">+ Add Scholarship</button>
+              <button class="btn btn-outline" style="width:100%; justify-content:flex-start;">+ Add University</button>
+              <button class="btn btn-outline" style="width:100%; justify-content:flex-start;">+ Post Blog Article</button>
+              <button class="btn btn-outline" style="width:100%; justify-content:flex-start;">+ Create Event</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

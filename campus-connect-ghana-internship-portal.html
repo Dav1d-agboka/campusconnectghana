@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Internship & Jobs Portal — Campus Connect Ghana</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+:root{
+  --navy:#0B1F3A; --navy-2:#0F2A4D;
+  --gold:#F2B705; --gold-dim:#C99400;
+  --green:#146B3C; --green-dim:#0F5230;
+  --red:#C8102E;
+  --parchment:#FBF7EF; --parchment-2:#F4EEDF;
+  --charcoal:#1B1B1B; --charcoal-70:rgba(27,27,27,.7);
+  --line:rgba(27,27,27,.12); --white:#fff;
+  --display:'Fraunces',serif; --body:'Inter',sans-serif; --mono:'IBM Plex Mono',monospace;
+  --max:1180px;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+body{font-family:var(--body); color:var(--charcoal); background:var(--parchment); line-height:1.5; -webkit-font-smoothing:antialiased;}
+a{color:inherit; text-decoration:none;} button{font-family:inherit; cursor:pointer;}
+.wrap{max-width:var(--max); margin:0 auto; padding:0 28px;}
+:focus-visible{outline:3px solid var(--gold); outline-offset:2px;}
+@media (prefers-reduced-motion: reduce){*{animation-duration:.001ms !important; transition-duration:.001ms !important;}}
+
+.kente{height:8px; background:repeating-linear-gradient(100deg, var(--gold) 0 18px, var(--green) 18px 36px, var(--red) 36px 42px, var(--navy) 42px 60px);}
+
+header{background:var(--navy); position:sticky; top:0; z-index:50; border-bottom:1px solid rgba(255,255,255,.08);}
+.nav{display:flex; align-items:center; justify-content:space-between; padding:14px 28px; max-width:var(--max); margin:0 auto;}
+.brand{display:flex; align-items:center; gap:10px; color:var(--white);}
+.brand-mark{width:34px; height:34px; border-radius:50%; background:var(--gold); color:var(--navy); display:flex; align-items:center; justify-content:center; font-family:var(--display); font-weight:700; font-size:15px;}
+.brand-text{font-family:var(--display); font-weight:600; font-size:17px;}
+.brand-text small{display:block; font-family:var(--mono); font-size:8.5px; letter-spacing:1.5px; color:var(--gold); text-transform:uppercase; margin-top:2px;}
+.nav-links{display:flex; gap:28px;}
+.nav-links a{color:rgba(255,255,255,.75); font-size:14px; font-weight:500;}
+.nav-links a.active{color:var(--gold);}
+.nav-links a:hover{color:var(--white);}
+.nav-actions{display:flex; align-items:center; gap:12px;}
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:10px 20px; border-radius:3px; border:none; font-size:13.5px; font-weight:600; transition:transform .15s ease, box-shadow .15s ease, background .15s ease;}
+.btn-gold{background:var(--gold); color:var(--navy);}
+.btn-gold:hover{background:#ffc61a; transform:translateY(-1px); box-shadow:0 6px 16px rgba(242,183,5,.3);}
+.btn-ghost-light{background:transparent; color:var(--white); border:1.5px solid rgba(255,255,255,.3);}
+.btn-outline-navy{background:transparent; color:var(--navy); border:1.5px solid var(--navy);}
+.btn-outline-navy:hover{background:var(--navy); color:var(--white);}
+
+/* hero */
+.portal-hero{background:var(--navy); color:var(--white); padding:52px 0 0; position:relative; overflow:hidden;}
+.portal-hero::before{content:''; position:absolute; inset:0; background:radial-gradient(600px 300px at 90% 0%, rgba(20,107,60,.3), transparent 60%); pointer-events:none;}
+.portal-hero .inner{position:relative; z-index:2;}
+.eyebrow{font-family:var(--mono); font-size:12px; letter-spacing:2px; text-transform:uppercase; color:var(--gold); display:flex; align-items:center; gap:10px; margin-bottom:14px;}
+.eyebrow::before{content:''; width:26px; height:1px; background:var(--gold);}
+.portal-hero h1{font-family:var(--display); font-weight:700; font-size:clamp(30px,4vw,44px);}
+.portal-hero p{margin-top:12px; color:rgba(255,255,255,.72); font-size:15.5px; max-width:540px;}
+
+.search-bar{margin-top:26px; background:var(--white); border-radius:8px; padding:8px; display:flex; gap:8px; align-items:center; max-width:760px; box-shadow:0 14px 34px rgba(0,0,0,.25);}
+.search-bar input{flex:1; border:none; outline:none; font-family:var(--body); font-size:14.5px; padding:10px 14px; color:var(--charcoal);}
+.search-bar select{border:none; background:var(--parchment-2); border-radius:5px; padding:10px 12px; font-family:var(--body); font-size:13.5px; color:var(--charcoal-70);}
+
+.scope-tabs{display:flex; gap:6px; margin-top:28px; position:relative; z-index:2;}
+.scope-tab{padding:12px 20px; font-size:13.5px; font-weight:600; color:rgba(255,255,255,.6); border-bottom:2px solid transparent; background:none; white-space:nowrap;}
+.scope-tab.active{color:var(--gold); border-color:var(--gold);}
+
+.stat-strip{display:flex; gap:28px; margin-top:16px; flex-wrap:wrap; padding-bottom:24px;}
+.stat-strip .s{font-family:var(--mono); font-size:12px; color:rgba(255,255,255,.55); letter-spacing:.5px;}
+.stat-strip .s strong{color:var(--gold); font-weight:600;}
+
+/* body */
+.portal-body{display:grid; grid-template-columns:270px 1fr; gap:32px; padding:40px 0 20px; align-items:start;}
+
+.filters{background:var(--white); border:1px solid var(--line); border-radius:8px; padding:22px; position:sticky; top:88px;}
+.filters-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;}
+.filters-head h3{font-family:var(--display); font-weight:600; font-size:16px; color:var(--navy);}
+.filters-head .clear{font-size:12px; color:var(--gold-dim); font-weight:600;}
+.f-group{padding:16px 0; border-top:1px solid var(--line);}
+.f-group:first-of-type{border-top:none; padding-top:0;}
+.f-group h4{font-family:var(--mono); font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--charcoal-70); margin-bottom:12px;}
+.f-option{display:flex; align-items:center; gap:9px; padding:6px 0; font-size:13.5px; color:var(--charcoal);}
+.f-option input{accent-color:var(--green);}
+.f-option .count{margin-left:auto; font-family:var(--mono); font-size:11px; color:var(--charcoal-70);}
+
+.alert-strip{background:var(--white); border:1px solid var(--line); border-radius:8px; padding:18px 20px; margin-bottom:22px; display:flex; align-items:center; gap:14px;}
+.alert-strip .ic{width:38px; height:38px; border-radius:9px; background:rgba(242,183,5,.15); color:var(--gold-dim); display:flex; align-items:center; justify-content:center; font-size:17px; flex-shrink:0;}
+.alert-strip .txt{flex:1;}
+.alert-strip .txt strong{color:var(--navy); font-size:13.5px;}
+.alert-strip .txt p{font-size:12px; color:var(--charcoal-70); margin-top:2px;}
+
+.results-bar{display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:12px;}
+.results-bar .count{font-size:14.5px; color:var(--charcoal-70);}
+.results-bar .count strong{color:var(--navy); font-family:var(--display); font-weight:600;}
+.sort{display:flex; align-items:center; gap:8px; font-size:13px; color:var(--charcoal-70);}
+.sort select{border:1px solid var(--line); border-radius:5px; padding:7px 10px; font-family:var(--body); font-size:13px; background:var(--white);}
+
+/* job cards */
+.job-grid{display:grid; grid-template-columns:1fr; gap:14px;}
+.job-card{
+  background:var(--white); border:1px solid var(--line); border-radius:8px; padding:20px 22px;
+  display:grid; grid-template-columns:52px 1fr auto; gap:18px; align-items:center; transition:transform .15s ease, box-shadow .15s ease;
+}
+.job-card:hover{transform:translateY(-2px); box-shadow:0 14px 30px rgba(11,31,58,.08);}
+.job-logo{width:52px; height:52px; border-radius:9px; background:var(--navy); color:var(--gold); display:flex; align-items:center; justify-content:center; font-family:var(--display); font-weight:700; font-size:16px; flex-shrink:0;}
+.job-info .row1{display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
+.job-info h4{font-family:var(--body); font-weight:700; font-size:15.5px; color:var(--charcoal);}
+.mini-tag{font-family:var(--mono); font-size:9.5px; letter-spacing:.8px; text-transform:uppercase; padding:3px 8px; border-radius:2px; font-weight:700;}
+.tag-intern{background:rgba(20,107,60,.12); color:var(--green-dim);}
+.tag-fulltime{background:rgba(11,31,58,.08); color:var(--navy);}
+.tag-nss{background:rgba(200,16,46,.1); color:var(--red);}
+.tag-remote{background:rgba(242,183,5,.15); color:var(--gold-dim);}
+.job-info .org{font-size:13px; color:var(--charcoal-70); margin-top:4px;}
+.job-meta-row{display:flex; gap:18px; margin-top:10px; flex-wrap:wrap; font-size:12px; color:var(--charcoal-70);}
+.job-meta-row span::before{content:'•'; margin-right:6px; color:var(--line);}
+.job-meta-row span:first-child::before{content:'';margin:0;}
+.job-actions{display:flex; flex-direction:column; gap:8px; align-items:flex-end;}
+.job-actions .btn{white-space:nowrap; padding:9px 16px; font-size:12.5px;}
+.job-actions .closes{font-family:var(--mono); font-size:11px; color:var(--red);}
+
+@media (max-width:900px){
+  .job-card{grid-template-columns:44px 1fr; grid-template-rows:auto auto;}
+  .job-actions{grid-column:1 / -1; flex-direction:row; justify-content:space-between; align-items:center; margin-top:14px;}
+}
+@media (max-width:1000px){
+  .portal-body{grid-template-columns:1fr;}
+  .filters{position:static;}
+}
+@media (max-width:700px){ .nav-links{display:none;} }
+
+.pagination{display:flex; justify-content:center; align-items:center; gap:8px; margin:44px 0 10px;}
+.pagination button{width:36px; height:36px; border-radius:5px; border:1px solid var(--line); background:var(--white); font-family:var(--mono); font-size:13px; color:var(--charcoal-70);}
+.pagination button.active{background:var(--navy); color:var(--gold); border-color:var(--navy);}
+
+/* employer spotlight */
+.employer-section{margin:56px 0 20px;}
+.section-head{display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:20px; flex-wrap:wrap; gap:12px;}
+.section-head h2{font-family:var(--display); font-weight:600; font-size:22px; color:var(--navy);}
+.section-head p{font-size:13px; color:var(--charcoal-70); margin-top:4px;}
+.employer-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px;}
+.employer-card{background:var(--white); border:1px solid var(--line); border-radius:8px; padding:22px 18px; text-align:center; transition:transform .15s ease, box-shadow .15s ease;}
+.employer-card:hover{transform:translateY(-3px); box-shadow:0 12px 26px rgba(11,31,58,.08);}
+.employer-logo{width:48px; height:48px; border-radius:50%; background:var(--navy); color:var(--gold); display:flex; align-items:center; justify-content:center; font-family:var(--display); font-weight:700; font-size:15px; margin:0 auto 12px;}
+.employer-card h5{font-size:13.5px; font-weight:700; color:var(--navy);}
+.employer-card p{font-size:11.5px; color:var(--charcoal-70); margin-top:4px;}
+.employer-card .open{font-family:var(--mono); font-size:10.5px; color:var(--green-dim); margin-top:10px;}
+@media (max-width:800px){.employer-grid{grid-template-columns:repeat(2,1fr);}}
+
+/* alert cta */
+.alert-cta{background:var(--green); border-radius:10px; padding:40px 40px; color:var(--white); display:flex; justify-content:space-between; align-items:center; gap:24px; flex-wrap:wrap; margin:50px 0 20px; position:relative; overflow:hidden;}
+.alert-cta::after{content:'★'; position:absolute; right:-10px; bottom:-40px; font-size:150px; color:rgba(255,255,255,.06);}
+.alert-cta h3{font-family:var(--display); font-size:clamp(19px,2.4vw,24px); font-weight:600; max-width:360px; position:relative; z-index:2;}
+.alert-cta p{margin-top:6px; font-size:13px; color:rgba(255,255,255,.8); position:relative; z-index:2;}
+.alert-cta form{display:flex; gap:10px; flex-wrap:wrap; position:relative; z-index:2;}
+.alert-cta input{padding:12px 16px; border-radius:3px; border:none; font-size:14px; width:220px; max-width:100%;}
+
+footer{background:var(--navy); color:rgba(255,255,255,.65); padding:40px 0 26px; text-align:center; font-size:12.5px;}
+
+/* nav "more" dropdown */
+.nav-more{position:relative;}
+.nav-more-btn{background:none; border:none; color:rgba(255,255,255,.75); font-size:14px; font-weight:500; font-family:inherit; cursor:pointer; padding:6px 0; display:flex; align-items:center; gap:4px;}
+.nav-more-btn:hover{color:var(--white);}
+.nav-more .care{font-size:10px; transition:transform .2s ease;}
+.nav-more.open .care{transform:rotate(180deg);}
+.nav-more-menu{display:none; position:absolute; top:calc(100% + 14px); left:50%; transform:translateX(-50%); background:var(--white); border:1px solid var(--line); border-radius:8px; box-shadow:0 16px 34px rgba(0,0,0,.18); padding:8px; min-width:190px; z-index:60;}
+.nav-more.open .nav-more-menu{display:block;}
+.nav-more-menu a{display:block; padding:9px 12px; font-size:13px; color:var(--charcoal); border-radius:5px; white-space:nowrap;}
+.nav-more-menu a:hover{background:var(--parchment-2); color:var(--navy);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="kente"></div>
+  <nav class="nav">
+    <a href="campus-connect-ghana-homepage.html" class="brand">
+      <span class="brand-mark">CC</span>
+      <span class="brand-text">Campus Connect<br><small>Ghana</small></span>
+    </a>
+        <div class="nav-links">
+      <a href="campus-connect-ghana-scholarship-portal.html">Scholarships</a>
+      <a href="campus-connect-ghana-university-portal.html">Admissions</a>
+      <a href="campus-connect-ghana-internship-portal.html">Internships</a>
+      <a href="campus-connect-ghana-study-resources.html">Study Resources</a>
+      <a href="campus-connect-ghana-community.html">Community</a>
+      <div class="nav-more">
+        <button type="button" class="nav-more-btn" onclick="this.parentElement.classList.toggle('open')">More <span class="care">▾</span></button>
+        <div class="nav-more-menu">
+          <a href="campus-connect-ghana-ai-study-assistant.html">AI Study Assistant</a>
+          <a href="campus-connect-ghana-career-development.html">Career Tools</a>
+          <a href="campus-connect-ghana-blog.html">Blog &amp; News</a>
+          <a href="campus-connect-ghana-events.html">Events</a>
+          <a href="campus-connect-ghana-premium-payments.html">Premium</a>
+          <a href="campus-connect-ghana-contact-support.html">Contact &amp; Support</a>
+        </div>
+      </div>
+    </div>
+        <div class="nav-actions">
+      <a href="campus-connect-ghana-dashboard.html" class="btn btn-ghost-light">My Dashboard</a>
+      <a href="campus-connect-ghana-register.html" class="btn btn-gold">Get Started</a>
+    </div>
+  </nav>
+</header>
+
+<section class="portal-hero">
+  <div class="wrap inner">
+    <div class="eyebrow">Internship &amp; Jobs Portal</div>
+    <h1>Internships, National Service,<br>and graduate jobs — verified.</h1>
+    <p>From your first internship to your first full-time role, matched to your field and updated by employers directly.</p>
+    <div class="search-bar">
+      <input type="text" placeholder="Search by role, company, or skill…">
+      <select>
+        <option>All Locations</option>
+        <option>Accra</option>
+        <option>Kumasi</option>
+        <option>Remote</option>
+      </select>
+      <button class="btn btn-gold">Search</button>
+    </div>
+    <div class="scope-tabs">
+      <button class="scope-tab active">All Listings</button>
+      <button class="scope-tab">Internships</button>
+      <button class="scope-tab">Graduate Jobs</button>
+      <button class="scope-tab">National Service</button>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="stat-strip">
+      <span class="s"><strong>380+</strong> live listings</span>
+      <span class="s"><strong>140+</strong> employer partners</span>
+      <span class="s"><strong>26</strong> new this week</span>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="portal-body">
+
+    <aside class="filters">
+      <div class="filters-head"><h3>Filters</h3><span class="clear">Clear all</span></div>
+
+      <div class="f-group">
+        <h4>Opportunity Type</h4>
+        <label class="f-option"><input type="checkbox" checked> Internship <span class="count">168</span></label>
+        <label class="f-option"><input type="checkbox"> Graduate Job <span class="count">94</span></label>
+        <label class="f-option"><input type="checkbox"> National Service <span class="count">62</span></label>
+        <label class="f-option"><input type="checkbox"> Part-time / Remote <span class="count">56</span></label>
+      </div>
+
+      <div class="f-group">
+        <h4>Industry</h4>
+        <label class="f-option"><input type="checkbox"> Technology <span class="count">92</span></label>
+        <label class="f-option"><input type="checkbox"> Banking &amp; Finance <span class="count">71</span></label>
+        <label class="f-option"><input type="checkbox"> Telecom <span class="count">44</span></label>
+        <label class="f-option"><input type="checkbox"> NGO &amp; Development <span class="count">38</span></label>
+        <label class="f-option"><input type="checkbox"> Media &amp; Marketing <span class="count">29</span></label>
+      </div>
+
+      <div class="f-group">
+        <h4>Location</h4>
+        <label class="f-option"><input type="checkbox"> Greater Accra <span class="count">210</span></label>
+        <label class="f-option"><input type="checkbox"> Ashanti <span class="count">64</span></label>
+        <label class="f-option"><input type="checkbox"> Remote <span class="count">48</span></label>
+      </div>
+
+      <div class="f-group">
+        <h4>Posted</h4>
+        <label class="f-option"><input type="radio" name="posted"> Last 24 hours <span class="count">14</span></label>
+        <label class="f-option"><input type="radio" name="posted"> This week <span class="count">26</span></label>
+        <label class="f-option"><input type="radio" name="posted" checked> Any time <span class="count">380</span></label>
+      </div>
+
+      <button class="btn btn-outline-navy" style="width:100%; margin-top:6px;">Apply Filters</button>
+    </aside>
+
+    <main>
+      <div class="alert-strip">
+        <div class="ic">🔔</div>
+        <div class="txt"><strong>Job Alerts</strong><p>Get notified the moment a listing matches your field and location.</p></div>
+        <button class="btn btn-outline-navy">Set Up Alert</button>
+      </div>
+
+      <div class="results-bar">
+        <div class="count"><strong>380</strong> opportunities found</div>
+        <div class="sort">
+          Sort by
+          <select>
+            <option>Newest first</option>
+            <option>Deadline — soonest first</option>
+            <option>Company A–Z</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="job-grid">
+
+        <div class="job-card">
+          <div class="job-logo">MT</div>
+          <div class="job-info">
+            <div class="row1"><h4>Data Analyst Intern</h4><span class="mini-tag tag-intern">Internship</span></div>
+            <div class="org">MTN Ghana</div>
+            <div class="job-meta-row"><span>Accra, Greater Accra</span><span>GH₵1,800/mo stipend</span><span>3 months</span></div>
+          </div>
+          <div class="job-actions">
+            <span class="closes">Closes Aug 17</span>
+            <a href="campus-connect-ghana-register.html" class="btn btn-gold">Apply Now</a>
+          </div>
+        </div>
+
+        <div class="job-card">
+          <div class="job-logo">JM</div>
+          <div class="job-info">
+            <div class="row1"><h4>Marketing Intern</h4><span class="mini-tag tag-intern">Internship</span></div>
+            <div class="org">Jumia Ghana</div>
+            <div class="job-meta-row"><span>Accra, Greater Accra</span><span>GH₵1,500/mo stipend</span><span>6 months</span></div>
+          </div>
+          <div class="job-actions">
+            <span class="closes">Closes Aug 19</span>
+            <a href="campus-connect-ghana-register.html" class="btn btn-gold">Apply Now</a>
+          </div>
+        </div>
+
+        <div class="job-card">
+          <div class="job-logo">EB</div>
+          <div class="job-info">
+            <div class="row1"><h4>Graduate Trainee — Finance</h4><span class="mini-tag tag-fulltime">Full-Time</span></div>
+            <div class="org">Ecobank Ghana</div>
+            <div class="job-meta-row"><span>Accra, Greater Accra</span><span>Entry level</span><span>Full-time</span></div>
+          </div>
+          <div class="job-actions">
+            <span class="closes">Closes Sep 5</span>
+            <a href="campus-connect-ghana-register.html" class="btn btn-gold">Apply Now</a>
+          </div>
+        </div>
+
+        <div class="job-card">
+          <div class="job-logo">GH</div>
+          <div class="job-info">
+            <div class="row1"><h4>National Service — Teaching Assistant</h4><span class="mini-tag tag-nss">National Service</span></div>
+            <div class="org">Ghana Education Service</div>
+            <div class="job-meta-row"><span>Various Districts</span><span>NSS Allowance</span><span>12 months</span></div>
+          </div>
+          <div class="job-actions">
+            <span class="closes">Closes Aug 25</span>
+            <a href="campus-connect-ghana-register.html" class="btn btn-gold">Apply Now</a>
+          </div>
+        </div>
+
+        <div class="job-card">
+          <div class="job-logo">SF</div>
+          <div class="job-info">
+            <div class="row1"><h4>Junior Frontend Developer</h4><span class="mini-tag tag-remote">Remote</span></div>
+            <div class="org">SnapFin Africa</div>
+            <div class="job-meta-row"><span>Remote (Ghana-based)</span><span>GH₵4,500/mo</span><span>Full-time</span></div>
+          </div>
+          <div class="job-actions">
+            <span class="closes">Closes Aug 30</span>
+            <a href="campus-connect-ghana-register.html" class="btn btn-gold">Apply Now</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="pagination">
+        <button>‹</button>
+        <button class="active">1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>…</button>
+        <button>32</button>
+        <button>›</button>
+      </div>
+    </main>
+
+  </div>
+
+  <div class="employer-section">
+    <div class="section-head">
+      <div>
+        <h2>Featured Employers</h2>
+        <p>Companies actively hiring students and graduates through Campus Connect Ghana.</p>
+      </div>
+    </div>
+    <div class="employer-grid">
+      <div class="employer-card"><div class="employer-logo">MT</div><h5>MTN Ghana</h5><p>Telecommunications</p><div class="open">6 open roles</div></div>
+      <div class="employer-card"><div class="employer-logo">EB</div><h5>Ecobank Ghana</h5><p>Banking &amp; Finance</p><div class="open">4 open roles</div></div>
+      <div class="employer-card"><div class="employer-logo">JM</div><h5>Jumia Ghana</h5><p>E-Commerce</p><div class="open">3 open roles</div></div>
+      <div class="employer-card"><div class="employer-logo">SF</div><h5>SnapFin Africa</h5><p>Fintech</p><div class="open">5 open roles</div></div>
+    </div>
+  </div>
+
+  <div class="alert-cta">
+    <div>
+      <h3>Never miss a listing</h3>
+      <p>Get internship and job alerts matched to your field, weekly.</p>
+    </div>
+    <form onsubmit="event.preventDefault(); this.querySelector('button').textContent='Alerts On ✓';">
+      <input type="email" placeholder="your.email@example.com" required aria-label="Email address">
+      <button type="submit" class="btn btn-gold">Create Alert</button>
+    </form>
+  </div>
+</div>
+
+<div class="kente"></div>
+<footer>© 2026 Campus Connect Ghana. Connecting Every Ghanaian Student to Success.</footer>
+
+<script>
+document.querySelectorAll('.scope-tab').forEach(tab=>{
+  tab.addEventListener('click', ()=>{
+    document.querySelectorAll('.scope-tab').forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+  });
+});
+</script>
+
+
+<script>
+(function(){
+  var here = location.pathname.split('/').pop();
+  document.querySelectorAll('.nav-links > a[href], .nav-more-menu a[href]').forEach(function(a){
+    if(a.getAttribute('href') === here){ a.classList.add('active'); }
+  });
+  document.addEventListener('click', function(e){
+    document.querySelectorAll('.nav-more.open').forEach(function(m){
+      if(!m.contains(e.target)) m.classList.remove('open');
+    });
+  });
+})();
+</script>
+</body>
+</html>

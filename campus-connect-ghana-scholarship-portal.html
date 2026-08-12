@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scholarship Portal — Campus Connect Ghana</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root{
+  --navy:#0B1F3A; --navy-2:#0F2A4D;
+  --gold:#F2B705; --gold-dim:#C99400;
+  --green:#146B3C; --green-dim:#0F5230;
+  --red:#C8102E;
+  --parchment:#FBF7EF; --parchment-2:#F4EEDF;
+  --charcoal:#1B1B1B; --charcoal-70:rgba(27,27,27,.7);
+  --line:rgba(27,27,27,.12); --white:#fff;
+  --display:'Fraunces',serif; --body:'Inter',sans-serif; --mono:'IBM Plex Mono',monospace;
+  --max:1180px;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+body{font-family:var(--body); color:var(--charcoal); background:var(--parchment); line-height:1.5; -webkit-font-smoothing:antialiased;}
+a{color:inherit; text-decoration:none;} button{font-family:inherit; cursor:pointer;}
+img{max-width:100%; display:block;}
+.wrap{max-width:var(--max); margin:0 auto; padding:0 28px;}
+:focus-visible{outline:3px solid var(--gold); outline-offset:2px;}
+@media (prefers-reduced-motion: reduce){*{animation-duration:.001ms !important; transition-duration:.001ms !important;}}
+
+.kente{height:8px; background:repeating-linear-gradient(100deg, var(--gold) 0 18px, var(--green) 18px 36px, var(--red) 36px 42px, var(--navy) 42px 60px);}
+
+/* header (reused from homepage) */
+header{background:var(--navy); position:sticky; top:0; z-index:50; border-bottom:1px solid rgba(255,255,255,.08);}
+.nav{display:flex; align-items:center; justify-content:space-between; padding:14px 28px; max-width:var(--max); margin:0 auto;}
+.brand{display:flex; align-items:center; gap:10px; color:var(--white);}
+.brand-mark{width:34px; height:34px; border-radius:50%; background:var(--gold); color:var(--navy); display:flex; align-items:center; justify-content:center; font-family:var(--display); font-weight:700; font-size:15px;}
+.brand-text{font-family:var(--display); font-weight:600; font-size:17px;}
+.brand-text small{display:block; font-family:var(--mono); font-size:8.5px; letter-spacing:1.5px; color:var(--gold); text-transform:uppercase; margin-top:2px;}
+.nav-links{display:flex; gap:28px;}
+.nav-links a{color:rgba(255,255,255,.75); font-size:14px; font-weight:500;}
+.nav-links a.active{color:var(--gold);}
+.nav-links a:hover{color:var(--white);}
+.nav-actions{display:flex; align-items:center; gap:12px;}
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:10px 20px; border-radius:3px; border:none; font-size:13.5px; font-weight:600; transition:transform .15s ease, box-shadow .15s ease, background .15s ease;}
+.btn-gold{background:var(--gold); color:var(--navy);}
+.btn-gold:hover{background:#ffc61a; transform:translateY(-1px); box-shadow:0 6px 16px rgba(242,183,5,.3);}
+.btn-ghost-light{background:transparent; color:var(--white); border:1.5px solid rgba(255,255,255,.3);}
+.btn-outline-navy{background:transparent; color:var(--navy); border:1.5px solid var(--navy);}
+.btn-outline-navy:hover{background:var(--navy); color:var(--white);}
+
+/* portal hero */
+.portal-hero{background:var(--navy); color:var(--white); padding:52px 0 40px; position:relative; overflow:hidden;}
+.portal-hero::before{content:''; position:absolute; inset:0; background:radial-gradient(600px 300px at 90% 0%, rgba(20,107,60,.3), transparent 60%); pointer-events:none;}
+.portal-hero .inner{position:relative; z-index:2;}
+.eyebrow{font-family:var(--mono); font-size:12px; letter-spacing:2px; text-transform:uppercase; color:var(--gold); display:flex; align-items:center; gap:10px; margin-bottom:14px;}
+.eyebrow::before{content:''; width:26px; height:1px; background:var(--gold);}
+.portal-hero h1{font-family:var(--display); font-weight:700; font-size:clamp(30px,4vw,44px);}
+.portal-hero p{margin-top:12px; color:rgba(255,255,255,.72); font-size:15.5px; max-width:520px;}
+
+.search-bar{
+  margin-top:26px; background:var(--white); border-radius:8px; padding:8px; display:flex; gap:8px; align-items:center;
+  max-width:720px; box-shadow:0 14px 34px rgba(0,0,0,.25);
+}
+.search-bar input{flex:1; border:none; outline:none; font-family:var(--body); font-size:14.5px; padding:10px 14px; color:var(--charcoal);}
+.search-bar select{border:none; background:var(--parchment-2); border-radius:5px; padding:10px 12px; font-family:var(--body); font-size:13.5px; color:var(--charcoal-70);}
+
+.stat-strip{display:flex; gap:28px; margin-top:22px; flex-wrap:wrap;}
+.stat-strip .s{font-family:var(--mono); font-size:12px; color:rgba(255,255,255,.55); letter-spacing:.5px;}
+.stat-strip .s strong{color:var(--gold); font-weight:600;}
+
+/* portal body */
+.portal-body{display:grid; grid-template-columns:270px 1fr; gap:32px; padding:44px 0 20px; align-items:start;}
+
+/* filters */
+.filters{background:var(--white); border:1px solid var(--line); border-radius:8px; padding:22px; position:sticky; top:88px;}
+.filters-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;}
+.filters-head h3{font-family:var(--display); font-weight:600; font-size:16px; color:var(--navy);}
+.filters-head .clear{font-size:12px; color:var(--gold-dim); font-weight:600;}
+.f-group{padding:16px 0; border-top:1px solid var(--line);}
+.f-group:first-of-type{border-top:none; padding-top:0;}
+.f-group h4{font-family:var(--mono); font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--charcoal-70); margin-bottom:12px;}
+.f-option{display:flex; align-items:center; gap:9px; padding:6px 0; font-size:13.5px; color:var(--charcoal);}
+.f-option input{accent-color:var(--green);}
+.f-option .count{margin-left:auto; font-family:var(--mono); font-size:11px; color:var(--charcoal-70);}
+
+/* results */
+.results-bar{display:flex; justify-content:space-between; align-items:center; margin-bottom:22px; flex-wrap:wrap; gap:12px;}
+.results-bar .count{font-size:14.5px; color:var(--charcoal-70);}
+.results-bar .count strong{color:var(--navy); font-family:var(--display); font-weight:600;}
+.sort{display:flex; align-items:center; gap:8px; font-size:13px; color:var(--charcoal-70);}
+.sort select{border:1px solid var(--line); border-radius:5px; padding:7px 10px; font-family:var(--body); font-size:13px; background:var(--white);}
+
+.tickets-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
+.ticket{background:var(--white); border:1px solid var(--line); border-radius:8px; position:relative; padding:24px 22px 22px; overflow:hidden; transition:transform .2s ease, box-shadow .2s ease;}
+.ticket:hover{transform:translateY(-4px); box-shadow:0 16px 32px rgba(11,31,58,.1);}
+.ticket .corner{position:absolute; top:14px; right:-30px; background:var(--gold); color:var(--navy); font-family:var(--mono); font-size:10px; font-weight:700; letter-spacing:1px; padding:4px 34px; transform:rotate(45deg);}
+.ticket .amount{font-family:var(--display); font-weight:700; font-size:23px; color:var(--navy);}
+.ticket .amount span{font-size:13px; font-weight:500; color:var(--charcoal-70); font-family:var(--body);}
+.ticket h4{font-family:var(--body); font-weight:700; font-size:14.5px; margin-top:9px; color:var(--charcoal); line-height:1.35;}
+.ticket .org{font-size:12.5px; color:var(--charcoal-70); margin-top:3px;}
+.tags-row{display:flex; gap:6px; margin-top:12px; flex-wrap:wrap;}
+.mini-tag{font-family:var(--mono); font-size:9.5px; letter-spacing:.5px; text-transform:uppercase; padding:3px 7px; border-radius:2px; background:var(--parchment-2); color:var(--charcoal-70);}
+.perf{border-top:2px dashed var(--line); margin:16px 0; position:relative;}
+.perf::before,.perf::after{content:''; position:absolute; top:-8px; width:16px; height:16px; border-radius:50%; background:var(--parchment); border:1px solid var(--line);}
+.perf::before{left:-38px;} .perf::after{right:-38px;}
+.ticket-meta{display:flex; justify-content:space-between; align-items:center; font-family:var(--mono); font-size:11px; color:var(--charcoal-70);}
+.ticket-meta .countdown{color:var(--red); font-weight:600;}
+.ticket-actions{display:flex; gap:9px; margin-top:16px;}
+.ticket-actions .btn{flex:1; padding:9px 12px; font-size:12.5px;}
+.ticket-actions .save-btn{width:38px; flex:none; border:1.5px solid var(--line); border-radius:3px; display:flex; align-items:center; justify-content:center; background:none; color:var(--charcoal-70); font-size:15px;}
+.ticket-actions .save-btn:hover{border-color:var(--red); color:var(--red);}
+
+.pagination{display:flex; justify-content:center; align-items:center; gap:8px; margin:44px 0 10px;}
+.pagination button{width:36px; height:36px; border-radius:5px; border:1px solid var(--line); background:var(--white); font-family:var(--mono); font-size:13px; color:var(--charcoal-70);}
+.pagination button.active{background:var(--navy); color:var(--gold); border-color:var(--navy);}
+.pagination button:hover:not(.active){border-color:var(--navy);}
+
+@media (max-width:1000px){
+  .portal-body{grid-template-columns:1fr;}
+  .filters{position:static;}
+  .tickets-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media (max-width:700px){
+  .nav-links{display:none;}
+  .tickets-grid{grid-template-columns:1fr;}
+  .search-bar{flex-direction:column; align-items:stretch;}
+}
+
+/* alert cta */
+.alert-cta{background:var(--green); border-radius:10px; padding:44px 42px; color:var(--white); display:flex; justify-content:space-between; align-items:center; gap:26px; flex-wrap:wrap; margin:50px 0 60px; position:relative; overflow:hidden;}
+.alert-cta::after{content:'★'; position:absolute; right:-10px; bottom:-40px; font-size:160px; color:rgba(255,255,255,.06);}
+.alert-cta h3{font-family:var(--display); font-size:clamp(20px,2.6vw,26px); font-weight:600; max-width:380px; position:relative; z-index:2;}
+.alert-cta p{margin-top:6px; font-size:13.5px; color:rgba(255,255,255,.8); position:relative; z-index:2;}
+.alert-cta form{display:flex; gap:10px; flex-wrap:wrap; position:relative; z-index:2;}
+.alert-cta input{padding:12px 16px; border-radius:3px; border:none; font-size:14px; width:230px; max-width:100%;}
+
+/* footer */
+footer{background:var(--navy); color:rgba(255,255,255,.65); padding:40px 0 26px; text-align:center; font-size:12.5px;}
+
+/* nav "more" dropdown */
+.nav-more{position:relative;}
+.nav-more-btn{background:none; border:none; color:rgba(255,255,255,.75); font-size:14px; font-weight:500; font-family:inherit; cursor:pointer; padding:6px 0; display:flex; align-items:center; gap:4px;}
+.nav-more-btn:hover{color:var(--white);}
+.nav-more .care{font-size:10px; transition:transform .2s ease;}
+.nav-more.open .care{transform:rotate(180deg);}
+.nav-more-menu{display:none; position:absolute; top:calc(100% + 14px); left:50%; transform:translateX(-50%); background:var(--white); border:1px solid var(--line); border-radius:8px; box-shadow:0 16px 34px rgba(0,0,0,.18); padding:8px; min-width:190px; z-index:60;}
+.nav-more.open .nav-more-menu{display:block;}
+.nav-more-menu a{display:block; padding:9px 12px; font-size:13px; color:var(--charcoal); border-radius:5px; white-space:nowrap;}
+.nav-more-menu a:hover{background:var(--parchment-2); color:var(--navy);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="kente"></div>
+  <nav class="nav">
+    <a href="campus-connect-ghana-homepage.html" class="brand">
+      <span class="brand-mark">CC</span>
+      <span class="brand-text">Campus Connect<br><small>Ghana</small></span>
+    </a>
+        <div class="nav-links">
+      <a href="campus-connect-ghana-scholarship-portal.html">Scholarships</a>
+      <a href="campus-connect-ghana-university-portal.html">Admissions</a>
+      <a href="campus-connect-ghana-internship-portal.html">Internships</a>
+      <a href="campus-connect-ghana-study-resources.html">Study Resources</a>
+      <a href="campus-connect-ghana-community.html">Community</a>
+      <div class="nav-more">
+        <button type="button" class="nav-more-btn" onclick="this.parentElement.classList.toggle('open')">More <span class="care">▾</span></button>
+        <div class="nav-more-menu">
+          <a href="campus-connect-ghana-ai-study-assistant.html">AI Study Assistant</a>
+          <a href="campus-connect-ghana-career-development.html">Career Tools</a>
+          <a href="campus-connect-ghana-blog.html">Blog &amp; News</a>
+          <a href="campus-connect-ghana-events.html">Events</a>
+          <a href="campus-connect-ghana-premium-payments.html">Premium</a>
+          <a href="campus-connect-ghana-contact-support.html">Contact &amp; Support</a>
+        </div>
+      </div>
+    </div>
+        <div class="nav-actions">
+      <a href="campus-connect-ghana-dashboard.html" class="btn btn-ghost-light">My Dashboard</a>
+      <a href="campus-connect-ghana-register.html" class="btn btn-gold">Get Started</a>
+    </div>
+  </nav>
+</header>
+
+<section class="portal-hero">
+  <div class="wrap inner">
+    <div class="eyebrow">Scholarship Portal</div>
+    <h1>Every scholarship in Ghana,<br>in one searchable list.</h1>
+    <p>Verified, updated daily, and matched to your level and field — with deadlines tracked automatically so nothing slips past you.</p>
+    <div class="search-bar">
+      <input type="text" placeholder="Search by name, university, or field of study…">
+      <select>
+        <option>All Regions</option>
+        <option>Greater Accra</option>
+        <option>Ashanti</option>
+        <option>International</option>
+      </select>
+      <button class="btn btn-gold">Search</button>
+    </div>
+    <div class="stat-strip">
+      <span class="s"><strong>247</strong> open scholarships</span>
+      <span class="s"><strong>18</strong> added this week</span>
+      <span class="s"><strong>60+</strong> partner institutions</span>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="portal-body">
+
+    <aside class="filters">
+      <div class="filters-head"><h3>Filters</h3><span class="clear">Clear all</span></div>
+
+      <div class="f-group">
+        <h4>Study Level</h4>
+        <label class="f-option"><input type="checkbox" checked> SHS / Undergraduate <span class="count">142</span></label>
+        <label class="f-option"><input type="checkbox"> Postgraduate <span class="count">68</span></label>
+        <label class="f-option"><input type="checkbox"> PhD / Research <span class="count">37</span></label>
+      </div>
+
+      <div class="f-group">
+        <h4>Funding Type</h4>
+        <label class="f-option"><input type="checkbox"> Full tuition <span class="count">96</span></label>
+        <label class="f-option"><input type="checkbox"> Partial funding <span class="count">88</span></label>
+        <label class="f-option"><input type="checkbox"> Stipend / grant <span class="count">63</span></label>
+      </div>
+
+      <div class="f-group">
+        <h4>Field of Study</h4>
+        <label class="f-option"><input type="checkbox"> Engineering &amp; Tech <span class="count">54</span></label>
+        <label class="f-option"><input type="checkbox"> Business &amp; Finance <span class="count">41</span></label>
+        <label class="f-option"><input type="checkbox"> Health Sciences <span class="count">33</span></label>
+        <label class="f-option"><input type="checkbox"> STEM (Women) <span class="count">22</span></label>
+        <label class="f-option"><input type="checkbox"> Arts &amp; Humanities <span class="count">19</span></label>
+      </div>
+
+      <div class="f-group">
+        <h4>Deadline</h4>
+        <label class="f-option"><input type="radio" name="dl"> Closing this week <span class="count">12</span></label>
+        <label class="f-option"><input type="radio" name="dl"> Closing this month <span class="count">54</span></label>
+        <label class="f-option"><input type="radio" name="dl" checked> Any time <span class="count">247</span></label>
+      </div>
+
+      <button class="btn btn-outline-navy" style="width:100%; margin-top:6px;">Apply Filters</button>
+    </aside>
+
+    <main>
+      <div class="results-bar">
+        <div class="count"><strong>247</strong> scholarships found</div>
+        <div class="sort">
+          Sort by
+          <select>
+            <option>Deadline — soonest first</option>
+            <option>Newest added</option>
+            <option>Amount — highest first</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="tickets-grid">
+
+        <div class="ticket">
+          <span class="corner">Featured</span>
+          <div class="amount">Full Tuition <span>+ Stipend</span></div>
+          <h4>MasterCard Foundation Scholars Program</h4>
+          <div class="org">Ashesi University</div>
+          <div class="tags-row"><span class="mini-tag">Undergraduate</span><span class="mini-tag">All Fields</span></div>
+          <div class="perf"></div>
+          <div class="ticket-meta"><span>Closes Aug 10</span><span class="countdown">4D : 12H</span></div>
+          <div class="ticket-actions">
+            <button class="save-btn">♡</button>
+            <button class="btn btn-outline-navy">Details</button>
+            <button class="btn btn-gold">Apply</button>
+          </div>
+        </div>
+
+        <div class="ticket">
+          <div class="amount">GH₵15,000 <span>/ year</span></div>
+          <h4>Girls in STEM Grant</h4>
+          <div class="org">GhanaTech Foundation</div>
+          <div class="tags-row"><span class="mini-tag">Women Only</span><span class="mini-tag">STEM</span></div>
+          <div class="perf"></div>
+          <div class="ticket-meta"><span>Closes Aug 8</span><span class="countdown">2D : 08H</span></div>
+          <div class="ticket-actions">
+            <button class="save-btn">♡</button>
+            <button class="btn btn-outline-navy">Details</button>
+            <button class="btn btn-gold">Apply</button>
+          </div>
+        </div>
+
+        <div class="ticket">
+          <span class="corner">Featured</span>
+          <div class="amount">Full Ride <span>+ Housing</span></div>
+          <h4>Mastercard-KNUST Engineering Award</h4>
+          <div class="org">KNUST, Kumasi</div>
+          <div class="tags-row"><span class="mini-tag">Engineering</span><span class="mini-tag">Undergraduate</span></div>
+          <div class="perf"></div>
+          <div class="ticket-meta"><span>Closes Aug 22</span><span class="countdown">16D : 03H</span></div>
+          <div class="ticket-actions">
+            <button class="save-btn">♡</button>
+            <button class="btn btn-outline-navy">Details</button>
+            <button class="btn btn-gold">Apply</button>
+          </div>
+        </div>
+
+        <div class="ticket">
+          <div class="amount">GH₵8,500 <span>/ semester</span></div>
+          <h4>Ghana National Petroleum Scholarship</h4>
+          <div class="org">GNPC Foundation</div>
+          <div class="tags-row"><span class="mini-tag">Postgraduate</span><span class="mini-tag">Energy</span></div>
+          <div class="perf"></div>
+          <div class="ticket-meta"><span>Closes Sep 3</span><span class="countdown">28D : 00H</span></div>
+          <div class="ticket-actions">
+            <button class="save-btn">♡</button>
+            <button class="btn btn-outline-navy">Details</button>
+            <button class="btn btn-gold">Apply</button>
+          </div>
+        </div>
+
+        <div class="ticket">
+          <div class="amount">Partial Tuition <span>50%</span></div>
+          <h4>Ecobank Fintech Leaders Scholarship</h4>
+          <div class="org">Ecobank Ghana</div>
+          <div class="tags-row"><span class="mini-tag">Business</span><span class="mini-tag">Undergraduate</span></div>
+          <div class="perf"></div>
+          <div class="ticket-meta"><span>Closes Aug 30</span><span class="countdown">24D : 06H</span></div>
+          <div class="ticket-actions">
+            <button class="save-btn">♡</button>
+            <button class="btn btn-outline-navy">Details</button>
+            <button class="btn btn-gold">Apply</button>
+          </div>
+        </div>
+
+        <div class="ticket">
+          <div class="amount">GH₵20,000 <span>total</span></div>
+          <h4>Health Sciences Merit Award</h4>
+          <div class="org">Korle-Bu Teaching Hospital</div>
+          <div class="tags-row"><span class="mini-tag">Health Sciences</span><span class="mini-tag">Undergraduate</span></div>
+          <div class="perf"></div>
+          <div class="ticket-meta"><span>Closes Sep 12</span><span class="countdown">37D : 00H</span></div>
+          <div class="ticket-actions">
+            <button class="save-btn">♡</button>
+            <button class="btn btn-outline-navy">Details</button>
+            <button class="btn btn-gold">Apply</button>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="pagination">
+        <button>‹</button>
+        <button class="active">1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>…</button>
+        <button>21</button>
+        <button>›</button>
+      </div>
+    </main>
+
+  </div>
+
+  <div class="alert-cta">
+    <div>
+      <h3>Set up scholarship alerts</h3>
+      <p>Tell us your field and level once — get an email the moment a matching scholarship opens.</p>
+    </div>
+    <form onsubmit="event.preventDefault(); this.querySelector('button').textContent='Alerts On ✓';">
+      <input type="email" placeholder="your.email@example.com" required aria-label="Email address">
+      <button type="submit" class="btn btn-gold">Create Alert</button>
+    </form>
+  </div>
+</div>
+
+<div class="kente"></div>
+<footer>© 2026 Campus Connect Ghana. Connecting Every Ghanaian Student to Success.</footer>
+
+
+<script>
+(function(){
+  var here = location.pathname.split('/').pop();
+  document.querySelectorAll('.nav-links > a[href], .nav-more-menu a[href]').forEach(function(a){
+    if(a.getAttribute('href') === here){ a.classList.add('active'); }
+  });
+  document.addEventListener('click', function(e){
+    document.querySelectorAll('.nav-more.open').forEach(function(m){
+      if(!m.contains(e.target)) m.classList.remove('open');
+    });
+  });
+})();
+</script>
+</body>
+</html>
